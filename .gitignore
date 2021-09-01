@@ -1,0 +1,25 @@
+Extra Ch. 3 Math.gdoc
+*.aux
+*.bbl
+*.blg
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.gz
+*.fdb*
+*.fls
+*.glg
+*.glo
+*.gls
+*.bcf
+*.run.xml
+*.ist
+*.synctex.gz
+*.synctex(busy)
+*.gdoc
+"Icon^M"
+Icon^M
+Icon\r
+"Icon\r"

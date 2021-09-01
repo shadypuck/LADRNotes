@@ -1,0 +1,33 @@
+\documentclass{report}
+
+\input{preamble.tex}
+
+\title{Linear Algebra Done Right Notes}
+\author{Steven Labalme}
+
+\begin{document}
+
+
+
+
+\maketitle
+
+
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+
+
+
+\pagenumbering{arabic}
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter:\ #1}{}}
+\subfile{Chapter01/chapter01.tex}
+
+\printbibliography[heading=bibintoc]
+
+
+
+
+\end{document}

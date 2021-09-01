@@ -1,0 +1,41 @@
+\usepackage[margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{csquotes}
+\usepackage{marginnote}
+\usepackage[style=apa]{biblatex}
+\usepackage{amsmath,amssymb}
+\usepackage{bm,scalerel}
+\usepackage[hidelinks]{hyperref}
+
+\fancypagestyle{main}{
+    \fancyhf{}
+    \fancyhead[L]{\leftmark}
+    \fancyhead[R]{Abstract Linear Algebra Prep}
+    \fancyfoot[R]{Labalme\ \thepage}
+}
+\fancypagestyle{plain}{
+    \fancyhead{}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+\MakeOuterQuote{"}
+
+\reversemarginpar
+
+\addbibresource{main.bib}
+\DefineBibliographyStrings{english}{bibliography={References}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\dq}[3][]{``#2"#1 \parencite[#3]{bib:Axler}.}
+
+\newlength\shft
+\shft=.15pt\relax
+\newcommand{\fakebold}[1]{
+    \ThisStyle{\ooalign{$\SavedStyle#1$\cr
+    \kern-\shft$\SavedStyle#1$\cr
+    \kern\shft$\SavedStyle#1$}}
+}
+
+\usepackage{subfiles}
