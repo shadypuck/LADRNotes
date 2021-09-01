@@ -3,7 +3,12 @@
 \usepackage{csquotes}
 \usepackage{marginnote}
 \usepackage[style=apa]{biblatex}
-\usepackage{amsmath,amssymb}
+\usepackage{xr}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage[bottom]{footmisc}
+\usepackage{tikz}
+\usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm,scalerel}
 \usepackage[hidelinks]{hyperref}
 
@@ -25,11 +30,25 @@
 \addbibresource{main.bib}
 \DefineBibliographyStrings{english}{bibliography={References}}
 
+\setitemize[3]{label={\scriptsize$\blacksquare$}}
+
+\externaldocument{main}
+
+\deffootnotemark{\textsuperscript{\textup{[}\thefootnotemark\textup{]}}}
+\deffootnote[2.1em]{0em}{0em}{\textsuperscript{\thefootnote}}
+
+\usetikzlibrary{calc}
+
+\newtheorem{theorem}{Theorem}[chapter]
+
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
 
 \newcommand{\dq}[3][]{``#2"#1 \parencite[#3]{bib:Axler}.}
 
+\renewcommand{\thesection}{\thechapter.\Alph{section}}
 \newlength\shft
 \shft=.15pt\relax
 \newcommand{\fakebold}[1]{
