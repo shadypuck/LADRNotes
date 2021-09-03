@@ -39,7 +39,11 @@
 
 \usetikzlibrary{calc}
 
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\len}{len}
+
 \newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
@@ -49,6 +53,7 @@
 \newcommand{\dq}[3][]{``#2"#1 \parencite[#3]{bib:Axler}.}
 
 \renewcommand{\thesection}{\thechapter.\Alph{section}}
+
 \newlength\shft
 \shft=.15pt\relax
 \newcommand{\fakebold}[1]{
