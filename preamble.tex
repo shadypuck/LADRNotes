@@ -9,6 +9,7 @@
 \usepackage[bottom]{footmisc}
 \usepackage{tikz}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{physics}
 \usepackage{bm,scalerel}
 \usepackage[hidelinks]{hyperref}
 
@@ -41,6 +42,8 @@
 
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\len}{len}
+\DeclareMathOperator{\nul}{null}
+\DeclareMathOperator{\range}{range}
 
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -48,6 +51,10 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\F}{\mathbb{F}}
+
+\newcommand{\lin}[2]{\mathcal{L}(#1,#2)}
+\newcommand{\mat}[1]{\mathcal{M}(#1)}
+
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
 \newcommand{\dq}[3][]{``#2"#1 \parencite[#3]{bib:Axler}.}

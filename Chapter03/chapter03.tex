@@ -1,0 +1,361 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{2}
+
+\begin{document}
+
+
+
+
+\chapter{Linear Maps}
+\section{The Vector Space of Linear Maps}
+\begin{itemize}
+    \item \marginnote{9/5:}\textbf{Linear map} (from $V$ to $W$): A function $T:V\to W$ with the following properties. \emph{Also known as} \textbf{linear transformation}.
+    \begin{description}
+        \item[additivity]\hfill\\ $T(u+v)=Tu+Tv$ for all $u,v\in V$.
+        \item[homogeneity]\hfill\\ $T(\lambda v)=\lambda(Tv)$ for all $\lambda\in\F$ and all $v\in V$. 
+    \end{description}
+    \begin{itemize}
+        \item Note that for linear maps, $Tv$ means the same as the more standard functional notation $T(v)$.
+    \end{itemize}
+    \item $\bm{\lin{V}{W}}$: The set of all linear maps from $V$ to $W$.
+    \item \textbf{Zero map}: The function $0\in\lin{V}{W}$ that takes each element of some vector space to the additive identity of another vector space. \emph{Defined by}
+    \begin{equation*}
+        0v = 0
+    \end{equation*}
+    \item \textbf{Identity map}: The function $I\in\lin{V}{V}$ on some vector space that takes each element to itself. \emph{Defined by}
+    \begin{equation*}
+        Iv = v
+    \end{equation*}
+    \item We can also formalize more esoteric linear processes as linear maps.
+    \begin{itemize}
+        \item For example, $D\in\lin{\mathcal{P}(\R)}{\mathcal{P}(\R)}$ can be thought of as the differentiation map $Dp=p'$. This formalizes the fact that $(f+g)'=f'+g'$ and $(\lambda f)'=\lambda f'$.
+        \item We can do the same with integration: Let $T\in\lin{\mathcal{P}(\R)}{\R}$ be described by $Tp=\int_0^1p(x)\dd{x}$. This formalizes the fact that integrals are additive and homogenous.
+        \item \textcite{bib:Axler} gives a number more examples.
+    \end{itemize}
+    \item We now prove that there exists a unique linear map from a vector space of dimension $n$ to any $n$ vectors in another vector space.
+    \begin{theorem}
+        Suppose $v_1,\dots,v_n$ is a basis of $V$ and $w_1,\dots,w_n\in W$. Then there exists a unique linear map $T:V\to W$ such that $Tv_j=w_j$ for each $j=1,\dots,n$.
+        \begin{proof}
+            First, we define a function $T:V\to W$. We then show that $T$ satisfies the specified property. After that, we show that it is a linear map. Lastly, we show that it is unique. Let's begin.\par
+            Let $T:V\to W$ be defined by
+            \begin{equation*}
+                T(c_1v_1+\cdots+c_nv_n) = c_1w_1+\cdots+c_nw_n
+            \end{equation*}
+            for all $c_1v_1+\cdots+c_nv_n\in V$. Note that this definition is valid since, by Theorem \ref{trm:basisLinearCombination}, each $v\in V$ can be written in the form $c_1v_1+\cdots+c_nv_n$ where $c_1,\dots,c_n\in\F$.\par
+            To prove that $Tv_j=w_j$ for all $j=1,\dots,n$, let each $c_i$ in the above definition equal 0 save $c_j$, which we set equal to 1. Then we have
+            \begin{align*}
+                T(0v_1+\cdots+0v_{j-1}+1v_j+0v_{j+1}+\cdots+0v_n) &= 0w_1+\cdots+0w_{j-1}+1w_j+0w_{j+1}+\cdots+0w_n\\
+                T(v_j) &= w_j
+            \end{align*}
+            as desired.\par
+            To prove that $T$ is a linear map, it will suffice to verify additivity and homogeneity, which we may do as follows. Let $u,v\in V$ with $u=a_1v_1+\cdots+a_nv_n$ and $v=c_1v_1+\cdots+c_nv_n$, and let $\lambda\in\F$. Then
+            \begin{align*}
+                T(u+v) &= T((a_1+c_1)v_1+\cdots+(a_n+c_n)v_n)\\
+                &= (a_1+c_1)w_1+\cdots+(a_n+c_n)w_n\\
+                &= Tu+Tv
+            \end{align*}
+            and
+            \begin{align*}
+                T(\lambda v) &= T(\lambda c_1v_1+\cdots+\lambda c_nv_n)\\
+                &= \lambda c_1w_1+\cdots+\lambda c_nw_n\\
+                &= \lambda Tv
+            \end{align*}
+            as desired.\par
+            Now suppose $\tilde{T}\in\lin{V}{W}$ satisfies $\tilde{T}v_j=w_j$ for all $j=1,\dots,n$. To prove that $T=\tilde{T}$, it will suffice to show that $\tilde{T}(c_1v_1+\cdots+c_nv_n)=T(c_1v_1+\cdots+c_nv_n)$ for all $c_1v_1+\cdots+c_nv_n\in V$. Let $c_1v_1+\cdots+c_nv_n\in V$ be arbitrary. We know that $\tilde{T}(v_j)=w_j$ for all $j=1,\dots,n$. It follows since $\tilde{T}$ is a linear map (specifically, since it's homogenous) that $c_jw_j=c_j\tilde{T}(v_j)=\tilde{T}(c_jv_j)$ for all $j=1,\dots,n$. Similarly, the additivity of $\tilde{T}$ implies that
+            \begin{align*}
+                T(c_1v_1+\cdots+c_nv_n) &= c_1w_1+\cdots+c_nw_n\\
+                &= \tilde{T}(c_1v_1)+\cdots+\tilde{T}(c_nv_n)\\
+                &= \tilde{T}(c_1v_1+\cdots+c_nv_n)
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Sum} (of $S,T\in\lin{V}{W}$): The linear map $(S+T)\in\lin{V}{W}$ defined by $(S+T)(v)=Sv+Tv$ for all $v\in V$.
+    \item \textbf{Product} (of $T\in\lin{V}{W}$ and $\lambda\in\F$): The linear map $(\lambda T)\in\lin{V}{W}$ defined by $(\lambda T)(v)=\lambda(Tv)$ for all $v\in V$.
+    \item It follows that, under these definitions of addition and multiplication, $\lin{V}{W}$ is a vector space.
+    \item \textbf{Product} (of $T\in\lin{U}{V}$ and $S\in\lin{V}{W}$): The linear map $ST\in\lin{U}{W}$ defined by $(ST)(u)=S(Tu)$ for all $u\in U$.
+    \begin{itemize}
+        \item Note that the product is just function composition, but most mathematicians do write $ST$ instead of $S\circ T$.
+    \end{itemize}
+    \item Linear maps (with the correct corresponding domains) satisfy the associativity, identity, and distributive properties. However, multiplication of linear maps is not necessarily commutative.
+    \begin{itemize}
+        \item $(T_1T_2)T_3=T_1(T_2T_3)$.
+        \item $TI_V=I_WT=T$ (note that if $T\in\lin{V}{W}$, $I_V\in\lin{V}{V}$ and $I_W\in\lin{W}{W}$).
+        \item $(S_1+S_2)T=S_1T+S_2T$ and $S(T_1+T_2)=ST_1+ST_2$.
+    \end{itemize}
+    \item Linear maps send 0 to 0.
+    \begin{theorem}\label{trm:linSendsZero}
+        Suppose $T\in\lin{V}{W}$. Then $T(0)=0$.
+        \begin{proof}
+            By additivity, we have
+            \begin{align*}
+                T(0) &= T(0+0) = T(0)+T(0)\\
+                0 &= T(0)
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Null Spaces and Ranges}
+\begin{itemize}
+    \item \textbf{Null space} (of $T\in\lin{V}{W}$): The subset of $V$ consisting of those vectors that $T$ maps to 0. \emph{Also known as} \textbf{kernel}. \emph{Denoted by} $\bm{\nul T}$. \emph{Given by}
+    \begin{equation*}
+        \nul T = \{v\in V:Tv=0\}
+    \end{equation*}
+    \item The null space is a subspace.
+    \begin{theorem}\label{trm:nullSpace}
+        Suppose $T\in\lin{V}{W}$. Then $\nul T$ is a subspace of $V$.
+        \begin{proof}
+            To prove that $\nul T$ is a subspace of $V$, it will suffice to show that $0\in\nul T$, $u,v\in\nul T$ implies that $u+v\in\nul T$, and $u\in\nul T$ and $\lambda\in\F$ imply $\lambda u\in\nul T$. Let's begin.\par
+            By Theorem \ref{trm:linSendsZero}, $T(0)=0$. Therefore, $0\in\nul T$, as desired.\par
+            Let $u,v\in\nul T$ be arbitrary. Then by additivity
+            \begin{equation*}
+                T(u+v) = Tu+Tv = 0+0 = 0
+            \end{equation*}
+            so $u+v\in\nul T$, as desired.\par
+            Let $u\in\nul T$ and $\lambda\in\F$ be arbitrary. Then by homogeneity,
+            \begin{equation*}
+                T(\lambda u) = \lambda Tu = \lambda 0 = 0
+            \end{equation*}
+            so $\lambda u\in\nul T$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Injective} (function): A function $T:V\to W$ such that $Tu=Tv$ implies $u=v$. \emph{Also known as} \textbf{one-to-one}.
+    \item If 0 is the only vector that gets mapped to 0, then $T$ is injective.
+    \begin{theorem}\label{trm:nullSpaceInjective}
+        Let $T\in\lin{V}{W}$. Then $T$ is injective if and only if $\nul T=\{0\}$.
+        \begin{proof}
+            Suppose first that $T$ is injective. To prove that $\nul T=\{0\}$, it will suffice to show that $0\in\nul T$ and for every $v\in\nul T$, $v=0$. By Theorem \ref{trm:nullSpace}, $0\in\nul T$. Now let $v\in\nul T$ be arbitrary. By the definition of the null space, we have $Tv=0$. By Theorem \ref{trm:linSendsZero}, we have $T(0)=0$. Thus, by transitivity, we have that $Tv=T(0)$. It follows by injectivity that $v=0$, as desired.\par
+            Now suppose that $\nul T=\{0\}$. To prove that $T$ is injective, it will suffice to show that if $Tu=Tv$, then $u=v$. Suppose $u,v\in V$ satisfy $Tu=Tv$. Then
+            \begin{equation*}
+                0 = Tu-Tv = T(u-v)
+            \end{equation*}
+            so $(u-v)\in\nul T=\{0\}$. It follows that $u-v=0$, i.e., that $u=v$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Range} (of $T\in\lin{V}{W}$): The subset of $W$ consisting of those vectors that are of the form $Tv$ for some $v\in V$. \emph{Also known as} \textbf{image}. \emph{Denoted by} $\bm{\range T}$. \emph{Given by}
+    \begin{equation*}
+        \range T = \{Tv:v\in V\}
+    \end{equation*}
+    \item The range is a subspace.
+    \begin{theorem}\label{trm:rangeSpace}
+        Suppose $T\in\lin{V}{W}$. Then $\range T$ is a subspace of $W$.
+        \begin{proof}
+            To prove that $\range T$ is a subspace of $W$, it will suffice to show that $0\in\range T$, $w_1,w_2\in\range T$ implies that $(w_1+w_2)\in\range T$, and $w\in\range T$ and $\lambda\in\F$ imply $\lambda w\in\range T$. Let's begin.\par
+            By the definition of a vector space, $0\in V$. By Theorem \ref{trm:linSendsZero}, $T(0)=0$. Therefore, $0\in\range T$, as desired.\par
+            Let $w_1,w_2\in\range T$ be arbitrary. Then there exist $v_1,v_2\in V$ such that $Tv_1=w_1$ and $Tv_2=w_2$. It follows by additivity that
+            \begin{equation*}
+                T(v_1+v_2) = Tv_1+Tv_2 = w_1+w_2
+            \end{equation*}
+            Therefore, since $v_1+v_2\in V$, we have that $(w_1+w_2)\in\range T$, as desired.\par
+            Let $w\in\range T$ and $\lambda\in\F$ be arbitrary. Then there exists $v\in V$ such that $Tv=w$. It follows by homogeneity that
+            \begin{equation*}
+                T(\lambda v) = \lambda Tv = \lambda w
+            \end{equation*}
+            Therefore, since $\lambda v\in V$, we have that $\lambda w\in\range T$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Surjective} (function): A function $T:V\to W$ such that $\range T=W$. \emph{Also known as} \textbf{onto}.
+    \item We now prove a very important theorem.
+    \begin{theorem}[Fundamental Theorem of Linear Maps]\label{trm:fundamentalTheoremLinearMaps}
+        Suppose $V$ is finite-dimensional and $T\in\lin{V}{W}$. Then $\range T$ is finite-dimensional and
+        \begin{equation*}
+            \dim V = \dim\nul T+\dim\range T
+        \end{equation*}
+        \begin{proof}
+            By Theorem \ref{trm:nullSpace}, $\nul T$ is a subspace of $V$ finite-dimensional. Thus, by Theorem \ref{trm:finiteDimensionalSubspaces}, $\nul T$ is finite-dimensional. It follows by Theorem \ref{trm:finiteBasis} that we may let $u_1,\dots,u_m$ be a basis of $\nul T$. As a basis of a subspace of $V$, $u_1,\dots,u_m$ is a linearly independent list of vectors in $V$. Consequently, by Theorem \ref{trm:lnlIndependentExtendBasis}, we may extend it to a basis $u_1,\dots,u_m,v_1,\dots,v_n$ of $V$.\par
+            Having established this terminology, we can now see that to prove that $\range T$ is finite-dimensional, it will suffice to show that $Tv_1,\dots,Tv_n$ spans it. To show that $\spn(Tv_1,\dots,Tv_n)=\range T$, it will suffice to show that every $b_1Tv_1+\cdots+b_nTv_n\in\spn(Tv_1,\dots,Tv_n)$ is an element of $\range T$ and that every $Tv\in\range T$ is an element of $\spn(Tv_1,\dots,Tv_n)$. Let $b_1Tv_1+\cdots+b_nTv_n\in\spn(Tv_1,\dots,Tv_n)$ be arbitrary. Then
+            \begin{align*}
+                b_1Tv_1+\cdots+b_nTv_n &= T(b_1v_1+\cdots+b_nv_n)\\
+                &= T(0u_1+\cdots+0u_m+b_1v_1+\cdots+b_nv_n)
+            \end{align*}
+            Therefore, since $0u_1+\cdots+0u_m+b_1v_1+\cdots+b_nv_n\in V$ by $V$'s closure under addition and scalar multiplication, we have that $b_1Tv_1+\cdots+b_nTv_n\in\range T$, as desired. Now let $Tv\in\range T$ be arbitrary. Since $v\in V$ and $u_1,\dots,u_m,v_1,\dots,v_n$ is a basis of $V$, Theorem \ref{trm:basisLinearCombination} implies that $v=a_1u_1+\cdots+a_mu_m+b_1v_1+\cdots+b_nv_n$ for some $a_1,\dots,a_m,b_1,\dots,b_n\in\F$. Therefore,
+            \begin{align*}
+                Tv &= T(a_1u_1+\cdots+a_mu_m+b_1v_1+\cdots+b_nv_n)\\
+                &= T(a_1u_1+\cdots+a_mu_m)+T(b_1v_1+\cdots+b_nv_n)\\
+                &= a_1Tu_1+\cdots+a_mTu_m+b_1Tv_1+\cdots+v_nTv_n\\
+                &= a_10+\cdots+a_m0+b_1Tv_1+\cdots+v_nTv_n\\
+                &= b_1Tv_1+\cdots+v_nTv_n
+            \end{align*}
+            where each $Tu_j=0$ because each $u_j\in\nul T$, so $Tv\in\spn(Tv_1,\dots,Tv_n)$, as desired.\par
+            Before we can verify the equation from the theorem, we need to establish one last fact: that $Tv_1,\dots,Tv_n$ is linearly independent. Suppose $c_1,\dots,c_n\in\F$ make
+            \begin{align*}
+                c_1Tv_1+\cdots+c_nTv_n &= 0\\
+                T(c_1v_1+\cdots+c_nv_n) &= 0
+            \end{align*}
+            It follows that $c_1v_1+\cdots+c_nv_n\in\nul T$. Thus, since $u_1,\dots,u_m$ is a basis of $\nul T$ by Theorem \ref{trm:basisLinearCombination}, we have that
+            \begin{align*}
+                c_1v_1+\cdots+c_nv_n &= d_1u_1+\cdots+d_mu_m\\
+                0 &= d_1u_1+\cdots+d_mu_m-c_1v_1-\cdots-c_nv_n
+            \end{align*}
+            for some $d_1,\dots,d_m\in\F$. But since $u_1,\dots,u_m,v_1,\dots,v_n$ is linearly independent as the basis of $V$, the above equation implies that $c_1=\cdots=c_n=0$, as desired.\par
+            Having established that $u_1,\dots,u_m,v_1,\dots,v_n$ is a basis of $V$, $u_1,\dots,u_m$ is a basis of $\nul T$, and $Tv_1,\dots,Tv_n$ spans $\range T$ and is linearly independent in $\range T$ (i.e., is a basis of $\range T$), we have that
+            \begin{align*}
+                \dim V &= m+n\\
+                &= \dim\nul T+\dim\range T
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We can now prove that a linear map to a "smaller" vector space cannot be injective.
+    \begin{theorem}\label{trm:smallerNotInjective}
+        Suppose $V$ and $W$ are finite-dimensional vector spaces such that $\dim V>\dim W$. Then no linear map from $V$ to $W$ is injective.
+        \begin{proof}
+            Let $T\in\lin{V}{W}$. Then
+            \begin{align*}
+                \dim\nul T &= \dim V-\dim\range T\tag*{\hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}}\\
+                &\geq \dim V-\dim\range T\tag*{Theorem \ref{trm:dimSubspaces}}\\
+                &> 0
+            \end{align*}
+            It follows that $\nul T$ has a basis consisting of a list of one or more vectors. As a linearly independent list, naturally none of these vectors will be equal to the zero vector. Thus, since $\nul T$ contains vectors other than 0, Theorem \ref{trm:nullSpaceInjective} implies that $T$ is not injective.
+        \end{proof}
+    \end{theorem}
+    \item Similarly, we can prove that a linear map to a "bigger" vector space cannot be surjective.
+    \begin{theorem}\label{trm:biggerNotSurjective}
+        Suppose $V$ and $W$ are finite-dimensional vector spaces such that $\dim V<\dim W$. Then no linear map from $V$ to $W$ is surjective.
+        \begin{proof}
+            Let $T\in\lin{V}{W}$. Then
+            \begin{align*}
+                \dim\range T &= \dim V-\dim\nul T\tag*{\hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}}\\
+                &\leq \dim V
+                &< \dim W
+            \end{align*}
+            Therefore, $\range T\neq W$, so $T$ cannot be surjective.
+        \end{proof}
+    \end{theorem}
+    \item Theorems \ref{trm:smallerNotInjective} and \ref{trm:biggerNotSurjective} allow us to express questions about systems of linear equations in terms of linear maps.
+    \begin{itemize}
+        \item For example, a question about a \textbf{homogenous} system of linear equations could be, "does there exist a nonzero solution to the homogenous system $\sum_{k=1}^nA_{1,k}x_k=0,\dots,\sum_{k=1}^nA_{m,k}x_k=0$?"
+        \item If we define $T:\F^n\to\F^m$ by
+        \begin{equation*}
+            T(x_1,\dots,x_n) = \left( \sum_{k=1}^nA_{1,k}x_k,\dots,\sum_{k=1}^nA_{m,k}x_k \right)
+        \end{equation*}
+        we can express the system of equations as $T(x_1,\dots,x_n)=0$ and ask instead, "is $\dim\nul T>0$?"
+    \end{itemize}
+    \item \textbf{Homogenous} (system of linear equations): A system of $m$ linear equations $\sum_{k=1}^nA_{1,k}x_k=c_1$ through $\sum_{k=1}^nA_{m,k}x_k=c_m$ such that the constant term $c_j=0$ for all $j=1,\dots,m$.
+    \item Continuing with the linear equations example, we can rigorously show the following.
+    \begin{theorem}
+        A homogenous system of linear equations with more variables than equations has nonzero solutions.
+        \begin{proof}
+            In terms of the above, $T:\F^n\to\F^m$ where $n>m$. Thus, by Theorem \ref{trm:smallerNotInjective}, $T$ is not injective. Consequently, by Theorem \ref{trm:nullSpaceInjective}, $\dim\nul T>0$. Therefore, the system has nonzero solutions.
+        \end{proof}
+    \end{theorem}
+    \begin{theorem}
+        An inhomogenous system of linear equations with more equations than variables has no solution for some choice of constant terms.
+        \begin{proof}
+            In terms of the above, $T:\F^n\to\F^m$ where $m>n$. We want to know if there exists $(c_1,\dots,c_m)\in\F^m$ such that $T(x_1,\dots,x_n)\neq(c_1,\dots,c_m)$ for any $(x_1,\dots,x_n)\in\F^n$. In other words, we want to know if there exists $(c_1,\dots,c_m)\in\F^m$ such that $(c_1,\dots,c_m)\notin\range T$, i.e., if $\range T\neq\F^m$. But since $n<m$, Theorem \ref{trm:biggerNotSurjective} asserts that $T$ is not surjective, meaning that $\range T\neq W$, as desired.
+        \end{proof}
+    \end{theorem}
+    \begin{itemize}
+        \item Note that while the past two results are typically proven with Gaussian elimination, the abstract approach taken here leads to cleaner proofs.
+    \end{itemize}
+\end{itemize}
+
+
+
+\section{Matrices}
+\begin{itemize}
+    \item \textbf{$\bm{m}$-by-$\bm{n}$ matrix}: A rectangular array $A$ of elements of $\F$ with $m$ rows and $n$ columns
+    \begin{equation*}
+        A =
+        \begin{pmatrix}
+            A_{1,1} & \cdots & A_{1,n}\\
+            \vdots &  & \vdots\\
+            A_{m,1} & \cdots & A_{m,n}\\
+        \end{pmatrix}
+    \end{equation*}
+    where $m$ and $n$ are positive integers.
+    \begin{itemize}
+        \item The notation $A_{j,k}$ denotes the entry in row $j$, column $k$ of $A$. In other words, the first index refers to the row nunber and the second index refers to the column number.
+    \end{itemize}
+    \item \textbf{Matrix} (of $T\in\lin{V}{W}$ with respect to the bases $v_1,\dots,v_n$ of $V$ and $w_1,\dots,w_m$ of $W$): The $m$-by-$n$ matrix $\mat{T}$ whose entries $A_{j,k}$ are defined by
+    \begin{equation*}
+        Tv_k = A_{1,k}w_1+\cdots+A_{m,k}w_m
+    \end{equation*}
+    \begin{itemize}
+        \item If the bases are not clear from context, then the notation $\mat{T,(v_1,\dots,v_n),(w_1,\dots,w_m)}$ is used.
+        \item Another way of wording the definition states that the $k^\text{th}$ column of $\mat{T}$ consists of the scalars needed to write $Tv_k$ as a linear combination of $w_1,\dots,w_m$.
+        \item Assuming standard bases, we \dq{can think of the $k^\text{th}$ column of $\mat{T}$ as the $T$ applied to the $k^\text{th}$ standard basis vector}{71}
+    \end{itemize}
+    \item \textbf{Sum} (of two $m$-by-$n$ matrices $A,C$): The $m$-by-$n$ matrix $A+C$ defined by $(A+C)_{j,k}=A_{j,k}+C_{j,k}$.
+    \begin{itemize}
+        \item Symbolically,
+        \begin{equation*}
+            \begin{pmatrix}
+                A_{1,1} & \cdots & A_{1,n}\\
+                \vdots &  & \vdots\\
+                A_{m,1} & \cdots & A_{m,n}\\
+            \end{pmatrix}+
+            \begin{pmatrix}
+                C_{1,1} & \cdots & C_{1,n}\\
+                \vdots &  & \vdots\\
+                C_{m,1} & \cdots & C_{m,n}\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                A_{1,1}+C_{1,1} & \cdots & A_{1,n}+C_{1,n}\\
+                \vdots &  & \vdots\\
+                A_{m,1}+C_{m,1} & \cdots & A_{m,n}+C_{m,n}\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Suppose $S,T\in\lin{V}{W}$. Then $\mat{S+T}=\mat{S}+\mat{T}$.
+    \item \textbf{Product} (of an $m$-by-$n$ matrix $A$ and $\lambda\in\F$): The $m$-by-$n$ matrix $\lambda A$ defined by $(\lambda A)_{j,k}=\lambda A_{j,k}$.
+    \begin{itemize}
+        \item Symbolically,
+        \begin{equation*}
+            \lambda
+            \begin{pmatrix}
+                A_{1,1} & \cdots & A_{1,n}\\
+                \vdots &  & \vdots\\
+                A_{m,1} & \cdots & A_{m,n}\\
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                \lambda A_{1,1} & \cdots & \lambda A_{1,n}\\
+                \vdots &  & \vdots\\
+                \lambda A_{m,1} & \cdots & \lambda A_{m,n}\\
+            \end{pmatrix}
+        \end{equation*}
+    \end{itemize}
+    \item Suppose $\lambda\in\F$ and $T\in\lin{V}{W}$. Then $\mat{\lambda T}=\lambda\mat{T}$.
+    \item $\protect\fakebold{\F}^{\bm{m,n}}$: The set of all $m$-by-$n$ matrices with entries in $\F$, where $m$ and $n$ are positive integers.
+    \item We have that $\dim\F^{m,n}=mn$.
+    \begin{itemize}
+        \item Note that a basis of $\F^{m,n}$ is the set of all $m$-by-$n$ matrices that have 0s everywhere save a 1 in a single place.
+    \end{itemize}
+    \item \textbf{Product} (of an $m$-by-$n$ matrix $A$ and an $n$-by-$p$ matrix $C$): The $m$-by-$p$ matrix $AC$ defined by $(AC)_{j,k}=\sum_{r=1}^nA_{j,r}C_{r,k}$.
+    \begin{itemize}
+        \item We may derive this by noting that if $\mat{S}=A$ and $\mat{T}=C$, $T:U\to V$ and $S:V\to W$, and $u_1,\dots,u_p$, $v_1,\dots,v_n$, and $w_1,\dots,w_m$ are bases, then
+        \begin{align*}
+            (ST)u_k &= S\left( \sum_{r=1}^nC_{r,k}v_r \right)\\
+            &= \sum_{r=1}^nC_{r,k}Sv_r\\
+            &= \sum_{r=1}^nC_{r,k}\sum_{j=1}^mA_{j,r}w_j\\
+            &= \sum_{j=1}^m\left( \sum_{r=1}^nA_{j,r}C_{r,k} \right)w_j
+        \end{align*}
+        \item Matrix multiplication is not commutative, but is distributive and associative.
+    \end{itemize}
+    \item Suppose $T\in\lin{U}{V}$ and $S\in\lin{V}{W}$. Then $\mat{ST}=\mat{S}\mat{T}$.
+    \item If $A$ is an $m$-by-$n$ matrix, then\dots
+    \begin{itemize}
+        \item We let $A_{j,\cdot}$ denote the 1-by-$n$ matrix consisting of row $j$ of $A$;
+        \item We let $A_{\cdot,k}$ denote the $m$-by-1 matrix consisting of column $k$ of $A$.
+    \end{itemize}
+    \item Thus, if $A$ is an $m$-by-$n$ matrix and $C$ is an $n$-by-$p$ matrix, then $(AC)_{j,k}=A_{j,\cdot}C_{\cdot,k}$ for all $1\leq j\leq m$ and $1\leq k\leq p$.
+    \item Similarly, $(AC)_{\cdot,k}=AC_{\cdot,k}$.
+    \item Lastly, suppose $A$ is an $m$-by-$n$ matrix and $c=(c_1,\dots,c_n)$ is an $n$-by-1 matrix. Then $Ac=c_1A_{\cdot,1}+\cdots+c_nA_{\cdot,n}$.
+    \begin{itemize}
+        \item In other words, $Ac$ is a linear combination of the columns of $A$, with the scalars that multiply the columns coming from $c$.
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\end{document}
