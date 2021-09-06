@@ -36,7 +36,7 @@
         \item \textcite{bib:Axler} gives a number more examples.
     \end{itemize}
     \item We now prove that there exists a unique linear map from a vector space of dimension $n$ to any $n$ vectors in another vector space.
-    \begin{theorem}
+    \begin{theorem}\label{trm:mapBasisToBasis}
         Suppose $v_1,\dots,v_n$ is a basis of $V$ and $w_1,\dots,w_n\in W$. Then there exists a unique linear map $T:V\to W$ such that $Tv_j=w_j$ for each $j=1,\dots,n$.
         \begin{proof}
             First, we define a function $T:V\to W$. We then show that $T$ satisfies the specified property. After that, we show that it is a linear map. Lastly, we show that it is unique. Let's begin.\par
@@ -353,6 +353,292 @@
     \begin{itemize}
         \item In other words, $Ac$ is a linear combination of the columns of $A$, with the scalars that multiply the columns coming from $c$.
     \end{itemize}
+\end{itemize}
+
+
+
+\section{Invertibility and Isomorphic Vector Spaces}
+\begin{itemize}
+    \item \marginnote{9/6:}\textbf{Invertible} (linear map): A linear map $T\in\lin{V}{W}$ such that there exists a linear map $S\in\lin{V}{W}$ such that $ST$ equals the identity map on $V$ and $TS$ equals the identity map on $W$.
+    \item \textbf{Inverse} (of $T\in\lin{V}{W}$): The linear map $S\in\lin{W}{V}$ satisfying $ST=I_V$ and $TS=I_W$. \emph{Denoted by} $\bm{T^{-1}}$.
+    \item We now justify the use of the word "the" in the definition of the inverse.
+    \begin{theorem}
+        An invertible linear map has a unique inverse.
+        \begin{proof}
+            Suppose $T\in\lin{V}{W}$ is invertible and $S_1,S_2$ are inverses of $T$. Then
+            \begin{equation*}
+                S_1 = S_1I = S_1(TS_2) = (S_1T)S_2 = IS_2 = S_2
+            \end{equation*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now give a criterion for invertibility.
+    \begin{theorem}\label{trm:invertibleInjectiveSurjective}
+        A linear map is invertible if and only if it is injective and surjective.
+        \begin{proof}
+            Let $T\in\lin{V}{W}$. Suppose first that $T$ is invertible.\par
+            To prove that $T$ is injective, it will suffice to show that for all $u,v\in V$, $Tu=Tv$ implies that $u=v$. Let $u,v$ be arbitrary elements of $V$ that satisfy $Tu=Tv$. Then
+            \begin{equation*}
+                u = T^{-1}(Tu) = T^{-1}(Tv) = v
+            \end{equation*}
+            as desired.\par
+            To prove that $T$ is surjective, it will suffice to show that $\range T=W$. Since $\range T\subset W$, we need only show that $W\subset\range T$. Let $w\in W$ be arbitrary. Since $w=T(T^{-1}w)$ where $T^{-1}w\in V$, we have that $w\in\range T$, as desired.\par\smallskip
+            Now suppose that $T$ is injective and surjective. To prove that $T$ is invertible, we will define a function $S:W\to V$, prove that it is a linear map, prove that $TS=I_W$, and prove that $ST=I_V$. Let $Sw$ be the unique element of $V$ such that $T(Sw)=w$ (the surjectivity of $T$ guarantees that there exists \emph{an} element of $V$ that $T$ maps to $w$, and the injectivity of $T$ guarantees the uniqueness of said element).\par
+            To prove that $S$ is a linear map, it will suffice to show that $S$ is additive and homogenous. To verify additivity, first note that the additivity of $T$ implies that
+            \begin{equation*}
+                T(Sw_1+Sw_2) = T(Sw_1)+T(Sw_2) = w_1+w_2
+            \end{equation*}
+            But since the above equation implies that $Sw_1+Sw_2$ is the unique element of $V$ that $T$ maps to $w_1+w_2$, we have by the definition of $S$ that $S(w_1+w_2)=Sw_1+Sw_2$. The proof is symmetric for homogeneity.\par
+            To prove that $TS=I_W$, we need only appeal to the definition of $S$, which states that $(TS)w=T(Sw)=w$ for all $w\in W$. It immediately follows that $TS=I_W$.\par
+            To prove that $ST=I_V$, first note that for all $v\in V$,
+            \begin{equation*}
+                T((ST)v) = (TS)(Tv) = I(Tv) = Tv
+            \end{equation*}
+            It follows by the injectivity of $T$ that $(ST)v=v$, i.e., that $ST=I_V$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Isomorphism}: An invertible linear map.
+    \item \textbf{Isomorphic} (vector spaces): Two vector spaces such that there exists an isomorphism from one vector space onto the other one.
+    \item Isomorphic vector spaces have the same dimension.
+    \begin{theorem}\label{trm:isomorphicDimension}
+        Two finite-dimensional vector spaces over $\F$ are isomorphic if and only if they have the same dimension.
+        \begin{proof}
+            Suppose $V,W$ are isomorphic finite-dimensional vector spaces over $\F$. Then there exists an isomorphism $T:V\to W$. By the definition of isomorphism, $T$ is an invertible linear map, meaning by Theorem \ref{trm:invertibleInjectiveSurjective} that $T$ is injective and surjective. Thus, since there exists an injective linear map $T:V\to W$, the contrapositive of Theorem \ref{trm:smallerNotInjective} asserts that $\dim V\leq\dim W$. Additionally, since there exists a surjective linear map $T:V\to W$, the contrapositive of Theorem \ref{trm:biggerNotSurjective} asserts that $\dim V\geq\dim W$. Therefore, we have that $\dim V=\dim W$, as desired.\par
+            Now suppose that $\dim V=\dim W$. Let $v_1,\dots,v_n$ be a basis of $V$, and let $w_1,\dots,w_n$ be a basis of $W$. By Theorem \ref{trm:mapBasisToBasis}, there exists a unique linear map $T:V\to W$ such that $Tv_j=w_j$ for each $j=1,\dots,n$. To prove that $T$ is an isomorphism, Theorem \ref{trm:invertibleInjectiveSurjective} tells us that it will suffice to show that it is injective and surjective. To show that $T$ is surjective, it will suffice to show that $\range T=W=\spn(w_1,\dots,w_n)$. But since $Tv_j=w_j\in\range T$ for all $j=1,\dots,n$, $\range T\subset W$, and $\range T$ is a vector space (see Theorem \ref{trm:rangeSpace}), we have that $\range T=\spn(w_1,\dots,w_n)=W$, as desired. To prove that $T$ is injective, Theorem \ref{trm:nullSpaceInjective} tells us that it will suffice to show that $\nul T=\{0\}$, i.e., that $\dim\nul T=0$. But since $\dim\range T=\dim W=\dim V$, we have by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps} that
+            \begin{align*}
+                \dim\nul T+\dim\range T &= \dim V\\
+                &= \dim W\\
+                &= \dim\range T\\
+                \dim\nul T &= 0
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item This result implies that every finite-dimensional vector space of dimension $n$ is isomorphic to $\F^n$.
+    \item It also allows us to formalize the link between linear maps from $V$ to $W$ and matrices in $\F^{m,n}$.
+    \begin{theorem}\label{trm:mapsMatricesIsomorphic}
+        Suppose $v_1,\dots,v_n$ is a basis of $V$ and $w_1,\dots,w_m$ is a basis of $W$. Then $\mathcal{M}$ is an isomorphism between $\lin{V}{W}$ and $\F^{m,n}$.
+        \begin{proof}
+            We have already established that $\mat{S+T}=\mat{S}+\mat{T}$ and that $\mat{\lambda T}=\lambda\mat{T}$, so we already know that $\mathcal{M}$ is a linear map. To prove that it is invertible, Theorem \ref{trm:invertibleInjectiveSurjective} tells us that it will suffice to show that $\mathcal{M}$ is injective and surjective.\par
+            To show that $\mathcal{M}$ is injective, Theorem \ref{trm:nullSpaceInjective} tells us that it will suffice to verify that $\nul\mathcal{M}=\{0\}$. Let $T\in\lin{V}{W}$ be arbitrary. If $\mat{T}=0$ (0 denoting the zero matrix), then
+            \begin{equation*}
+                Tv_k = 0w_1+\cdots+0w_m = 0
+            \end{equation*}
+            for all $k=1,\dots,n$. But since $v_1,\dots,b_n$ is a basis of $V$, this implies that $T=0$ (0 denoting the zero transformation), as desired.\par
+            To show that $\mathcal{M}$ is surjective, it will suffice to verify that $\range\mathcal{M}=\F^{m,n}$. Clearly $\range\mathcal{M}\subset\F^{m,n}$, so we focus on the other direction. Let $A\in\F^{m,n}$ be arbitrary. Define $T\in\lin{V}{W}$ by
+            \begin{equation*}
+                Tv_k = \sum_{j=1}^mA_{j,k}w_j
+            \end{equation*}
+            for $k=1,\dots,n$. It follows by the definition of a matrix of a linear transformation that $\mat{T}=A$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We can now determine the dimension of the vector space of linear maps from one finite-dimensional vector space to another.
+    \begin{theorem}
+        Suppose $V$ and $W$ are finite-dimensional. Then $\lin{V}{W}$ is finite-dimensional and
+        \begin{equation*}
+            \dim\lin{V}{W} = (\dim V)(\dim W)
+        \end{equation*}
+        \begin{proof}
+            By Theorem \ref{trm:mapsMatricesIsomorphic}, $\lin{V}{W}$ and $\F^{m,n}$ are isomorphic. Thus, by Theorem \ref{trm:isomorphicDimension}, $\lin{V}{W}$ and $\F^{m,n}$ have the same dimension. Therefore, we have that
+            \begin{align*}
+                \dim\lin{V}{W} &= \dim\F^{m,n}\\
+                &= mn\\
+                &= (\dim V)(\dim W)
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Matrix} (of $v\in V$ with respect to the basis $v_1,\dots,v_n$ of $V$): The $n$-by-1 matrix $\mat{v}$ whose entries $A_{j,1}$ are defined by
+    \begin{equation*}
+        v = A_{1,1}v_1+\cdots+A_{n,1}v_n
+    \end{equation*}
+    \item We now show that the columns of the matrix of $T$ are directly related to the effect $T$ has on basis vectors.
+    \begin{theorem}\label{trm:columnBasis}
+        Suppose $T\in\lin{V}{W}$, $v_1,\dots,v_n$ is a basis of $V$, and $w_1,\dots,w_m$ is a basis of $W$. Let $1\leq k\leq n$. Then
+        \begin{equation*}
+            \mat{T}_{\cdot,k} = \mat{Tv_k}
+        \end{equation*}
+        \begin{proof}
+            As an element of $W$, $Tv_k=c_1w_1+\cdots+c_mw_m$ for some $c_1,\dots,c_m\in\F$. By the definition of the matrix of $T$, the values in column $k$ are $c_1,\dots,c_m$. Similarly, by the definition of the matrix of $Tv_k$, the values in its one column are $c_1,\dots,c_m$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Linear maps act like matrix multiplication.
+    \begin{theorem}
+        Suppose $T\in\lin{V}{W}$, $v\in V$, $v_1,\dots,v_n$ is a basis of $V$, and $w_1,\dots,w_m$ is a basis of $W$. Then
+        \begin{equation*}
+            \mat{Tv} = \mat{T}\mat{v}
+        \end{equation*}
+        \begin{proof}
+            Let $v=c_1v_1+\cdots+c_nv_n$. Then by the linearity of $T$, $Tv=c_1Tv_1+\cdots+c_nTv_n$. It follows by the linearity of $\mathcal{M}$, Theorem \ref{trm:columnBasis}, and the fact that a matrix times a vector is equal to a linear combination of columns that
+            \begin{align*}
+                \mat{Tv} &= c_1\mat{Tv_1}+\cdots+c_n\mat{Tv_n}\\
+                &= c_1\mat{T}_{\cdot,1}+\cdots+c_n\mat{T}_{\cdot,n}\\
+                &= \mat{T}\mat{v}
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \dq{Each $m$-by-$n$ matrix $A$ induces a linear map from $\F^{n,1}$ to $\F^{m,1}$, namely the matrix multiplication function that takes $x\in\F^{n,1}$ to $Ax\in\F^{m,1}$}{85}
+    \item \textbf{Operator}: A linear map from a vector space to itself.
+    \item $\bm{\ope{V}}$: The set of all operators on $V$.
+    \begin{itemize}
+        \item Mathematically, $\ope{V}=\lin{V}{V}$.
+    \end{itemize}
+    \item On infinite-dimensional vector spaces, neither injectivity nor surjectivity, alone, implies invertibility.
+    \item However, only one does on finite-dimensional vector spaces.
+    \begin{theorem}
+        Suppose $V$ is finite-dimensional and $T\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is invertible;
+            \item $T$ is injective;
+            \item $T$ is surjective.
+        \end{enumerate}
+        \begin{proof}
+            First, suppose that $T$ is invertible. Then by Theorem \ref{trm:invertibleInjectiveSurjective}, $T$ is injective, as desired.\par
+            Second, suppose that $T$ is injective. Then by Theorem \ref{trm:nullSpaceInjective}, $\nul T=\{0\}$. It follows by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps} that
+            \begin{align*}
+                \dim\range T &= \dim V-\dim\nul T\\
+                &= \dim V
+            \end{align*}
+            Thus, since $\range T$ has the same dimension as $V$ and is a subspace of $V$ (by Theorem \ref{trm:rangeSpace}), $\range T=V$. Therefore, $T$ is surjective, as desired.\par
+            Third, suppose that $T$ is surjective. Then $\range T=V$. It follows that $\dim\range T=\dim V$. Thus, by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}, we have that
+            \begin{align*}
+                \dim\nul T &= \dim V-\dim\range T\\
+                &= 0
+            \end{align*}
+            Consequently, by Theorem \ref{trm:nullSpaceInjective}, $T$ is injective. Therefore, by Theorem \ref{trm:invertibleInjectiveSurjective}, $T$ is invertible, as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Products and Quotients of Vector Spaces}
+\begin{itemize}
+    \item \textbf{Product} (of $V_1,\dots,V_m$): The set
+    \begin{equation*}
+        V_1\times\cdots\times V_m = \{(v_1,\dots,v_m):v_1\in V_1,\dots,v_m\in V_m\}
+    \end{equation*}
+    \begin{itemize}
+        \item Addition on $V_1\times\cdots\times V_m$ is defined by
+        \begin{equation*}
+            (u_1,\dots,u_m)+(v_1,\dots,v_m) = (u_1+v_1,\dots,u_m+v_m)
+        \end{equation*}
+        \item Scalar multiplication on $V_1\times\cdots\times V_m$ is defined by
+        \begin{equation*}
+            \lambda(v_1,\dots,v_m) = (\lambda v_1,\dots,\lambda v_m)
+        \end{equation*}
+    \end{itemize}
+    \item The product of $n$ vector spaces over $\F$ is a vector space over $\F$, with addition and scalar multiplication defined as above.
+    \item We can, for example, identify $\R^2\times\R^3$ with $\R^5$ by constructing an isomorphism from every vector $((x_1,x_2),(x_3,x_4,x_5))\in\R^2\times\R^3$ to the vector $(x_1,x_2,x_3,x_4,x_5)\in\R^5$.
+    \item The dimension of the product of vector spaces is equal to the sum of the dimensions of the component vector spaces.
+    \begin{theorem}\label{trm:dimensionProduct}
+        Suppose $V_1,\dots,V_m$ are finite-dimensional vector spaces. Then $V_1\times\cdots\times V_m$ is finite-dimensional and
+        \begin{equation*}
+            \dim(V_1\times\cdots\times V_m) = \dim V_1+\cdots+\dim V_m
+        \end{equation*}
+        \begin{proof}
+            Choose a basis of each $V_j$. For each basis vector of each $V_j$, consider the element of $V_1\times\cdots\times V_m$ that equals the basis vector in the $j^\text{th}$ slot and 0 in the other slots. The list of all such vectors is linearly independent and spans $V_1\times\cdots\times V_m$. Thus, it is a basis of $V_1\times\cdots\times V_m$. The length of this basis is $\dim V_1+\cdots+\dim V_m$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now relate products and direct sums.
+    \begin{theorem}\label{trm:productDirectsumInjective}
+        Suppose that $U_1,\dots,U_m$ are subspaces of $V$. Define a linear map $\Gamma:U_1\times\cdots\times U_m\to U_1+\cdots+U_m$ by
+        \begin{equation*}
+            \Gamma(u_1,\dots,u_m) = u_1+\cdots+u_m
+        \end{equation*}
+        Then $U_1+\cdots+U_m$ is a direct sum if and only if $\Gamma$ is injective.
+        \begin{proof}
+            Suppose first that $\Gamma$ is injective. Then the only way to write 0 as a sum $u_1+\cdots+u_m$, where each $u_j\in U_j$, is by taking each $u_j=0$. It follows by the condition on direct sums that $U_1+\cdots+U_m$ is a direct sum. The proof is symmetric in the reverse direction.
+        \end{proof}
+    \end{theorem}
+    \begin{itemize}
+        \item Note that since $\Gamma$ is surjective by the definition of $U_1+\cdots+U_m$, the condition that $\Gamma$ is injective could be changed to the condition that $\Gamma$ is invertible.
+    \end{itemize}
+    \item We can now prove that the dimensions add up in a direct sum.
+    \begin{theorem}
+        Suppose $V$ is finite-dimensional and $U_1,\dots,U_m$ are subspaces of $V$. Then $U_1+\cdots+U_m$ is a direct sum if and only if
+        \begin{equation*}
+            \dim(U_1+\cdots+U_m) = \dim U_1+\cdots+\dim U_m
+        \end{equation*}
+        \begin{proof}
+            Suppose first that $U_1+\cdots+U_m$ is a direct sum. Then by Theorem \ref{trm:productDirectsumInjective}, there exists an invertible linear map $\Gamma$ from $U_1\times\cdots\times U_m$ to $U_1+\cdots+U_m$. Thus, by Theorem \ref{trm:isomorphicDimension}, $U_1\times\cdots\times U_m$ and $U_1+\cdots+U_m$ have the same dimension. Therefore,
+            \begin{align*}
+                \dim(U_1+\cdots+U_m) &= \dim(U_1\times\cdots\times U_m)\\
+                &= \dim U_1+\cdots+\dim U_m\tag*{Theorem \ref{trm:dimensionProduct}}
+            \end{align*}
+            as desired.\par
+            The proof is symmetric in the other direction.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Sum} (of $v\in V$ and $U$ a subspace of $V$): The subset of $V$ defined by
+    \begin{equation*}
+        v+U = \{v+u:u\in U\}
+    \end{equation*}
+    \item \textbf{Affine subset} (of $V$): A subset of $V$ of the form $v+U$ for some $v\in V$ and some subspace $U$ of $V$.
+    \item \textbf{Parallel} (subset to $U$): An affine subset $v+U$ of $V$.
+    \item \textbf{Quotient space}: The set of all affine subsets of $V$ parallel to $U$.
+    \begin{itemize}
+        \item Symbolically,
+        \begin{equation*}
+            V/U = \{v+U:v\in V\}
+        \end{equation*}
+    \end{itemize}
+    \item Two affine subsets parallel to $U$ are equal or disjoint.
+    \begin{theorem}\label{trm:affineEquivalenceProperties}
+        Suppose $U$ is a subspace of $V$ and $v,w\in V$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $v-w\in U$;
+            \item $v+U=w+U$;
+            \item $(v+U)\cap(w+U)\neq\emptyset$.
+        \end{enumerate}
+        \begin{proof}
+            First, suppose that $v-w\in U$.  Let $x\in v+U$ be arbitrary. Then $x=v+u$ for some $u\in U$. Now since $v-w\in U$, $u\in U$, and $U$ is a subspace, we have that $v-w+u\in U$. Thus, $x=w-w+v+u=w+(v-w+u)\in w+U$. The proof is symmetric in the other direction. Therefore, $v+U=w+U$, as desired.\par
+            Second, suppose that $v+U=w+U$. Since $U$ is nonempty ($0\in U$ by definition), we know that $v+U\neq\emptyset\neq w+U$. Therefore, $(v+U)\cap(w+U)\supset\{0\}\neq\emptyset$, as desired.\par
+            Third, suppose that $(v+U)\cap(w+U)\neq\emptyset$. Then there exists $x$ such that $x\in v+U$ and $x\in w+U$. It follows that $x=v+u_1$ and $x=w+u_2$ for some $u_1,u_2\in U$. Thus, by transitivity, $v+u_1=w+u_2$. Therefore, $v-w=u_2-u_1\in U$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Sum} (of $v+U,w+U\in V/U$): The affine subset $(v+w)+U$.
+    \item \textbf{Product} (of $v+U\in V/U$ and $\lambda\in\F$): The affine subset $(\lambda v)+U$.
+    \item We now verify that the above operations are well-defined and prove that the quotient space is a vector space.
+    \begin{theorem}
+        Suppose $U$ is a subspace of $V$. Then $V/U$, with the operations of addition and scalar multiplication as defined above, is a vector space.
+        \begin{proof}
+            The way affine subsets are defined, we may have $v+U=\hat{v}+U$ and yet have $v\neq\hat{v}$. Thus, we must first guarantee that the operations of addition and scalar multiplication, as defined above, are well-defined, i.e., that if $v+U=\hat{v}+U$ and $w+U=\hat{w}+U$, then $(v+w)+U=(\hat{v}+\hat{w})+U$ and $(\lambda v)+U=(\lambda\hat{v})+U$. Let's begin.\par
+            To confirm that addition as defined above is a well-defined operation, let $v,\hat{v},w,\hat{w}\in V$ be such that $v+U=\hat{v}+U$ and $w+U=\hat{w}+U$. Then by Theorem \ref{trm:affineEquivalenceProperties}, $v-\hat{v}\in U$ and $w-\hat{w}\in U$. It follows since $U$ is a subspace that $(v-\hat{v})+(w-\hat{w})\in U$. Consequently, $(v+w)-(\hat{v}+\hat{w})\in U$, so by Theorem \ref{trm:affineEquivalenceProperties} again, $(v+w)+U=(\hat{v}+\hat{w})+U$, as desired.\par
+            Similarly, $v+U=\hat{v}+U$ implies $v-\hat{v}\in U$, implies $\lambda(v-\hat{v})=\lambda v-\lambda\hat{v}\in U$, implies $(\lambda v)+U=(\lambda\hat{v})+U$, as desired.\par\smallskip
+            The remaining proof that $V/U$ is a vector space is straightforward; note that $0+U$ is the identity element and $(-v)+U$ is the additive inverse.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Quotient map}: The linear map $\pi:V\to V/U$ defined by $\pi(v)=v+U$ for all $v\in V$.
+    \item We now give a formula for the dimension of a quotient space.
+    \begin{theorem}
+        Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$. Then
+        \begin{equation*}
+            \dim V/U = \dim V-\dim U
+        \end{equation*}
+        \begin{proof}
+            Let $\pi$ be the quotient map from $V$ to $V/U$. From Theorem \ref{trm:affineEquivalenceProperties}, we know that in order for $w+U=0+U$, we must have $v-0=v\in U$. Thus, $\pi(u)=0$ if and only if $u\in U$, meaning $\nul\pi=U$. Additionally, we clearly have that $\range\pi=V/U$. Therefore, by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}, we have that
+            \begin{align*}
+                \dim V &= \dim\nul\pi+\dim\range\pi\\
+                &= \dim U+\dim V/U\\
+                \dim V/U &= \dim V-\dim U
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item Lastly, consider the fact that we can add any vector in the null space of a linear map $T$ to an argument passed to $T$ without changing its output. In other words, if $T\in\lin{V}{W}$, $v\in V$, and $u\in\nul T$, then $T(v+u)=Tv+Tu=Tv$. We formalize this concept with the following definition.
+    \item $\bm{\tilde{T}}$: The function from $V/(\nul T)$ to $W$ defined by $\tilde{T}(v+\nul T)=Tv$, where $T\in\lin{V}{W}$.
+    \item We now state a few basic results about $\tilde{T}$.
+    \begin{theorem}
+        Suppose $T\in\lin{V}{W}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $\tilde{T}$ is a linear map from $V/(\nul T)$ to $W$;
+            \item $\tilde{T}$ is injective;
+            \item $\range\tilde{T}=\range T$;
+            \item $V/(\nul T)$ is isomorphic to $\range T$.
+        \end{enumerate}
+    \end{theorem}
 \end{itemize}
 
 
