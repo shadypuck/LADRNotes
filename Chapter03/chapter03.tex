@@ -433,7 +433,7 @@
         \end{proof}
     \end{theorem}
     \item We can now determine the dimension of the vector space of linear maps from one finite-dimensional vector space to another.
-    \begin{theorem}
+    \begin{theorem}\label{trm:dimLVW}
         Suppose $V$ and $W$ are finite-dimensional. Then $\lin{V}{W}$ is finite-dimensional and
         \begin{equation*}
             \dim\lin{V}{W} = (\dim V)(\dim W)
@@ -638,6 +638,222 @@
             \item $\range\tilde{T}=\range T$;
             \item $V/(\nul T)$ is isomorphic to $\range T$.
         \end{enumerate}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Duality}
+\begin{itemize}
+    \item \marginnote{9/7:}\textbf{Linear functional} (on $v$): A linear map from $V$ to $\F$.
+    \begin{itemize}
+        \item In other words, a linear functional is an element of $\lin{V}{\F}$.
+    \end{itemize}
+    \item \textbf{Dual space} (of $V$): The vector space of all linear functionals on $V$. \emph{Denoted by} $\bm{V'}$. \emph{Also known as} $\bm{V^*}$. \emph{Given by}
+    \begin{equation*}
+        V' = \lin{V}{\F}
+    \end{equation*}
+    \item We now give a definition of the dimension of the dual space.
+    \begin{theorem}\label{trm:dimDualSpace}
+        Suppose $V$ is finite-dimensional. Then $V'$ is also finite-dimensional and
+        \begin{equation*}
+            \dim V' = \dim V
+        \end{equation*}
+        \begin{proof}
+            By Theorem \ref{trm:dimLVW}, we have that
+            \begin{align*}
+                \dim V' &= \dim\lin{V}{\F}\\
+                &= (\dim V)(\dim\F)\\
+                &= (\dim V)(1)\\
+                &= \dim V
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Dual basis} (of a basis $v_1,\dots,v_n$ of $V$): The list $\varphi_1,\dots,\varphi_n$ of elements of $V'$, where each $\varphi_j$ is the linear functional on $V$ such that
+    \begin{equation*}
+        \varphi_j(v_k) =
+        \begin{cases}
+            1 & k=j\\
+            0 & k\neq j
+        \end{cases}
+    \end{equation*}
+    where $v_1,\dots,v_n$ is a basis of $V$.
+    \item We now verify that the dual basis of a basis of $V$ is actually a basis of the dual space.
+    \begin{theorem}
+        Suppose $V$ is finite-dimensional. Then the dual basis of a basis of $V$ is a basis of $V'$.
+        \begin{proof}
+            Let $v_1,\dots,v_n$ be a basis of $V$, and let $\varphi_1,\dots,\varphi_n$ be the corresponding dual basis. Since the dual basis has length equal to the dimension of $V'$ (by Theorem \ref{trm:dimDualSpace}), Theorem \ref{trm:sameDimIndependent} tells us that it will suffice to show that $\varphi_1,\dots,\varphi_n$ is linearly independent to confirm that it is a basis of $V'$. To do so, suppose
+            \begin{equation*}
+                a_1\varphi_1+\cdots+a_n\varphi_n = 0
+            \end{equation*}
+            where $a_1,\dots,a_n\in\F$ and 0 denotes the zero transformation. Since $(a_1\varphi_1+\cdots+a_n\varphi_n)(v_j)=a_j$ for $j=1,\dots,n$, we have that for any vector $c_1v_1+\cdots+c_nv_n\in V$,
+            \begin{equation*}
+                (a_1\varphi_1+\cdots+a_n\varphi_n)(c_1v_1+\cdots+c_nv_n) = c_1a_1+\cdots+c_na_n
+            \end{equation*}
+            Therefore, the only way to guarantee that $c_1a_1+\cdots+c_na_n=0$ is to let $a_1=\cdots=a_n=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Dual map} (of $T\in\lin{V}{W}$): The linear map $T'\in\lin{W'}{V'}$ defined by
+    \begin{equation*}
+        T'(\varphi) = \varphi\circ T
+    \end{equation*}
+    for all $\varphi\in W'$. \emph{Also known as} $\bm{T^*}$.
+    \item We now prove some algebraic properties of dual maps.
+    \begin{theorem}\leavevmode
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $(S+T)'=S'+T'$ for all $S,T\in\lin{V}{W}$.
+            \begin{proof}
+                Let $S,T\in\lin{V}{W}$ be arbitrary. To prove that $(S+T)'=S'+T'$, it will suffice to show that $(S+T)'(\varphi)=(S'+T')(\varphi)$ for all $\varphi\in W'$. Let $\varphi\in W'$ be arbitrary. However, before we go into the main equality, it will be useful if we verify that $\varphi\circ(S+T)=\varphi\circ S+\varphi\circ T$. To do so, it will suffice to show that $(\varphi\circ(S+T))(v)=(\varphi\circ S+\varphi\circ T)(v)$ for all $v\in V$. Let $v\in V$ be arbitrary. Then
+                \begin{align*}
+                    (\varphi\circ(S+T))(v) &= \varphi((S+T)(v))\\
+                    &= \varphi(S(v)+T(v))\\
+                    &= \varphi(S(v))+\varphi(T(v))\\
+                    &= (\varphi\circ S)(v)+(\varphi\circ T)(v)\\
+                    &= (\varphi\circ S+\varphi\circ T)(v)
+                \end{align*}
+                Now we can show that
+                \begin{align*}
+                    (S+T)'(\varphi) &= \varphi\circ(S+T)\\
+                    &= \varphi\circ S+\varphi\circ T\\
+                    &= S'(\varphi)+T'(\varphi)\\
+                    &= (S'+T')(\varphi)
+                \end{align*}
+                as desired.
+            \end{proof}
+            \item $(\lambda T)'=\lambda T'$ for all $\lambda\in\F$ and all $T\in\lin{V}{W}$.
+            \begin{proof}
+                The proof is symmetric to the proof of part (a).
+            \end{proof}
+            \item $(ST)'=T'S'$ for all $T\in\lin{U}{V}$ and $S\in\lin{V}{W}$.
+            \begin{proof}
+                Let $\varphi\in W'$ be arbitrary. Then
+                \begin{equation*}
+                    (ST)'(\varphi) = \varphi\circ(ST)
+                    = (\varphi\circ S)\circ T
+                    = T'(\varphi\circ S)
+                    = T'(S'(\varphi))
+                    = (T'S')(\varphi)
+                \end{equation*}
+                as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item \textbf{Annihilator} (of $U\subset V$): The set
+    \begin{equation*}
+        U^0 = \{\varphi\in V':\varphi(u)=0\ \forall\ u\in U\}
+    \end{equation*}
+    \item The annihilator is a subspace.
+    \begin{theorem}
+        Suppose $U\subset V$. Then $U^0$ is a subspace of $V'$
+        \begin{proof}
+            To prove that $U^0$ is a subspace of $V'$, it will suffice to show that $0\in U^0$, $\varphi,\psi\in U^0$ implies $\varphi+\psi\in U^0$, and $\varphi\in U^0$ and $\lambda\in\F$ imply $\lambda\varphi\in U^0$. Let's begin.\par
+            Since $0(u)=0$ for all $u\in U$, $0\in U^0$.\par
+            Let $\varphi,\psi\in U^0$ be arbitrary. Let $u\in U$ be arbitrary. Then $(\varphi+\psi)(u)=\varphi(u)+\psi(u)=0+0=0$, as desired.\par
+            The proof is symmetric for scalar multiplication.
+        \end{proof}
+    \end{theorem}
+    \item Dimension of the annihilator.
+    \begin{theorem}\label{trm:dimAnnihilator}
+        Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$. Then
+        \begin{equation*}
+            \dim U+\dim U^0 = \dim V
+        \end{equation*}
+        \begin{proof}
+            Let $i\in\lin{U}{V}$ be the identity map $i(u)=u$ for all $u\in U$. Then $i':V'\to U'$ is a linear map. It follows by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps} that
+            \begin{equation*}
+                \dim\range i'+\dim\nul i' = \dim V'
+            \end{equation*}
+            Since $i'(\varphi)=\varphi\circ i=\varphi$ for all $\varphi\in V'$, and $U^0=\{\varphi\in V':\varphi=0\}$, we have that $i'(\varphi)=0$ for all $\varphi\in U^0$. Thus, $U^0=\nul i'$. Additionally, we have that $\dim V=\dim V'$ by Theorem \ref{trm:dimDualSpace}. Lastly, let $\psi\in U'$ be arbitrary. Define $\psi\in V'$ by
+            \begin{equation*}
+                \psi(v) =
+                \begin{cases}
+                    \varphi(v) & v\in U\\
+                    0 & v\notin U
+                \end{cases}
+            \end{equation*}
+            Thus, $i'(\psi)=\psi\circ i=\varphi$. It follows that $\varphi\in\range i'$. Consequently, $\range i'=U'$, so $\dim U=\dim U'=\dim\range i'$ by Theorem \ref{trm:dimDualSpace}. Therefore, we have from the first equation and the three substitutions that
+            \begin{equation*}
+                \dim U+\dim U^0 = \dim V
+            \end{equation*}
+            as desired.\footnote{Note that we may also prove this by constructing a basis of $U$ extending it to a basis of $V$, and showing that the extended portion of the dual basis is a basis of $U^0$.}
+        \end{proof}
+    \end{theorem}
+    \item We now describe the null space of $T'$.
+    \begin{theorem}\label{trm:nullDualMap}
+        Suppose $V$ and $W$ are finite-dimensional and $T\in\lin{V}{W}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:nullDualMapa}$\nul T'=(\range T)^0$.
+            \begin{proof}
+                First, let $\varphi\in\nul T'$ be arbitrary. Then $T'(\varphi)=\varphi\circ T=0$. It follows that $0=(\varphi\circ T)(v)=\varphi(Tv)$ for all $v\in V$. But this means that $\varphi$ is a linear functional that maps every element of $\range T$ to 0, i.e., that $\varphi\in(\range T)^0$. The proof is symmetric in the other direction.
+            \end{proof}
+            \item \label{trm:nullDualMapb}$\dim\nul T'=\dim\nul T+\dim W-\dim V$.
+            \begin{proof}
+                We have that
+                \begin{align*}
+                    \dim\nul T' &= \dim(\range T)^0\tag*{Theorem \ref{trm:nullDualMapa}}\\
+                    &= \dim W-\dim\range T\tag*{Theorem \ref{trm:dimAnnihilator}}\\
+                    &= \dim W-(\dim V-\dim\nul T)\tag*{\hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}}\\
+                    &= \dim\nul T+\dim W-\dim V
+                \end{align*}
+                as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \begin{itemize}
+        \item Note that the proof of part (a) does not use the hypothesis that $V,W$ are finite-dimensional, so the argument holds for infinite-dimensional vector spaces as well.
+    \end{itemize}
+    \item $T$ surjective is equivalent to $T'$ injective.
+    \begin{theorem}
+        Suppose $V$ and $W$ are finite-dimensional and $T\in\lin{V}{W}$. Then $T$ is surjective if and only if $T'$ is injective.
+        \begin{proof}
+            Suppose first that $T$ is surjective. Then $\range T=W$. It follows by Theorem \ref{trm:dimAnnihilator} that
+            \begin{equation*}
+                \dim(\range T)^0 = \dim W-\dim\range T = 0
+            \end{equation*}
+            meaning that $(\range T)^0=\{0\}$. Thus, by Theorem \ref{trm:nullDualMapa}, $\nul T'=\{0\}$. Therefore, by Theorem \ref{trm:nullSpaceInjective}, $T'$ is injective, as desired.\par
+            The proof is symmetric in the other direction.
+        \end{proof}
+    \end{theorem}
+    \item We now describe the range space of $T'$.
+    \begin{theorem}\label{trm:rangeDualMap}
+        Suppose $V$ and $W$ are finite-dimensional and $T\in\lin{V}{W}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:rangeDualMapa}$\dim\range T'=\dim\range T$.
+            \begin{proof}
+                We have that
+                \begin{align*}
+                    \dim\range T' &= \dim W'-\dim\nul T'\tag*{\hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}}\\
+                    &= \dim W-\dim\nul T'\tag*{Theorem \ref{trm:dimDualSpace}}\\
+                    &= \dim W-\dim(\range T)^0\tag*{Theorem \ref{trm:nullDualMapa}}\\
+                    &= \dim\range T\tag*{Theorem \ref{trm:dimAnnihilator}}
+                \end{align*}
+                as desired.
+            \end{proof}
+            \item \label{trm:rangeDualMapb}$\range T'=(\nul T)^0$.
+            \begin{proof}
+                First, let $\varphi\in\range T'$ be arbitrary. Then there exists $\psi\in W'$ such that $\varphi=T'(\psi)$. Now let $v\in\nul T$ be arbitrary. It follows that
+                \begin{equation*}
+                    \varphi(v) = (T'(\psi))(v) = (\psi\circ T)(v) = \psi(Tv) = \psi(0) = 0
+                \end{equation*}
+                Therefore, $\varphi\in(\nul T)^0$, as desired.\par
+                Second, we have that
+                \begin{align*}
+                    \dim\range T' &= \dim\range T\tag*{Theorem \ref{trm:rangeDualMapa}}\\
+                    &= \dim V-\dim\nul T\tag*{\hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}}\\
+                    &= \dim(\nul T)^0\tag*{Theorem \ref{trm:dimAnnihilator}}
+                \end{align*}\par
+                Therefore, since Theorem \ref{trm:rangeSpace} implies that $\range T'$ is a subspace of $(\nul T)^0$ and $\dim\range T'=\dim(\nul T)^0$, Exercise \ref{exr:subspaceSameDim} asserts that $\range T'=(\nul T)^0$, as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item $T$ injective is equivalent to $T'$ surjective.
+    \begin{theorem}
+        Suppose $V$ and $W$ are finite-dimensional and $T\in\lin{V}{W}$. Then $T$ is injective if and only if $T'$ is surjective.
+        \begin{proof}
+            Suppose first that $T$ is injective. Then by Theorem \ref{trm:nullSpaceInjective}, $\nul T=\{0\}$. Thus, since Theorem \ref{trm:linSendsZero} asserts that $\varphi(0)=0$ for any linear functional, we have that every linear functional is in the annihilator of $\nul T$, i.e., that $(\nul T)^0=V'$. It follows by Theorem \ref{trm:rangeDualMapb} that $\range T'=V'$. Therefore, $T'$ is surjective, as desired.\par
+            The proof is symmetric in the other direction.
+        \end{proof}
     \end{theorem}
 \end{itemize}
 

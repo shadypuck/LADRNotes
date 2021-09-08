@@ -170,7 +170,7 @@
         \end{proof}
     \end{theorem}
     \item Finding orthogonal complements.
-    \begin{theorem}
+    \begin{theorem}\label{trm:orthogonalComplement}
         Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$. Then there is a subspace $W$ of $V$ such that $V=U\oplus W$.
         \begin{proof}
             Since $V$ is finite-dimensional, Theorem \ref{trm:finiteDimensionalSubspaces} asserts that $U$ is finite-dimensional. Thus, by Theorem \ref{trm:finiteBasis}, $U$ has a basis $u_1,\dots,u_m$. It follows by Theorem \ref{trm:lnlIndependentExtendBasis} that there exist $w_1,\dots,w_n\in V$ such that $u_1,\dots,u_m,w_1,\dots,w_n$ is a basis of $V$. Let $W=\spn(w_1,\dots,w_n)$.\par
@@ -231,7 +231,7 @@
         \end{proof}
     \end{theorem}
     \item Lastly, we tackle the dimension of a sum of subspaces, which bears a resemblance to the principle of inclusion-exclusion.
-    \begin{theorem}
+    \begin{theorem}\label{trm:dimSumSubspaces}
         If $U_1$ and $U_2$ are subspaces of a finite-dimensional vector space, then
         \begin{equation*}
             \dim(U_1+U_2) = \dim U_1+\dim U_2-\dim(U_1\cap U_2)
@@ -265,6 +265,26 @@
         \end{proof}
     \end{theorem}
 \end{itemize}
+
+
+\subsection*{Exercises}
+\begin{enumerate}[label={\textbf{\arabic*}},labelsep=1em,ref={\thesection.\arabic*}]
+    \item \label{exr:subspaceSameDim}Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$ such that $\dim U=\dim V$. Prove that $U=V$.
+    \begin{proof}
+        Since $V$ is finite dimensional and $U$ is a subspace of $V$, we have by Theorem \ref{trm:orthogonalComplement} that there is a subspace $W$ of $V$ such that $V=U\oplus W$. It follows by Theorem \ref{trm:dimSumSubspaces} that
+        \begin{equation*}
+            \dim W = \dim V-\dim U+\dim\{0\} = 0
+        \end{equation*}
+        Thus, $W=\{0\}$. Therefore,
+        \begin{align*}
+            V &= U\oplus W\\
+            &= \{u+w:u\in U,w\in W\}\\
+            &= \{u+0:u\in U\}\\
+            &= U
+        \end{align*}
+        as desired.
+    \end{proof}
+\end{enumerate}
 
 
 
