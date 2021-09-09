@@ -1,0 +1,103 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{4}
+
+\begin{document}
+
+
+
+
+\chapter{Eigenvalues, Eigenvectors, and Invariant Subspaces}
+\section{Invariant Subspaces}
+\begin{itemize}
+    \item \marginnote{9/8:}Let $T\in\ope{V}$, and let $V$ be decomposable into a direct sum of proper subspaces as follows.
+    \begin{equation*}
+        V = U_1\oplus\cdots\oplus U_m
+    \end{equation*}
+    \begin{itemize}
+        \item To understand $T$, we need only understand each each \textbf{restriction} of $T$ to a $U_j$.
+        \item Since $T|_{U_j}$ may not map $U_j$ onto itself in every case, to use operator-based tools, we need to consider only direct sum decompositions into subspaces that $T$ maps onto themselves, or \textbf{invariant subspace}.
+    \end{itemize}
+    \item \textbf{Invariant subspace} (of $V$ under $T$): A subspace $U$ of $V$ such that $u\in U$ implies $Tu\in U$, where $T\in\ope{V}$.
+    \begin{itemize}
+        \item In other words, $U$ is invariant under $T$ iff $T|_U\in\ope{U}$.
+    \end{itemize}
+    \item Some invariant subspaces under $T\in\ope{V}$: $\{0\}$, $V$, $\text{null }T$, and $\text{range }T$.
+    \item \textbf{Invariant subspace problem}: The most famous unsolved problem in functional analysis, dealing with invariant subspaces of operators on infinite-dimensional vector spaces.
+    \item To begin our study of invariant subspaces, we consider the simplest possible type of invariant subspace: those with dimension 1.
+    \item Every 1-dimensional subspace of $V$ is of the form $\spn(v)$ for some $v\in V$.
+    \begin{itemize}
+        \item If $\spn(v)$ is invariant under $T\in\ope{V}$, then $Tv\in\spn(v)$.
+        \item If $Tv\in\spn(v)$, then there exists $\lambda\in\F$ such that $Tv=\lambda v$.
+    \end{itemize}
+    \item \textbf{Eigenvalue} (of $T$): A number $\lambda\in\F$ such that there exists a nonzero vector $v\in V$ satisfying the equation $Tv=\lambda v$. \emph{Also known as} \textbf{characteristic value}.
+    \item \dq{$T$ has a 1-dimensional invariant subspace if and only if $T$ has an eigenvalue}{134}
+    \item We now give some conditions $\lambda$ can satisfy to be deemed an eigenvalue.
+    \begin{theorem}\label{trm:eigenConditions}
+        Suppose $V$ is finite-dimensional, $T\in\ope{V}$, $I\in\ope{V}$ is the identity operator on $V$, and $\lambda\in\F$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $\lambda$ is an eigenvalue of $T$.
+            \item $T-\lambda I$ is not injective.
+            \item $T-\lambda I$ is not surjective.
+            \item $T-\lambda I$ is not invertible.
+        \end{enumerate}
+        \begin{proof}
+            Suppose first that $\lambda$ is an eigenvalue of $T$. Then
+            \begin{align*}
+                Tv &= \lambda v\\
+                Tv &= \lambda Iv\\
+                Tv-\lambda Iv &= 0\\
+                (T-\lambda I)v &= 0
+            \end{align*}
+            for some $v\in V$ such that $v\neq 0$. It follows that $v\in\nul(T-\lambda I)$, so by Theorem \ref{trm:nullSpaceInjective}, $T-\lambda I$ is not injective, as desired. The proof is symmetric in the other direction. Therefore, conditions (a) and (b) are equivalent.\par
+            To prove that (a), (b), (c), and (d) are equivalent at this point, it will suffice to show that (b), (c), and (d) are equivalent. But we have this by Theorem \ref{trm:invertibleInjectiveSurjective}, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Eigenvector} (of $T$): A nonzero vector $v\in V$ such that there exists a $\lambda\in\F$ satisfying the equation $Tv=\lambda v$.
+    \item Since $Tv=\lambda v$ iff $(T-\lambda I)v=0$, \dq{a vector $v\in V$ with $v\neq 0$ is an eigenvector of $T$ corresponding to $\lambda$ if and only if $v\in\text{null}(T-\lambda I)$}{135}
+    \item Eigenvectors corresponding to distinct eigenvalues are linearly independent.
+    \begin{theorem}\label{trm:lnlIndependentEigenvectors}
+        Let $T\in\ope{V}$. Suppose $\lambda_1,\dots,\lambda_m$ are distinct eigenvalues of $T$ and $v_1,\dots,v_m$ are corresponding eigenvectors. Then $v_1,\dots,v_m$ is linearly independent.
+        \begin{proof}
+            Suppose for the sake of contradiction that $v_1,\dots,v_m$ is linearly dependent. Then by the \hyperref[lem:linearDependenceLemma]{Linear Dependence Lemma}, we may let $k$ be the smallest positive integer such that $v_k\in\spn(v_1,\dots,v_{k-1})$. It follows that
+            \begin{equation*}
+                v_k = a_1v_1+\cdots+a_{k-1}v_{k-1}
+            \end{equation*}
+            for some $a_1,\dots,a_{k-1}\in\F$. Thus, applying $T$, we have that
+            \begin{align*}
+                Tv_k &= a_1Tv_1+\cdots+a_{k-1}Tv_{k-1}\\
+                \lambda_kv_k &= a_1\lambda_1v_1+\cdots+a_{k-1}\lambda_{k-1}v_{k-1}
+            \end{align*}
+            If we multiply the first equation by $\lambda_k$ and subtract the above equation from it, we get that
+            \begin{equation*}
+                0 = a_1(\lambda_k-\lambda_1)v_1+\cdots+a_{k-1}(\lambda_k-\lambda_{k-1})v_{k-1}
+            \end{equation*}
+            But since $k$ is the smallest positive integer $j$ such that $v_j\in\spn(v_1,\dots,v_{j-1})$, we know that $v_1,\dots,v_{k-1}$ are linearly independent. Thus, $a_1(\lambda_k-\lambda_1)=\cdots=a_{k-1}(\lambda_k-\lambda_{k-1})=0$. More specifically, since all eigenvalues are distinct (i.e., $\lambda_k-\lambda_j\neq 0$ for any $j=1,\dots,k-1$), we must have that $a_1=\cdots=a_{k-1}=0$. But this implies that
+            \begin{align*}
+                v_k &= a_1v_1+\cdots+a_{k-1}v_{k-1}\\
+                &= 0
+            \end{align*}
+            contradicting the fact that $v_k$, as an eigenvector, is nonzero.
+        \end{proof}
+    \end{theorem}
+    \item We now put a bound on the number of eigenvalues.
+    \begin{theorem}
+        Suppose $V$ is finite-dimensional. Then each operator on $V$ has at most $\dim V$ distinct eigenvalues.
+        \begin{proof}
+            Let $T\in\ope{V}$ have distinct eigenvalues $\lambda_1,\dots,\lambda_m$ and corresponding eigenvectors $v_1,\dots,v_m$. Then by Theorem \ref{trm:lnlIndependentEigenvectors}, $v_1,\dots,v_m$ is linearly independent. It follows by Theorem \ref{trm:linearIndependent-Spanning} that $m\leq\dim V$
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Restriction operator} (of $T:V\to W$ to $U\subset V$): The function $T|_U:U\to W$ defined by $T|_U(u)=Tu$ for all $u\in U$. \emph{Denoted by} $\bm{T|_U}$.
+    \begin{itemize}
+        \item The fact that $U$ is invariant under $T$ is what allows us to consider $T|_U$ to be in $\ope{U}$ as opposed to just $\ope{V}$.
+    \end{itemize}
+    \item \textbf{Quotient operator}: The operator $T/U\in\ope{V/U}$ defined by $(T/U)(v+U)=Tv+U$ for all $v\in V$.
+    \item \textcite{bib:Axler} verifies that the restriction operator and the quotient operator actually \emph{are} operators, in general, as defined.
+\end{itemize}
+
+
+
+
+\end{document}

@@ -8,6 +8,7 @@
 \usepackage{scrextend}
 \usepackage[bottom]{footmisc}
 \usepackage{tikz}
+\usepackage{float}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{physics}
 \usepackage{bm,scalerel}
@@ -44,10 +45,13 @@
 \DeclareMathOperator{\len}{len}
 \DeclareMathOperator{\nul}{null}
 \DeclareMathOperator{\range}{range}
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
 
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
 
+\newcommand{\N}{\mathbb{N}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\F}{\mathbb{F}}
@@ -55,6 +59,7 @@
 \newcommand{\lin}[2]{\mathcal{L}(#1,#2)}
 \newcommand{\ope}[1]{\mathcal{L}(#1)}
 \newcommand{\mat}[1]{\mathcal{M}(#1)}
+\newcommand{\pol}[2][]{\mathcal{P}_{#1}(#2)}
 
 \renewcommand{\qedsymbol}{$\blacksquare$}
 

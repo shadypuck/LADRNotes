@@ -1,0 +1,119 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{3}
+
+\begin{document}
+
+
+
+
+\chapter{Polynomials}
+\begin{itemize}
+    \item \marginnote{9/8:}\textbf{Real part} (of $a+bi\in\C$): The number $a$. \emph{Denoted by} $\bm{\re z}$.
+    \item \textbf{Imaginary part} (of $a+bi\in\C$): The number $b$. \emph{Denoted by} $\bm{\im z}$.
+    \item \textbf{Complex conjugate} (of $z\in\C$): The number $\re z-(\im z)i$. \emph{Denoted by} $\bm{\bar{z}}$.
+    \item \textbf{Absolute value} (of $z\in\C$): The number $\sqrt{(\re z)^2+(\im z)^2}$. \emph{Denoted by} $\bm{|z|}$.
+    \item $z=\bar{z}$ if and only if $z\in\R$.
+    \item Properties of complex numbers.
+    \begin{theorem}
+        Suppose $w,z\in\C$. Then
+        \begin{description}
+            \item[sum of $\bm{z}$ and $\bm{\bar{z}}$]\hfill\\ $z+\bar{z}=2\re z$.
+            \item[difference of $\bm{z}$ and $\bm{\bar{z}}$]\hfill\\ $z-\bar{z}=2(\im z)i$.
+            \item[product of $\bm{z}$ and $\bm{\bar{z}}$]\hfill\\ $z\bar{z}=|z|^2$.
+            \item[additivity and multiplicativity of the complex conjugate]\hfill\\ $\overline{w+z}=\bar{w}+\bar{z}$ and $\overline{wz}=\bar{w}\bar{z}$.
+            \item[conjugate of conjugate]\hfill\\ $\overline{\bar{z}}=z$.
+            \item[real and imaginary parts are bounded by $\bm{|z|}$]\hfill\\ $|\re z|\leq|z|$ and $|\im z|\leq|z|$.
+            \item[absolute value of the complex conjugate]\hfill\\ $|\bar{z}|=|z|$.
+            \item[multiplicativity of absolute value]\hfill\\ $|wz|=|w|\,|z|$.
+            \item[Triangle Inequality]\hfill\\ $|w+z|\leq|w|+|z|$.
+        \end{description}
+    \end{theorem}
+    \item If a polynomial is the zero function, then all coefficients are 0.
+    \begin{itemize}
+        \item It follows that the coefficients of a polynomial are uniquely determined.
+    \end{itemize}
+    \item \textbf{Division Algorithm} (for integers): If $p,s$ are nonnegative integers with $s\neq 0$, then there exist nonnegative integers $q,r$ such that $r<s$ and
+    \begin{equation*}
+        p = sq+r
+    \end{equation*}
+    \item Analogously,
+    \begin{theorem}[Division Algorithm for Polynomials]
+        Suppose that $p,s\in\pol{\F}$, with $s\neq 0$. Then there exist unique polynomials $q,r\in\pol{\F}$ such that
+        \begin{equation*}
+            p = sq+r
+        \end{equation*}
+        and $\deg r<\deg s$.
+        \begin{proof}
+            Let $n=\deg p$ and $m=\deg s$. We divide into two cases ($n<m$ and $n\geq m$). If $n<m$, then take $q=0$ and $r=p$.\par\smallskip
+            On the other hand, if $n\geq P$, then let $T:\pol[n-m]{\F}\times\pol[m-1]{\F}\to\pol[n](\F)$ be defined by
+            \begin{equation*}
+                T(q,r) = sq+r
+            \end{equation*}
+            We can easily confirm that $T$ is a linear map.\par
+            We now seek to prove that $\nul T=\{(0,0)\}$. Let $(q,r)\in\nul T$ be arbitrary. Then $sq+r=0$. It follows that all coefficients of the polynomial $sq+r$ are zero. Consequently, $q=0$ and $r=0$, as desired. Therefore, $\dim\nul T=0$. Additionally, Theorem \ref{trm:dimensionProduct} implies that
+            \begin{equation*}
+                \dim(\pol[n-m]{\F}\times\pol[m-1]{\F}) = (n-m+1)+(m-1+1) = n+1
+            \end{equation*}
+            It follows by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps} that
+            \begin{align*}
+                \dim\range T &= \dim(\pol[n-m]{\F}\times\pol[m-1]{\F})-\dim\nul T\\
+                &= n+1\\
+                &= \dim\pol[n]{\F}
+            \end{align*}
+            Thus, by Exercise \ref{exr:subspaceSameDim}, $\range T=\pol[n]{\F}$. Therefore, since $p\in\pol[n]{\F}$, we know that there exists $q\in\pol[n-m]{\F}$ and $r\in\pol[m-1]{\F}$ such that $p=T(q,r)=sq+r$.\par
+            Additionally, we know that $q,r$ are unique: If there exist $q',r'$ such that $T(q',r')=p$, then $T(q-q',r-r')=p-p=0$, implying since $\nul T=\{(0,0)\}$ that $q-q'=0$ and $r-r'=0$, i.e., that $q=q'$ and $r=r'$.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Zero} (of $p\in\pol{\F}$): A number $\lambda\in\F$ such that $p(\lambda)=0$. \emph{Also known as} \textbf{root}.
+    \item \textbf{Factor} (of $p\in\pol{\F}$): A polynomial $s\in\pol{\F}$ such that there exists a polynomial $q\in\pol{\F}$ satisfying $p=sq$.
+    \item We now relate zeroes and factors.
+    \begin{theorem}
+        Suppose $p\in\pol{\F}$ and $\lambda\in\F$. Then $p(\lambda)=0$ if and only if there is a polynomial $q\in\pol{\F}$ such that
+        \begin{equation*}
+            p(z) = (z-\lambda)q(z)
+        \end{equation*}
+        for every $z\in\F$.
+    \end{theorem}
+    \item Putting bounds on the number of zeroes a polynomial can have.
+    \begin{theorem}
+        Suppose $p\in\pol{\F}$ is a polynomial with degree $m\geq 0$. Then $p$ has at most $m$ distinct zeros in $\F$.
+    \end{theorem}
+    \item We cannot prove the following without complex analysis, but we will state it, regardless.
+    \begin{theorem}[Fundamental Theorem of Algebra]
+        Every nonconstant polynomial with complex coefficients has a zero.
+    \end{theorem}
+    \item The following proceeds immediately from the Fundamental Theorem of Algebra.
+    \begin{theorem}
+        If $p\in\pol{\C}$ is a nonconstant polynomial, then $p$ has a unique factorization (except for the order of the factors) of the form
+        \begin{equation*}
+            p(z) = c(z-\lambda_1)\cdots(z-\lambda_m)
+        \end{equation*}
+        where $c,\lambda_1,\dots,\lambda_m\in\C$.
+    \end{theorem}
+    \item We now explore some of the differences between $\R$ and $\C$.
+    \begin{theorem}
+        Suppose $p\in\pol{\C}$ is a polynomial with real coefficients. If $\lambda\in\C$ is a zero of $p$, then so is $\bar{\lambda}$.
+    \end{theorem}
+    \begin{theorem}
+        Suppose $b,c\in\R$. Then there is a polynomial factorization of the form
+        \begin{equation*}
+            x^2+bx+c = (x-\lambda_1)(x-\lambda_2)
+        \end{equation*}
+        with $\lambda_1,\lambda_2\in\R$ if and only if $b^2\geq 4c$.
+    \end{theorem}
+    \begin{theorem}
+        Suppose $p\in\pol{\R}$ is a nonconstant polynomial. Then $p$ has a unique factorization (except for the order of factors) of the form
+        \begin{equation*}
+            p(x) = c(x-\lambda_1)\cdots(x-\lambda_m)(x^2+b_1x+c_1)\cdots(x^2+b_Mx+c_M)
+        \end{equation*}
+        where $c,\lambda_1,\dots,\lambda_m,b_1,\dots,b_M,c_1,\dots,c_M\in\R$, with $b_j^2<4c_j$ for each $j$.
+    \end{theorem}
+\end{itemize}
+
+
+
+
+\end{document}
