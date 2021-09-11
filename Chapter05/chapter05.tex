@@ -99,5 +99,108 @@
 
 
 
+\section{Eigenvectors and Upper-Triangular Matrices}
+\begin{itemize}
+    \item \marginnote{9/10:}If an operator $T\in\ope{V}$, then $TT=T^2\in\ope{V}$.
+    \item $\bm{T^m}$: The operator $T^m\in\ope{V}$ defined by
+    \begin{equation*}
+        T^m = \underbrace{T\cdots T}_\text{$m$ times}
+    \end{equation*}
+    where $T\in\ope{V}$, $m\in\N$.
+    \item $\bm{T^0}$: The identity operator $I\in\ope{V}$, where $T\in\ope{V}$.
+    \item $\bm{T^{-m}}$: The operator $T^{-m}\in\ope{V}$ defined by
+    \begin{equation*}
+        T^{-m} = (T^{-1})^m
+    \end{equation*}
+    where $T\in\ope{V}$ is invertible with inverse $T^{-1}$, and $m\in\N$.
+    \item It follows from these definitions that
+    \begin{align*}
+        T^mT^n &= T^{m+n}&
+        (T^m)^n &= T^{mn}
+    \end{align*}
+    for any $m,n\in\Z$ if $T$ is invertible and for any $m,n\in\N$ if $T$ is not invertible.
+    \item $\bm{p(T)}$: The operator defined by
+    \begin{equation*}
+        p(T) = a_0I+a_1T+\cdots+a_mT^m
+    \end{equation*}
+    where $T\in\ope{V}$, and $p\in\pol{\F}$ is defined by $p(z) = a_0+a_1z+\cdots+a_mz^m$ for all $z\in\F$.
+    \item $f:\pol{\F}\to\ope{V}$ defined by $p\mapsto p(T)$ is linear.
+    \item \textbf{Product} (of $p,q\in\pol{\F}$): The polynomial $pq\in\pol{\F}$ defined by $(pq)(z)=p(z)q(z)$ for all $z\in\F$.
+    \item Multiplicative properties of $p(T)$.
+    \begin{theorem}\label{trm:polTMultiplicative}
+        Suppose $p,q\in\pol{\F}$ and $T\in\ope{V}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $(pq)(T)=p(T)q(T)$.
+            \begin{proof}
+                Suppose $p(z)=\sum_{j=0}^ma_jz^j$ and $q(z)=\sum_{k=0}^nb_kz^k$ for all $z\in\F$. Then
+                \begin{equation*}
+                    (pq)(z) = \sum_{j=0}^m\sum_{k=0}^na_jb_kz^{j+k}
+                \end{equation*}
+                so
+                \begin{align*}
+                    (pq)(T) &= \sum_{j=0}^m\sum_{k=0}^na_jb_kT^{j+k}\\
+                    &= \left( \sum_{j=0}^ma_jT^j \right)\left( \sum_{k=0}^nb_kT^k \right)\\
+                    &= p(T)q(T)
+                \end{align*}
+                as desired.
+            \end{proof}
+            \item $p(T)q(T)=q(T)p(T)$.
+            \begin{proof}
+                It follows from part (a) that $p(T)q(T)=(pq)(T)=(qp)(T)=q(T)p(T)$, as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item We now prove a central result concerning operators on complex vector spaces.
+    \begin{theorem}\label{trm:eigenExists}
+        Every operator on a finite-dimensional, nonzero, complex vector space has an eigenvalue.
+        \begin{proof}
+            Let $V$ be nonzero complex vector space of dimension $n$, let $T\in\ope{V}$, and let $v\in V$ be nonzero. Then since $\len(v,Tv,T^2v,\dots,T^nv)>\dim V$, Theorem \ref{trm:linearIndependent-Spanning} implies that $v,Tv,\dots,T^nv$ is not linearly independent. Thus, there exist $a_0,\dots,a_n\in\F$, not all 0, such that
+            \begin{equation*}
+                0 = a_0v+a_1Tv+\cdots+a_nT^nv
+            \end{equation*}
+            Additionally, we have that $a_1,\dots,a_n$ do not all equal zero (suppose they did; then $0=a_0v$, so $a_0=0$ because $v\neq 0$; this would imply that $a_0=\cdots=a_n=0$, a contradiction). Thus, if we consider the (nonconstant, by the previous result) polynomial with coefficients equal to the $a$'s, Theorem \ref{trm:polFactorization} implies that
+            \begin{equation*}
+                a_0+a_1z+\cdots+a_nz^n = c(z-\lambda_1)\cdots(z-\lambda_m)
+            \end{equation*}
+            for all $z\in\C$, where $c\in\C$ is nonzero and each $\lambda_j\in\C$\footnote{Note that $m\neq n$ necessarily, because $a_n$ may equal 0.}. It follows that
+            \begin{align*}
+                0 &= a_0v+a_1Tv+\cdots+a_nT^nv\\
+                &= (a_0I+a_1T+\cdots+a_nT^n)v\\
+                &= c(T-\lambda_1I)\cdots(T-\lambda_mI)v\tag*{Theorem \ref{trm:polTMultiplicative}}
+            \end{align*}
+            Each $T-\lambda_jI$ is a linear operator in its own right. As a linear map, we have by Theorem \ref{trm:linSendsZero} that $(T-\lambda_jI)0=0$ for all $j=1,\dots,m$. However, $v\neq 0$, meaning that there exists $1\leq k\leq m$ such that $T-\lambda_kI$ maps its nonzero argument, which we may call $v'$ and know to be the result of all of the operators to its right being applied successively to $v$ via function composition, to 0 as well; every operator to the left of $T-\lambda_kI$ will then map the result to 0, resulting in the final equivalence. Thus, $(T-\lambda_kI)v'=(T-\lambda_kI)0$ but $v'\neq 0$ for this operator, meaning that it is not injective. But if $T-\lambda_kI$ is not injective, Theorem \ref{trm:eigenConditions} implies that $\lambda_k$ is an eigenvalue of $T$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Matrix} (of $T\in\ope{V}$ with respect to the basis $v_1,\dots,v_n$ of $V$): The $n$-by-$n$ matrix $\mat{T}$ whose entries $A_{j,k}$ are defined by
+    \begin{equation*}
+        Tv_k = A_{1,k}v_1+\cdots+A_{n,k}v_n
+    \end{equation*}
+    \begin{itemize}
+        \item If the basis is not clear from context, then the notation $\mat{T,(v_1,\dots,v_n)}$ is used.
+    \end{itemize}
+    \item \dq{A central goal of linear algebra is to show that given an operator $T\in\ope{V}$, there exists a basis of $V$ with respect to which $T$ has a reasonably simple [sparse] matrix}{146}
+    \begin{itemize}
+        \item For example, given just Theorems \ref{trm:columnBasis} and \ref{trm:eigenExists}, we know that we can choose a basis of $V$ such that the first column of $\mat{T}$ for an arbitrary $T$ will have an eigenvalue $\lambda$ of $T$ in the first row and zeros everywhere else. Specifically, let $v_1$ be the eigenvector corresponding to $\lambda$ (guaranteed to exist by Theorem \ref{trm:eigenExists}). Then by Theorem \ref{trm:columnBasis},
+        \begin{align*}
+            \mat{T}_{\cdot,1} &= \mat{Tv_1}\\
+            &= \mat{\lambda v_1}\\
+            &= \lambda\mat{v_1}+0\mat{v_2}+\cdots+0\mat{v_n}
+        \end{align*}
+        where we extend $v_1$ into a basis $v_1,\dots,v_n$ of $V$.
+    \end{itemize}
+    \item \textbf{Diagonal} (of a square matrix): The entries along the line from the upper left corner to the bottom right corner.
+    \item \textbf{Upper-triangular matrix}: A matrix such that all the entries below the diagonal equal 0. \emph{Denoted by}
+    \begin{equation*}
+        \begin{pmatrix}
+            \lambda_1 &  & *\\
+             & \ddots & \\
+            0 &  & \lambda_n\\
+        \end{pmatrix}\footnotemark
+    \end{equation*}
+    \footnotetext{We often use $*$ to denote matrix entries that we do not know about or that are irrelevant to the questions being discussed.}
+\end{itemize}
+
+
+
 
 \end{document}
