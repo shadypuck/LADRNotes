@@ -198,6 +198,119 @@
         \end{pmatrix}\footnotemark
     \end{equation*}
     \footnotetext{We often use $*$ to denote matrix entries that we do not know about or that are irrelevant to the questions being discussed.}
+    \item \marginnote{9/22:}Conditions on $T$ that imply that $\mat{T}$ is upper triangular.
+    \begin{theorem}\label{trm:upperTriangularConditions}
+        Suppose $T\in\ope{V}$ and $v_1,\dots,v_n$ is a basis of $V$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item The matrix of $T$ with respect to $v_1,\dots,v_n$ is upper triangular.
+            \item $Tv_j\in\spn(v_1,\dots,v_j)$ for each $j=1,\dots,n$.
+            \item $\spn(v_1,\dots,v_j)$ is invariant under $T$ for each $j=1,\dots,n$.
+        \end{enumerate}
+        \begin{proof}
+            We will first prove that (a) implies (b); the proof in the reverse direction will be symmetric. We will then prove that (b) implies (c), and wrap up by quickly showing that (c) implies (b), and. Let's begin.\par
+            Suppose first that the matrix of $T$ with respect to $v_1,\dots,v_n$ is upper triangular. Let $j\in\{1,\dots,n\}$ be arbitrary. By the definition of $\mat{T}$, $Tv_j=A_{1,j}v_1+\cdots+A_{n,j}v_n$. Additionally, since $\mat{T}$ is upper triangular, we know that $A_{j+1,j}=\cdots=A_{n,j}=0$. Therefore, $Tv_j=A_{1,j}v_1+\cdots+A_{j,j}v_j\in\spn(v_1,\dots,v_j)$, as desired. The proof is symmetric in the other direction.\par
+            Now suppose that $Tv_j\in\spn(v_1,\dots,v_j)$ for each $j=1,\dots,n$. Fix $j\in\{1,\dots,n\}$. Let $v\in\spn(v_1,\dots,v_j)$. It follows since $Tv_i\in\spn(v_1,\dots,v_i)\subset\spn(v_1,\dots,v_j)$ for all $i=1,\dots,j$ by hypothesis that
+            \begin{align*}
+                Tv &= T(a_1v_1+\cdots+a_jv_j)\\
+                &= a_1Tv_1+\cdots+a_jTv_j\\
+                &\in \spn(v_1,\dots,v_j)
+            \end{align*}
+            as desired. On the other hand, suppose $\spn(v_1,\dots,v_j)$ is invariant under $T$ for each $j=1,\dots,n$. Fix $j\in\{1,\dots,n\}$. Then by the definition of invariance, $v_j\in\spn(v_1,\dots,v_j)$ implies that $Tv_j\in\spn(v_1,\dots,v_j)$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now prove that over $\C$ (notably not over $\R$), every operator has an upper-triangular matrix.
+    \begin{theorem}
+        Suppose $V$ is a finite-dimensional complex vector space and $T\in\ope{V}$. Then $T$ has an upper-triangular matrix with respect to some basis of $V$.\footnote{Note that \textcite{bib:Axler} gives two proofs, but only one (the shorter one using more advanced topics) is transcribed here.}
+        \begin{proof}
+            We induct on $n=\dim V$. For the base case $n=1$, the desired result holds since any one-dimensional matrix is upper-triangular by definition. Now suppose inductively that we have proven the result for $n-1$; we wish to prove it for $n$. By Theorem \ref{trm:eigenExists}, we may let $v_1$ be an eigenvector of $T$. Thus, if we let $U=\spn(v_1)$, we know that $U$ is an invariant subspace of $T$ with $\dim U=1$.\par
+            Now consider $V/U$. It follows from the above by Theroem \ref{trm:dimQuotientSpace} that $\dim V/U=n-1$. Consequently, we may apply the inductive hypothesis to learn that $T/U\in\ope{V/U}$ has an upper-triangular matrix with respect to some basis $v_2+U,\dots,v_n+U$ of $V/U$. It follows by \ref{trm:upperTriangularConditions} that
+            \begin{equation*}
+                (T/U)(v_j+U) \in \spn(v_2+U,\dots,v_j+U)
+            \end{equation*}
+            for each $j=2,\dots,n$. Thus, since $Tv_1=\lambda v_1\in\spn(v_1)$ and since the above implies that $Tv_j\in\spn(v_2,\dots,v_j)\subset\spn(v_1,\dots,v_j)$ for all $j=2,\dots,n$, we have that $Tv_j\in\spn(v_1,\dots,v_j)$ for all $j=1,\dots,n$. Therefore, by Theorem \ref{trm:upperTriangularConditions}, we have that the matrix of $T$ with respect to $v_1,\dots,v_n$ is upper triangular, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now prove an easy method for determining invertibility from an upper-triangular matrix.
+    \begin{theorem}\label{trm:upperTriangularInvertible}
+        Suppose $T\in\ope{V}$ has an upper-triangular matrix with respect to some basis of $V$. Then $T$ is invertible if and only if all the entries on the diagonal of that upper-triangular matrix are nonzero.
+        \begin{proof}
+            Let $v_1,\dots,v_n$ be the basis of $V$ with respect to which $\mat{T}$ is upper triangular, and let $\lambda_1,\dots,\lambda_n$ be the diagonal entries of said matrix.\par
+            Suppose first that $T$ is invertible, and suppose for the sake of contradiction that $\lambda_j=0$ for some $j=1,\dots,n$. Then by the definition of $\mat{T}$, we have that $T$ maps $\spn(v_1,\dots,v_j)$ into $\spn(v_1,\dots,v_{j-1})$. Thus, since $\dim\spn(v_1,\dots,v_j)=j$ and $\dim\spn(v_1,\dots,v_{j-1})=j-1$, Theorem \ref{trm:smallerNotInjective} implies that the restriction of $T$ to $\spn(v_1,\dots,v_j)$ is not injective. Consequently, by Theorem \ref{trm:nullSpaceInjective}, there exists a nonzero $v\in\spn(v_1,\dots,v_j)$ such that $Tv=0$. But this implies that the original $T$ is not injective, i.e., not invertible (by Theorem \ref{trm:invertibleInjectiveSurjective}), contradicting our supposition that $T$ is invertible, as desired.\par
+            Now suppose that $\lambda_j\neq 0$ for all $j=1,\dots,n$. To prove that $T$ is invertible, Theorem \ref{trm:invertInjSurjFiniteEquivalence} tells us that it will suffice to show that $T$ is surjective. To verify that $\range T=V$, we will demonstrate that $v_1,\dots,v_n\in\range T$, from which it will follow by Theorem \ref{trm:rangeSpace} that $\range T=V$. Let's begin. Since $\mat{T}$ is upper triangular, we have that
+            \begin{align*}
+                Tv_1 &= \lambda_1v_1+0v_2+\cdots+0v_n\\
+                v_1 &= T(v_1/\lambda_1) \in \range T
+            \end{align*}
+            Similarly, we have that
+            \begin{align*}
+                Tv_2 &= av_1+\lambda_2v_2+0v_3+\cdots+0v_n\\
+                v_2 &= T(v_2/\lambda_2)-\frac{a}{\lambda_2}v_1 \in \range T
+            \end{align*}
+            since $T(v_2/\lambda_2)$ clearly and linear combinations of $v_1$ are elements of $\range T$ by the previous result. We may analogously prove that $v_3,\dots,v_n\in\range T$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We cannot exactly compute the eigenvalues of a linear operator from its matrix, but we can approximate them with powerful numerical methods.
+    \item Lastly, we will show that we can use upper-triangular matrices to determine the eigenvalues of the linear operator it represents.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$ has an upper-triangular matrix with respect to some basis of $V$. Then the eigenvalues of $T$ are precisely the entries on the diagonal of that upper-triangular matrix.
+        \begin{proof}
+            Let $v_1,\dots,v_n$ be the basis of $V$ with respect to which $\mat{T}$ is upper triangular, and let $\lambda_1,\dots,\lambda_n$ be the diagonal entries of said matrix.\par
+            Let $\lambda\in\F$. Then $\mat{T-\lambda I}$ has diagonal entries $\lambda_1-\lambda,\dots,\lambda_n-\lambda$. Thus, by Theorem \ref{trm:upperTriangularInvertible}, $T-\lambda I$ is not invertible iff $\lambda=\lambda_j$ for some $j=1,\dots,n$. But by Theorem \ref{trm:eigenConditions}, it follows that $\lambda$ is an eigenvalue of $T$ iff $T-\lambda I$ is not invertible iff $\lambda=\lambda_j$ for some $j=1,\dots,n$, as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Eigenspaces and Diagonal Matrices}
+\begin{itemize}
+    \item \textbf{Diagonal matrix}: A square matrix that is 0 everywhere except possibly along the diagonal.
+    \begin{itemize}
+        \item Naturally, every diagonal matrix is upper triangular.
+    \end{itemize}
+    \item \textbf{Eigenspace} (of $T\in\ope{V}$ and $\lambda\in\F$): The set of all eigenvectors of $T$ corresponding to $\lambda$, along with the zero vector; in other words, the vector space $\nul(T-\lambda I)$. \emph{Denoted by} $\bm{E(\lambda,T)}$.
+    \item We now show that the sum of the eigenspaces is a direct sum.
+    \begin{theorem}\label{trm:directSumEigenspaces}
+        Suppose $V$ is finite-dimensional and $T\in\ope{V}$. Suppose also that $\lambda_1,\dots,\lambda_m$ are distinct eigenvalues of $T$. Then $E(\lambda_1,T)+\cdots+E(\lambda_m,T)$ is a direct sum. Furthermore, $\dim E(\lambda_1,T)+\cdots+\dim E(\lambda_m,T)\leq\dim V$.
+        \begin{proof}
+            To prove that $E(\lambda_1,T)+\cdots+E(\lambda_m,T)$ is a direct sum, suppose that $u_1+\cdots+u_m=0$, where $u_j\in E(\lambda_j,T)$ for all $j=1,\dots,m$. Naturally, each $u_j$ is an eigenvector corresponding to $\lambda_j$ or zero. But since Theorem \ref{trm:lnlIndependentEigenvectors} implies that $u_1,\dots,u_j$ is linearly independent if any $u_j$ is nonzero, we must have $u_1=\cdots=u_m=0$.\par
+            Additionally, we have that
+            \begin{align*}
+                \dim E(\lambda_1,T)+\cdots+\dim E(\lambda_m,T) &= \dim(E(\lambda_1,T)\oplus\cdots\oplus E(\lambda_m,T))\\
+                &\leq \dim V
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Diagonalizable} ($T\in\ope{V}$): An operator $T\in\ope{V}$ such that the operator has a diagonal matrix with respect to some basis of $V$.
+    \item We now give some conditions equivalent to diagonalizability.
+    \begin{theorem}\label{trm:diagonalizableConditions}
+        Suppose $V$ is finite-dimensional and $T\in\ope{V}$. Let $\lambda_1,\dots,\lambda_m$ denote the distinct eigenvalues of $T$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is diagonalizable.
+            \item $V$ has a basis consisting of eigenvectors of $T$.
+            \item There exist one-dimensional subspaces $U_1,\dots,U_n$ of $V$, each invariant under $T$, such that $V=U_1\oplus\cdots\oplus U_n$.
+            \item $V=E(\lambda_1,T)\oplus\cdots\oplus E(\lambda_m,T)$.
+            \item $\dim V=\dim E(\lambda_1,T)+\cdots+\dim E(\lambda_m,T)$.
+        \end{enumerate}
+        \begin{proof}
+            We will first briefly justify the equivalence of (a) and (b). We will then show that (b) implies (c) and vice versa. Lastly, we will show that (b) implies (d), (d) implies (e), and (e) implies (b). Let's begin.\par\smallskip
+            Suppose that $T$ is diagonalizable. Then there exists a basis $v_1,\dots,v_n$ of $V$ such that the matrix of $T$ with respect to this basis is diagonal. Let $\lambda_1,\dots,\lambda_n$ be the diagonal entries of this matrix. Then by the definition of $\mat{T}$, $Tv_j=\lambda_jv_j$ for all $j=1,\dots,n$. It follows that each $v_j$ in the basis $v_1,\dots,v_n$ of $V$ is an eigenvector of $T$, as desired. The proof is symmetric in the reverse direction.\par\smallskip
+            Suppose that $v_1,\dots,v_n$ is a basis of $V$ consisting of eigenvectors of $T$. Let $U_j=\spn(v_j)$ for each $j=1,\dots,n$. Then each $U_j$ is a one-dimensional subspace of $V$. Additionally, for any $av_j\in U_j$, we have that $T(av_j)=aTv_j=a\lambda_jv_j\in U_j$, proving that each $U_j$ is invariant under $T$. Finally, to show that $V=U_1\oplus\cdots\oplus U_n$, it will suffice to show that each $v\in V$ can be written uniquely as a sum $u_1+\cdots+u_n$, where $u_j\in U_j$ for each $j=1,\dots,n$. Let $v\in V$ be arbitrary. Since $v_1,\dots,v_n$ is a basis of $V$, Theorem \ref{trm:basisLinearCombination} $v$ can be written uniquely in the form $a_1v_1+\cdots+a_nv_n$. Let $u_j=a_jv_j$ for each $j=1,\dots,n$. Then $v$ can be written uniquely as a sum $u_1+\cdots+u_n$, where $u_j\in U_j$ for each $j=1,\dots,n$, as desired. The proof in the reverse direction is quite similar.\par\smallskip
+            Suppose that $v_1,\dots,v_n$ is a basis of $V$ consisting of eigenvectors of $T$. Thus, since each $v\in V$ is a linear combination of eigenvectors of $T$, $V=E(\lambda_1,T)+\cdots+E(\lambda_m,T)$. Therefore, Theorem \ref{trm:directSumEigenspaces} implies that $V=E(\lambda_1,T)\oplus\cdots\oplus E(\lambda_m,T)$, as desired.\par
+            Suppose $V=E(\lambda_1,T)\oplus\cdots\oplus E(\lambda_m,T)$. Then naturally $\dim V=\dim E(\lambda_1,T)+\cdots+\dim E(\lambda_m,T)$, as desired.\par
+            Suppose $\dim V=\dim E(\lambda_1,T)+\cdots+\dim E(\lambda_m,T)$. Choose a basis of each $E(\lambda_j,T)$. Concatenate all these bases to form a list $v_1,\dots,v_n$ of eigenvectors of $T$. We now wish to show that $v_1,\dots,v_n$ is a basis of $V$. To do so, already knowing that $n=\dim V$ by hypothesis, Theorem \ref{trm:sameDimIndependent} tells us that we need only additionally show that $v_1,\dots,v_n$ is linearly independent. Let $a_1,\dots,a_n\in\F$ be such that $a_1v_1+\cdots+a_nv_n=0$. For each $j=1,\dots,m$, let $u_j$ denote the sum of all the terms $a_kv_k$ such that $v_k\in E(\lambda_j,T)$. Thus, each $u_j\in E(\lambda_j,T)$ and $u_1+\cdots+u_m=0$. But since $u_1,\dots,u_m$ are eigenvectors of $T$ corresponding to distinct eigenvalues, Theorem \ref{trm:lnlIndependentEigenvectors} implies that $u_1,\dots,u_m$ are linearly independent. This combined with the previous result implies that $u_j=0$ for each $j=1,\dots,m$. It follows since each (zero) $u_j$ is a linear combination of a basis of an eigenspace, each $a_j=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Note that not every operator is diagonalizable.
+    \item We now prove that if an operator has sufficiently many eigenvalues, it is diagonalizable.
+    \begin{theorem}\label{trm:diagonalizableEnoughEigenvalues}
+        If $T\in\ope{V}$ has $\dim V$ distinct eigenvalues, then $T$ is diagonalizable.
+        \begin{proof}
+            Let $m=\dim V$, and let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$. Let $v_1,\dots,v_m$ be the corresponding eigenvectors. Since $v_1,\dots,v_m$ has length equal to the dimension of $V$ and is linearly independent (by Theorem \ref{trm:lnlIndependentEigenvectors}), Theorem \ref{trm:sameDimIndependent} implies that $v_1,\dots,v_m$ is a basis of $V$. Therefore, by Theorem \ref{trm:diagonalizableConditions}, $T$ is diagonalizable.
+        \end{proof}
+    \end{theorem}
+    \item Note that the converse of Theorem \ref{trm:diagonalizableEnoughEigenvalues} is not true.
 \end{itemize}
 
 
