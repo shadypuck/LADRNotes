@@ -107,14 +107,14 @@
         \norm{v} = \sqrt{\inp{v}{v}}
     \end{equation*}
     \item Basic properties of the norm.
-    \begin{theorem}
+    \begin{theorem}\label{trm:normProperties}
         Suppose $v\in V$. Then
-        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
-            \item $\norm{v}=0$ iff $v=0$.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:normPropertiesa}$\norm{v}=0$ iff $v=0$.
             \begin{proof}
                 Suppose first that $\norm{v}=0$. Then $0=\sqrt{\inp{v}{v}}=\inp{v}{v}$. Thus, $v=0$. The proof is symmetric in the reverse direction.
             \end{proof}
-            \item $\norm{\lambda v}=|\lambda|\norm{v}$ for all $\lambda\in\F$.
+            \item \label{trm:normPropertiesb}$\norm{\lambda v}=|\lambda|\norm{v}$ for all $\lambda\in\F$.
             \begin{proof}
                 Let $\lambda\in\F$ be arbitrary. Then
                 \begin{align*}
@@ -198,7 +198,7 @@
                 0 &= \inp{u-cv}{v}\\
                 &= \inp{u}{v}+\inp{-cv}{v}\\
                 &= \inp{u}{v}-c\inp{v}{v}\\
-                &= \inp{u}{v}-c\norm{v}^2
+                &= \inp{u}{v}-c\norm{v}^2\\
                 c &= \frac{\inp{u}{v}}{\norm{v}^2}
             \end{align*}
             But this gives the values we want for $c$ and $w$, as desired.
@@ -310,6 +310,61 @@
                 &= 2(\norm{u}^2+\norm{v}^2)
             \end{align*}
             as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Orthonormal Bases}
+\begin{itemize}
+    \item \marginnote{10/3:}\textbf{Orthonormal} (list of vectors): A list of vectors such that each vector in the list has norm 1 and is orthogonal to all the other vectors in the list.
+    \begin{itemize}
+        \item In other words, a list $e_1,\dots,e_m$ is orthonormal if
+        \begin{equation*}
+            \inp{e_j}{e_k} =
+            \begin{cases}
+                1 & j=k\\
+                0 & j\neq k
+            \end{cases}
+        \end{equation*}
+    \end{itemize}
+    \item Orthonormal lists are particularly easy to work with.
+    \begin{theorem}\label{trm:normOrthoLnlComb}
+        If $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$, then
+        \begin{equation*}
+            \norm{a_1e_1+\cdots+a_me_m}^2 = |a_1|^2+\cdots+|a_m|^2
+        \end{equation*}
+        for all $a_1,\dots,a_m\in\F$.
+        \begin{proof}
+            We have that
+            \begin{align*}
+                \norm{a_1e_1+\cdots+a_me_m}^2 &= \norm{a_1e_1}^2+\cdots+\norm{a_me_m}^2\tag*{\hyperref[trm:pythagorean]{Pythagorean Theorem}}\\
+                &= |a_1|^2\norm{e_1}^2+\cdots+|a_m|^2\norm{e_m}^2\tag*{Theorem \ref{trm:normPropertiesb}}\\
+                &= |a_1|^2+\cdots+|a_m|^2
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item The next result directly follows from the previous one.
+    \begin{theorem}\label{trm:orthonormalLnlIndep}
+        Every orthonormal list of vectors is linearly independent.
+        \begin{proof}
+            Let $e_1,\dots,e_m$ be an orthonormal list of vectors, and let $a_1,\dots,a_m\in\F$ be such that $a_1e_1+\cdots+a_me_m=0$. Then
+            \begin{align*}
+                0 &= \norm{0}\\
+                &= \norm{a_1e_1+\cdots+a_me_m}\\
+                &= |a_1|^2+\cdots+|a_m|^2\tag*{Theorem \ref{trm:normOrthoLnlComb}}
+            \end{align*}
+            But this implies that each $a_j=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Orthonormal basis} (of $V$): An orthonormal list of vectors in $V$ that is also a basis of $V$.
+    \item We now prove an easy condition for identifying orthonormal bases.
+    \begin{theorem}
+        Every orthonormal list of vectors in $V$ with length $\dim V$ is an orthonormal basis of $V$.
+        \begin{proof}
+            Let $e_1,\dots,e_m$ be an orthonormal list of vectors in $V$ with length $\dim V$. It follows by Theorem \ref{trm:orthonormalLnlIndep} that $e_1,\dots,e_m$ is linearly independent. Therefore, by Theorem \ref{trm:sameDimIndependent}, $e_1,\dots,e_m$ is a basis of $V$.
         \end{proof}
     \end{theorem}
 \end{itemize}
