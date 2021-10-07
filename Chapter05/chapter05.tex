@@ -219,7 +219,7 @@
         \end{proof}
     \end{theorem}
     \item We now prove that over $\C$ (notably not over $\R$), every operator has an upper-triangular matrix.
-    \begin{theorem}
+    \begin{theorem}\label{trm:upperTriangularExists}
         Suppose $V$ is a finite-dimensional complex vector space and $T\in\ope{V}$. Then $T$ has an upper-triangular matrix with respect to some basis of $V$.\footnote{Note that \textcite{bib:Axler} gives two proofs, but only one (the shorter one using more advanced topics) is transcribed here.}
         \begin{proof}
             We induct on $n=\dim V$. For the base case $n=1$, the desired result holds since any one-dimensional matrix is upper-triangular by definition. Now suppose inductively that we have proven the result for $n-1$; we wish to prove it for $n$. By Theorem \ref{trm:eigenExists}, we may let $v_1$ be an eigenvector of $T$. Thus, if we let $U=\spn(v_1)$, we know that $U$ is an invariant subspace of $T$ with $\dim U=1$.\par
