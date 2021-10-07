@@ -1,0 +1,447 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{6}
+
+\begin{document}
+
+
+
+
+\chapter{Operators on Inner Product Spaces}
+\section{Self-Adjoints and Normal Operators}
+\begin{itemize}
+    \item \marginnote{10/7:}\textbf{Adjoint} (of $T\in\lin{V}{W}$): The function $T^*:W\to V$ that satisfies
+    \begin{equation*}
+        \inp{Tv}{w} = \inp{v}{T^*w}
+    \end{equation*}
+    for all $v\in V$ and $w\in W$\footnote{Note that the word adjoint has another, unrelated meaning in algebra. Fortunately, this other meaning will not be covered in \textcite{bib:Axler}.}.
+    \begin{itemize}
+        \item Calculating $T^*w$: Consider the linear functional $\varphi:V\to\F$ defined by $\varphi(v)=\inp{Tv}{w}$ for all $v\in V$. By the \hyperref[trm:RieszRepresentationTheorem]{Riesz Representation Theorem}, there exists a unique vector $T^*w\in V$ such that $\varphi(v)=\inp{v}{T^*w}$ for all $v\in V$. This vector in $V$ will guarantee that $\inp{Tv}{w}=\varphi(v)=\inp{v}{T^*w}$ for all $v\in V$, and we can find vectors $T^*w\in V$ for all $w\in W$.
+    \end{itemize}
+    \item The adjoint is a linear map.
+    \begin{theorem}
+        If $T\in\lin{V}{W}$, then $T^*\in\lin{W}{V}$.
+        \begin{proof}
+            Let $T\in\lin{V}{W}$, let $w_1,w_2\in W$, and let $\lambda\in\F$. By the definition of $T^*$, we have that for any $v\in V$,
+            \begin{align*}
+                \inp{v}{T^*(w_1+w_2)} &= \inp{Tv}{w_1+w_2}&
+                    \inp{v}{T^*(\lambda w_1)} &= \inp{Tv}{\lambda w_1}\\
+                &= \inp{Tv}{w_1}+\inp{Tv}{w_2}&
+                    &= \bar{\lambda}\inp{Tv}{w_1}\\
+                &= \inp{v}{T^*w_1}+\inp{v}{T^*w_2}&
+                    &= \bar{\lambda}\inp{v}{T^*w_1}\\
+                &= \inp{v}{T^*w_1+T^*w_2}&
+                    &= \inp{v}{\lambda T^*w_1}
+            \end{align*}
+            Thus, by the definition of $T^*$,
+            \begin{align*}
+                T^*(w_1+w_2) &= T^*w_1+T^*w_2&
+                T^*(\lambda w_1) &= \lambda T^*w
+            \end{align*}
+            so $T^*$ is a linear map, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Properties of the adjoint.
+    \begin{theorem}\label{trm:adjointProperties}\leavevmode
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:adjointPropertiesa}$(S+T)^*=S^*+T^*$ for all $S<T\in\lin{V}{W}$.
+            \begin{proof}
+                Suppose $S,T\in\lin{V}{W}$. If $v\in V$ and $w\in W$, then
+                \begin{align*}
+                    \inp{v}{(S+T)^*w} &= \inp{(S+T)v}{w}\\
+                    &= \inp{Sv}{w}+\inp{Tv}{w}\\
+                    &= \inp{v}{S^*w}+\inp{v}{T^*w}\\
+                    &= \inp{v}{S^*w+T^*w}
+                \end{align*}
+                Thus, $(S+T)^*w=S^*w+T^*w$, as desired.
+            \end{proof}
+            \item \label{trm:adjointPropertiesb}$(\lambda T)^*=\bar{\lambda}T^*$ for all $\lambda\in\F$ and $T\in\lin{V}{W}$.
+            \begin{proof}
+                Suppose $T\in\lin{V}{W}$ and $\lambda\in\F$. If $v\in V$ and $w\in W$, then
+                \begin{align*}
+                    \inp{v}{(\lambda T)^*w} &= \inp{\lambda Tv}{w}\\
+                    &= \lambda\inp{Tv}{w}\\
+                    &= \lambda\inp{v}{T^*w}\\
+                    &= \inp{v}{\bar{\lambda}T^*w}
+                \end{align*}
+                Thus, $(\lambda T)^*w=\bar{\lambda}T^*w$, as desired.
+            \end{proof}
+            \item \label{trm:adjointPropertiesc}$(T^*)^*=T$ for all $T\in\lin{V}{W}$.
+            \begin{proof}
+                Suppose $T\in\lin{V}{W}$. If $v\in V$ and $w\in W$, then
+                \begin{align*}
+                    \inp{w}{(T^*)^*v} &= \inp{T^*w}{v}\\
+                    &= \overline{\inp{v}{T^*w}}\\
+                    &= \overline{\inp{Tv}{w}}\\
+                    &= \inp{w}{Tv}
+                \end{align*}
+                Thus, $(T^*)^*v=Tv$, as desired.
+            \end{proof}
+            \item \label{trm:adjointPropertiesd}$I^*=I$, where $I$ is the identity operator on $V$.
+            \begin{proof}
+                If $v,u\in V$, then
+                \begin{equation*}
+                    \inp{v}{I^*u} = \inp{Iv}{u} = \inp{v}{Iu}
+                \end{equation*}
+                Thus, $I^*u=Iu$, as desired.
+            \end{proof}
+            \item \label{trm:adjointPropertiese}$(ST)^*=T^*S^*$ for all $T\in\lin{V}{W}$ and $S\in\lin{W}{U}$. Here $U$ is an inner product space over $\F$.
+            \begin{proof}
+                Suppose $T\in\lin{V}{W}$ and $S\in\lin{W}{U}$. If $v\in V$ and $u\in U$, then
+                \begin{align*}
+                    \inp{v}{(ST)^*u} &= \inp{STv}{u}\\
+                    &= \inp{Tv}{S^*u}\\
+                    &= \inp{v}{T^*S^*u}
+                \end{align*}
+                Thus, $(ST)^*u=T^*S^*u$, as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item Null space and range of $T^*$.
+    \begin{theorem}\label{trm:adjointNullRange}
+        Suppose $T\in\lin{V}{W}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:adjointNullRangea}$\nul T^*=(\range T)^\perp$.
+            \begin{proof}
+                Let $w\in W$ be an arbitrary element of $\nul T^*$. Then $T^*w=0$ by definition. It follows by Theorem \ref{trm:inpPropertiesc} that $\inp{v}{T^*w}=0$ for all $v\in V$. Thus, by the definition of the adjoint, $\inp{Tv}{w}=0$ for all $v\in V$. But this implies that $w$ is orthogonal to every vector in $\range T$ (i.e., the set of all $Tv$), meaning that $w\in(\range T)^\perp$.\par
+                The proof is symmetric in the other direction.
+            \end{proof}
+            \item \label{trm:adjointNullRangeb}$\range T^*=(\nul T)^\perp$.
+            \begin{proof}
+                We have that
+                \begin{align*}
+                    \range T^* &= ((\range T^*)^\perp)^\perp\tag*{Theorem \ref{trm:perpPerp}}\\
+                    &= (\nul(T^*)^*)^\perp\tag*{Theorem \ref{trm:adjointNullRangea}}\\
+                    &= (\nul T)^\perp\tag*{Theorem \ref{trm:adjointPropertiesc}}
+                \end{align*}
+                as desired.
+            \end{proof}
+            \item \label{trm:adjointNullRangec}$\nul T=(\range T^*)^\perp$.
+            \begin{proof}
+                We have that
+                \begin{align*}
+                    \nul T &= \nul(T^*)^*\tag*{Theorem \ref{trm:adjointPropertiesc}}\\
+                    &= (\range T^*)^\perp\tag*{Theorem \ref{trm:adjointNullRangea}}
+                \end{align*}
+                as desired.
+            \end{proof}
+            \item \label{trm:adjointNullRanged}$\range T=(\nul T^*)^\perp$.
+            \begin{proof}
+                We have that
+                \begin{align*}
+                    \range T &= ((\range T)^\perp)^\perp\tag*{Theorem \ref{trm:perpPerp}}\\
+                    &= (\nul T^*)^\perp\tag*{Theorem \ref{trm:adjointNullRangea}}
+                \end{align*}
+                as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item \textbf{Conjugate transpose} (of an $m$-by-$n$ matrix): The $n$-by-$m$ matrix obtained by interchanging the rows and columns and then taking the complex conjugate of each entry.
+    \begin{itemize}
+        \item "If $\F=\R$, then the conjugate transpose of a matrix is the same as its transpose" \parencite[207]{bib:Axler}.
+    \end{itemize}
+    \item The next result shows how to compute the matrix of $T^*$ from the matrix of $T$. Note, however, that if $\mat{T}$ is with respect to nonorthonormal bases, $\mat{T^*}$ does not necessarily equal the conjugate transpose of $\mat{T}$.
+    \begin{theorem}
+        Let $T\in\lin{V}{W}$. Suppose $e_1,\dots,e_n$ is an orthonormal basis of $V$ and $f_1,\dots,f_m$ is an orthonormal basis of $W$. Then
+        \begin{equation*}
+            \mat{T^*,(f_1,\dots,f_m),(e_1,\dots,e_n)}
+        \end{equation*}
+        is the conjugate transpose of
+        \begin{equation*}
+            \mat{T,(e_1,\dots,e_n),(f_1,\dots,f_m)}
+        \end{equation*}
+        \begin{proof}
+            Recall that the $k^\text{th}$ column of $\mat{T}$ is given by writing $Te_k$ as a linear combination of the $f_j$'s. Since $f_1,\dots,f_m$ is an orthonormal basis of $W$, Theorem \ref{trm:linCombOrthonormal} implies that
+            \begin{equation*}
+                Te_k = \inp{Te_k}{f_1}f_1+\cdots+\inp{Te_k}{f_m}f_m
+            \end{equation*}
+            Thus, the entry in row $j$ column $k$ of $\mat{T}$ is $\inp{Te_k}{f_j}$. On the other hand, since
+            \begin{equation*}
+                T^*f_k = \inp{T^*f_k}{e_1}e_1+\cdots+\inp{T^*f_k}{e_n}e_n
+            \end{equation*}
+            we have that the entry in row $j$ column $k$ of $\mat{T^*}$ is
+            \begin{align*}
+                \inp{T^*f_k}{e_j} &= \inp{f_k}{Te_j}\\
+                &= \overline{\inp{Te_j}{f_k}}
+            \end{align*}
+            Therefore, the entry in row $k$ column $j$ of $\mat{T^*}$ is the complex conjugate of the entry in row $j$ column $k$ of $\mat{T}$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Self-adjoint} (operator $T\in\ope{V}$): An operator $T$ such that $T=T^*$. \emph{Also known as} \textbf{Hermitian}.
+    \begin{itemize}
+        \item In other words, $T\in\ope{V}$ is self-adjoint if and only if
+        \begin{equation*}
+            \inp{Tv}{w} = \inp{v}{Tw}
+        \end{equation*}
+        for all $v,w\in V$.
+    \end{itemize}
+    \item The sum of two self-adjoint operators is self-adjoint, and the product of a real scalar and a self-adjoint operator is self-adjoint.
+    \item Note the analogy between self-adjoint operator and complex numbers: A complex number $z$ is real iff $z=\bar{z}$, and thus a self-adjoint operator ($T=T^*$) is analogous to a real number.
+    \item Eigenvalues of self-adjoint operators.
+    \begin{theorem}
+        Every eigenvalue of a self-adjoint operator is real.
+        \begin{proof}
+            Let $T$ be a self-adjoint operator on $V$, let $\lambda$ be an eigenvalue of $T$, and let $v$ be a nonzero vector in $V$ such that $Tv=\lambda v$. Then
+            \begin{equation*}
+                \lambda\norm{v}^2 = \inp{\lambda v}{v} = \inp{Tv}{v} = \inp{v}{Tv} = \inp{v}{\lambda v} = \bar{\lambda}\norm{v}^2
+            \end{equation*}
+            so $\lambda=\bar{\lambda}$, which implies that $\lambda$ is real, as desired.
+        \end{proof}
+    \end{theorem}
+    \item The next result is false for real inner product spaces (consider a rotation matrix), but true for complex ones.
+    \begin{theorem}\label{trm:inpTvvZero}
+        Suppose $V$ is a complex inner product space and $T\in\ope{V}$. Suppose $\inp{Tv}{v}=0$ for all $v\in V$. Then $T=0$.
+        \begin{proof}
+            Let $u\in V$ be arbitrary. By inner product algebra, we have that
+            \begin{equation*}
+                \inp{Tu}{w} = \frac{\inp{T(u+w)}{u+w}-\inp{T(u-w)}{u-w}}{4}+\frac{\inp{T(u+iw)}{u+iw}-\inp{T(u-iw)}{u-iw}}{4}i
+            \end{equation*}
+            for all $w\in V$. Since each term on the right-hand side of the above equation is of the form $\inp{Tv}{v}$ and we know by hypothesis that $\inp{Tv}{v}=0$ for all $v\in V$, we have that $\inp{Tu}{w}=0$ for all $w\in V$. In particular, if we let $w=Tu$, we learn that $\inp{Tu}{Tu}=0$, which implies that $Tu=0$. But this implies that $Tu=0$ for all $u\in V$, i.e., that $T=0$.
+        \end{proof}
+    \end{theorem}
+    \item The next result provides another example of how self-adjoint operators behave like real numbers, and is also false for real inner product spaces (consider a operator on such a space that is not self-adjoint).
+    \begin{theorem}
+        Suppose $V$ is a complex inner product space and $T\in\ope{V}$. Then $T$ is self-adjoint if and only if $\inp{Tv}{v}\in\R$ for every $v\in V$.
+        \begin{proof}
+            Suppose first that $T$ is self-adjoint. Let $v\in V$ be arbitrary. Then
+            \begin{equation*}
+                \inp{Tv}{v}-\overline{\inp{Tv}{v}} = \inp{Tv}{v}-\inp{v}{Tv}
+                = \inp{Tv}{v}-\inp{T^*v}{v}
+                = \inp{(T-T^*)v}{v}
+                = \inp{0v}{v}\\
+                = 0
+            \end{equation*}
+            so $\inp{Tv}{v}=\overline{\inp{Tv}{v}}$. Therefore, $\inp{Tv}{v}\in\R$, as desired.\par
+            Now suppose that $\inp{Tv}{v}\in\R$ for every $v\in V$. Let $v\in V$ be arbitrary. Then
+            \begin{equation*}
+                \inp{(T-T^*)v}{v} = \inp{Tv}{v}-\inp{T^*v}{v}
+                = \inp{Tv}{v}-\inp{v}{Tv}
+                = \inp{Tv}{v}-\overline{\inp{Tv}{v}}
+                = 0
+            \end{equation*}
+            Therefore, by Theorem \ref{trm:inpTvvZero}, $T-T^*=0$, or $T=T^*$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now show that on complex \emph{or} real vector spaces, self-adjoint operators that satisfy $\inp{Tv}{v}=0$ \emph{must} be the zero operator.
+    \begin{theorem}\label{trm:selfAdjointTvv}
+        Suppose $T$ is a self-adjoint operator on $V$ such that
+        \begin{equation*}
+            \inp{Tv}{v} = 0
+        \end{equation*}
+        for all $v\in V$. Then $T=0$.
+        \begin{proof}
+            We divide into two cases. If $V$ is complex, invoke Theorem \ref{trm:inpTvvZero}. If $V$ is real, we continue.\par
+            Let $u\in V$ be arbitrary. By inner product algebra, we have that
+            \begin{equation*}
+                \inp{Tu}{w} = \frac{\inp{T(u+w)}{u+w}-\inp{T(u-w)}{u-w}}{4}
+            \end{equation*}
+            By a symmetric argument to that used in the later part of the proof of Theorem \ref{trm:inpTvvZero}, we can confirm that $T=0$.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Normal} (operator): An operator that commutes with its adjoint.
+    \begin{itemize}
+        \item In other words, $T\in\ope{V}$ is normal if
+        \begin{equation*}
+            TT^* = T^*T
+        \end{equation*}
+    \end{itemize}
+    \item Every self-adjoint operator is normal.
+    \item We now characterize normal operators.
+    \begin{theorem}\label{trm:normalNorm}
+        An operator is normal if and only if
+        \begin{equation*}
+            \norm{Tv} = \norm{T^*v}
+        \end{equation*}
+        for all $v\in V$.
+        \begin{proof}
+            Let $T\in\ope{V}$.\par
+            Suppose first that $T$ is normal. Then $T^*T-TT^*=0$. Thus, by Theorem \ref{trm:inpPropertiesb}, $\inp{(T^*T-TT^*)v}{v}=0$ for all $v\in V$. It follows that
+            \begin{align*}
+                \inp{T^*Tv}{v} &= \inp{TT^*v}{v}\\
+                \inp{Tv}{Tv} &= \inp{T^*v}{T^*v}\\
+                \norm{Tv}^2 &= \norm{T^*v}^2\\
+                \norm{Tv} &= \norm{T^*v}
+            \end{align*}
+            for all $v\in V$, as desired.\par
+            Now suppose that $\norm{Tv}=\norm{T^*v}$ for all $v\in V$. Then following the reverse of the procedure for the forward direction, we can easily show that $\inp{(T^*T-TT^*)v}{v}=0$ for all $v\in V$. Additionally, by consecutive applications of Theorem \ref{trm:adjointProperties}, we have that
+            \begin{align*}
+                (T^*T-TT^*)^* &= (T^*T)^*-(TT^*)^*\\
+                &= T^*(T^*)^*-(T^*)^*T^*\\
+                &= T^*T-TT^*
+            \end{align*}
+            It follows that $T^*T-TT^*$ is self-adjoint. This combined with the previous result implies by Theorem \ref{trm:selfAdjointTvv} that $T^*T-TT^*=0$. It follows that $T^*T=TT^*$, so $T$ is normal, as desired.
+        \end{proof}
+    \end{theorem}
+    \item While an operator and its adjoint may have different eigenvectors, a normal operator and its adjoint have the same eigenvectors.
+    \begin{theorem}\label{trm:normalSameEigenvectors}
+        Suppose $T\in\ope{V}$ is normal and $v\in V$ is an eigenvector of $T$ with eigenvalue $\lambda$. Then $v$ is also an eigenvector of $T^*$ with eigenvalue $\bar{\lambda}$.
+        \begin{proof}
+            By consecutive applications of Theorem \ref{trm:adjointProperties}, we have that
+            \begin{align*}
+                (T-\lambda I)(T-\lambda I)^* &= (T-\lambda I)(T^*-\bar{\lambda}I)\\
+                &= TT^*-\bar{\lambda}T-\lambda T^*+\lambda\bar{\lambda}I\\
+                &= T^*T-\lambda T^*-\bar{\lambda}T+\bar{\lambda}\lambda I\\
+                &= (T^*-\bar{\lambda}I)(T-\lambda I)\\
+                &= (T-\lambda I)^*(T-\lambda I)
+            \end{align*}
+            Thus, $T-\lambda I$ is self-adjoint. It follows by Theorem \ref{trm:normalNorm} that
+            \begin{equation*}
+                0 = \norm{(T-\lambda I)v} = \norm{(T-\lambda I)^*v} = \norm{(T^*-\bar{\lambda}I)v}
+            \end{equation*}
+            Hence $v$ is an eigenvector of $T^*$ with eigenvalue $\bar{\lambda}$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Normal operators have orthogonal eigenvectors.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$ is normal. Then the eigenvectors of $T$ corresponding to distinct eigenvalues are orthogonal.
+        \begin{proof}
+            Let $\alpha,\beta$ be distinct eigenvalues of $T$, and let $u,v$ be their corresponding eigenvectors. Thus, we have that
+            \begin{align*}
+                (\alpha-\beta)\inp{u}{v} &= \inp{\alpha u}{v}-\inp{u}{\bar{\beta}v}\\
+                &= \inp{Tu}{v}-\inp{u}{T^*v}\tag*{Theorem \ref{trm:normalSameEigenvectors}}\\
+                &= 0
+            \end{align*}
+            Since $\alpha\neq\beta$ by hypothesis, we must have that $\inp{u}{v}=0$. Therefore, $u,v$ are orthogonal, as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{The Spectral Theorem}
+\begin{itemize}
+    \item Diagonal operators are nice operators.
+    \begin{itemize}
+        \item An operator has a diagonal matrix with respect to some basis iff the basis consists of eigenvectors of the operator (see Theorem \ref{trm:diagonalizableConditions}).
+    \end{itemize}
+    \item The nicest operators are those for which there is an orthonormal basis of $V$ with respect to which the operator has a diagonal matrix.
+    \begin{itemize}
+        \item The Spectral Theorem characterizes the operators $T\in\ope{V}$ for which there exists an orthonormal basis of $V$ consisting of eigenvectors of $T$.
+        \item In particular, it characterizes them as the normal operators when $\F=\C$ and the self-adjoint operators when $\F=\R$.
+        \item "The Spectral Theorem is probably the most useful tool in the study of operators on inner product spaces" \parencite[217]{bib:Axler}.
+    \end{itemize}
+    \item For the purposes of proving the Spectral Theorem, we will break it into a Complex Spectral Theorem and a Real Spectral Theorem.
+    \item The complex portion is simpler, so we begin with it.
+    \begin{theorem}[Complex Spectral Theorem]
+        Suppoe $\F=\C$ and $T\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is normal.
+            \item $V$ has an orthonormal basis consisting of eigenvectors of $T$.
+            \item $T$ has a diagonal matrix with respect to some orthonormal basis of $V$.
+        \end{enumerate}
+        \begin{proof}
+            We have by Theorem \ref{trm:diagonalizableConditions} that (b) and (c) are equivalent, so we will focus on proving the equivalence of (a) and (c).\par
+            Suppose first that (c) holds. Since $\mat{T}$ is diagonal and $\mat{T^*}$ is the conjugate transpose of $\mat{T}$, $\mat{T^*}$ is diagonal. Therefore, since any two diagonal matrices commute, $T$ is normal, so (a) holds.\par
+            Now suppose that (a) holds. By \hyperref[trm:Schur]{Schur's Theorem}, there exists an orthonormal basis $e_1,\dots,e_n$ of $V$ with respect to which $T$ has an upper triangular matrix. We will show that this matrix is actually diagonal. To begin, since $\mat{T}$ is upper triangular, we know that
+            \begin{equation*}
+                \norm{Te_1}^2 = |a_{1,1}|^2
+            \end{equation*}
+            Similarly, since $T^*$ is the conjugate \emph{transpose}, we have that
+            \begin{equation*}
+                \norm{T^*e_1}^2 = |a_{1,1}|^2+\cdots+|a_{1,n}|^2
+            \end{equation*}
+            But since $\norm{Te_1}=\norm{T^*e_1}$ by Theorem \ref{trm:normalNorm}, the two equations above imply that
+            \begin{equation*}
+                0 = |a_{1,2}|^2+\cdots+|a_{1,n}|^2
+            \end{equation*}
+            Therefore, we know that all entries in row 1 save the first are zero. We may repeat this procedure for every row to finish the proof.
+        \end{proof}
+    \end{theorem}
+    \item The next result continues to build on the likeness of normal matrices and real numbers. Specifically, it plays off the fact that if $b,c\in\R$ with $b^2<4c$, then $x^2+bx+c>0$, i.e., $x^2+bx+c$ nonzero is an "invertible" real number.
+    \begin{theorem}\label{trm:invertibleQuadratics}
+        Suppose $T\in\ope{V}$ is self-adjoint and $b,c\in\R$ are such that $b^2<4c$. Then
+        \begin{equation*}
+            T^2+bT+cI
+        \end{equation*}
+        is invertible.
+        \begin{proof}
+            To prove that $T^2+bT+cI$ is invertible, Theorem \ref{trm:invertInjSurjFiniteEquivalence} tells us that it will suffice to show that $T$ is injective. To do this, Theorem \ref{trm:nullSpaceInjective} tells us that we must verify that $\nul(T^2+bT+cI)\subset\{0\}$, i.e., that if $v\in V$ is nonzero, then $(T^2+bT+cI)v\neq 0$. Let's begin.\par
+            Let $v\in V$ be arbitrary. Then we have that
+            \begin{align*}
+                \inp{(T^2+bT+cI)v}{v} &= \inp{T^2v}{v}+b\inp{Tv}{v}+c\inp{v}{v}\\
+                &= \inp{Tv}{Tv}+b\inp{Tv}{v}+c\norm{v}^2\\
+                &\geq \norm{Tv}^2-|b|\norm{Tv}\norm{v}+c\norm{v}^2\tag*{\hyperref[trm:CauchySchwarz]{Cauchy-Schwarz Inequality}}\\
+                &= \left( \norm{Tv}-\frac{|b|\norm{v}}{2} \right)^2+\left( c-\frac{b^2}{4} \right)\norm{v}^2\\
+                &> 0
+            \end{align*}
+            The overall strict inequality implies by the contrapositive of Theorem \ref{trm:inpPropertiesb} that $(T^2+bT+cI)v\neq 0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Like Theorem \ref{trm:eigenExists} told us that operators on \emph{finite-dimensional nonzero complex} vector spaces have eigenvalues, the following tells us that \emph{self-adjoint} operators on \emph{any nonzero} vector space have eigenvalues.
+    \begin{theorem}\label{trm:eigenSelfAdjoint}
+        Suppose $V\neq\{0\}$ and $T\in\ope{V}$ is a self-adjoint operator. Then $T$ has an eigenvalue.
+        \begin{proof}
+            Let $V$ be a real inner product space, let $n=\dim V$, and let $v\in V$ be arbitrary and nonzero. Since $v,Tv,T^2v,\dots,T^nv$ has length $n+1>\dim V$, it is linearly dependent. Thus, there exist $a_0,\dots,a_n\in\F$ such that
+            \begin{equation*}
+                0 = a_0v+a_1Tv+\cdots+a_nT^nv
+            \end{equation*}
+            If we let the $a$'s be the coefficients of a degree $n$ polynomial, then we have by Theorem \ref{trm:realPolFactorization} that
+            \begin{equation*}
+                a_0+a_1x+\cdots+a_nx^n = c(x^2+b_1x+c_1)\cdots(x^2+b_Mx+c_M)(x-\lambda_1)\cdots(x-\lambda_m)
+            \end{equation*}
+            where $c\in\R$ is nonzero, each $b_j,c_j,\lambda_j\in\R$, each $b_j^2<4c_j$, $m+M\geq 1$, and the equation holds for all $x\in\R$. It follows that
+            \begin{align*}
+                0 &= a_0v+a_1Tv+\cdots+a_nT^nv\\
+                &= (a_0I+a_1T+\cdots+a_nT^n)v\\
+                &= c(T^2+b_1T+c_1I)\cdots(T_2+b_MT+c_MI)(T-\lambda_1I)\cdots(T-\lambda_mI)v
+            \end{align*}
+            Since $T$ is self-adjoint and $b_j,c_j\in\R$ satisfy $b_j^2<4c_j$ for each $j$, we have by consecutive applications of Theorem \ref{trm:invertibleQuadratics} that each $T^2+b_jT+c_jI$ is invertible. Thus, if we multiply both sides of the above equation by $1/c$ (recall that $c\neq 0$) and $(T^2+b_jT+c_jI)^{-1}$ for each $j$, we obtain
+            \begin{equation*}
+                0 = (T-\lambda I)\cdots(T-\lambda_mI)v
+            \end{equation*}
+            Therefore, by an argument symmetric to that used in the last paragraph of the proof of Theorem \ref{trm:eigenExists}, we have that $T$ has an eigenvalue, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Invariant subspaces and self-adjoint operators.
+    \begin{theorem}\label{trm:invariantSelfAdjoint}
+        Suppose $T\in\ope{V}$ is self-adjoint and $U$ is a subspace of $V$ that is invariant under $T$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:invariantSelfAdjointa}$U^\perp$ is invariant under $T$.
+            \begin{proof}
+                Let $v\in U^\perp$ be arbitrary, and let $u$ be any element of $U$. Then
+                \begin{equation*}
+                    \inp{Tv}{u} = \inp{v}{Tu} = 0
+                \end{equation*}
+                where the first equality holds because $T$ is self-adjoint and the second equality holds because $U$ is invariant under $T$ (so $Tu\in U$, and we know that the inner product of an element of $U^\perp$ with an element of $U$ is 0). Thus, since $\inp{Tv}{u}=0$ for all $u\in U$, $Tv\in U^\perp$, as desired.
+            \end{proof}
+            \item \label{trm:invariantSelfAdjointb}$T|_U\in\ope{U}$ is self-adjoint.
+            \begin{proof}
+                If $u,v\in U$, then
+                \begin{equation*}
+                    \inp{(T|_U)u}{v} = \inp{Tu}{v} = \inp{u}{Tv} = \inp{u}{(T|_U)v}
+                \end{equation*}
+                as desired.
+            \end{proof}
+            \item \label{trm:invariantSelfAdjointc}$T|_{U^\perp}\in\ope{U^\perp}$ is self-adjoint.
+            \begin{proof}
+                The proof is symmetric to that of Theorem \ref{trm:invariantSelfAdjointb}.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item We can now prove the real portion of the spectral theorem.
+    \begin{theorem}[Real Spectral Theorem]
+        Suppose $\F=\R$ and $T\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is self-adjoint.
+            \item $V$ has an orthonormal basis consisting of eigenvectors of $T$.
+            \item $T$ has a diagonal matrix with respect to some orthonormal basis of $V$.
+        \end{enumerate}
+        \begin{proof}
+            We will prove that (a) implies (b), (b) implies (c), and (c) implies (a). Let's begin.\par
+            First, suppose that $T$ is self-adjoint. We induct on $\dim V$. For the base case $\dim V=1$, we must have $Tv=\lambda v$ for any $v\in V$. Thus, take $e=v/\norm{v}$ as an orthonormal basis of $V$ consisting of eigenvectors of $T$. Now suppose inductively that (a) implies (b) for all real inner product spaces of dimension less than $\dim V>1$. Suppose $T\in\ope{V}$ is self-adjoint. By Theorem \ref{trm:eigenSelfAdjoint}, we may let $v$ be an eigenvector of $T$. It follows that $u=v/\norm{v}$ is a normal eigenvector of $T$. Let $U=\spn(u)$. Then $U$ is a subspace of $V$ that is invariant under $T$, so we have by Theorem \ref{trm:invariantSelfAdjointc} that $T|_{U^\perp}\in\ope{U^\perp}$ is self-adjoint. But since $\dim U^\perp=\dim V-\dim U=\dim V-1$, we have by the inductive hypothesis that there is an orthonormal basis of $U^\perp$ consisting of eigenvectors of $T|_{U^\perp}$. Adjoining $u$ to this list gives an orthonormal basis of $V$ consisting of eigenvectors of $T$, as desired.\par
+            Second, suppose that $V$ has an orthonormal basis $e_1,\dots,e_n$ consisting of eigenvectors of $T$. Then since
+            \begin{equation*}
+                Te_j = 0e_1+\cdots+0e_{j-1}+\lambda_je_j+0e_{j+1}+\cdots+0e_n
+            \end{equation*}
+            for all $j$, we have by the definition that $\mat{T,(e_1,\dots,e_n)}$ is diagonal, as desired.\par
+            Third, suppose that $T$ has a diagonal matrix $\mat{T}$ with respect to some orthonormal basis of $V$. In a real inner product space, $\overline{\mat{T}}=\mat{T}$. Additionally, any diagonal matrix is equal to its transpose. Thus, $T=T^*$, so $T$ is self-adjoint, as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+
+\end{document}
