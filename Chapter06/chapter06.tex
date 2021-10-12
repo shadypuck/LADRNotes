@@ -315,6 +315,44 @@
 \end{itemize}
 
 
+\subsection*{Exercises}
+\begin{enumerate}[label={\textbf{\arabic*}},labelsep=1em,ref={\thesection.\arabic*}]
+    \setcounter{enumi}{18}
+    \item \marginnote{10/11:}\label{exr:6A19}Suppose $V$ is a real inner product space. Prove that
+    \begin{equation*}
+        \inp{u}{v} = \frac{\norm{u+v}^2-\norm{u-v}^2}{4}
+    \end{equation*}
+    for all $u,v\in V$.
+    \begin{proof}
+        Let $u,v\in V$ be arbitrary. Then
+        \begin{align*}
+            \frac{\norm{u+v}^2-\norm{u-v}^2}{4} &= \frac{\inp{u+v}{u+v}-\inp{u-v}{u-v}}{4}\\
+            &= \frac{(\inp{u}{u}+\inp{u}{v}+\inp{v}{u}+\inp{v}{v})-((\inp{u}{u}-\inp{u}{v})-(\inp{v}{u}-\inp{v}{v}))}{4}\\
+            &= \frac{2\inp{u}{v}+2\inp{v}{u}}{4}\\
+            &= \frac{2\inp{u}{v}+2\inp{u}{v}}{4}\\
+            &= \inp{u}{v}
+        \end{align*}
+        as desired.
+    \end{proof}
+    \item \label{exr:6A20}Suppose $V$ is a complex inner product space. Prove that
+    \begin{equation*}
+        \inp{u}{v} = \frac{\norm{u+v}^2-\norm{u-v}^2+\norm{u+iv}^2i-\norm{u-iv}^2i}{4}
+    \end{equation*}
+    for all $u,v\in V$.
+    \begin{proof}
+        Let $u,v\in V$ be arbitrary. Then
+        \begin{align*}
+            \frac{\norm{u+v}^2-\norm{u-v}^2+\norm{u+iv}^2i-\norm{u-iv}^2i}{4} &= \frac{\norm{u+v}^2-\norm{u-v}^2}{4}+i\frac{\norm{u+iv}^2-\norm{u-iv}^2}{4}\\
+            &= \frac{2\inp{u}{v}+2\inp{v}{u}}{4}+i\frac{2\inp{u}{iv}+2\inp{iv}{u}}{4}\\
+            &= \frac{2\inp{u}{v}+2\inp{v}{u}+2\inp{u}{v}+2\inp{-v}{u}}{4}\\
+            &= \frac{4\inp{u}{v}+2\inp{0}{u}}{4}\\
+            &= \inp{u}{v}
+        \end{align*}
+        as desired.
+    \end{proof}
+\end{enumerate}
+
+
 
 \section{Orthonormal Bases}
 \begin{itemize}
@@ -440,7 +478,7 @@
         \end{proof}
     \end{theorem}
     \item Existence of an orthonormal basis.
-    \begin{theorem}
+    \begin{theorem}\label{trm:orthonormalExists}
         Every finite-dimensional inner product space has an orthonormal basis.
         \begin{proof}
             Let $V$ be a finite-dimensional inner product space. Choose a basis of $V$. Applying the \hyperref[trm:GramSchmidt]{Gram-Schmidt Procedure} to this (by definition linearly independent) basis yields an orthonormal list of vectors in $V$ of length $\dim V$. Therefore, by Theorem \ref{trm:dimOrthonormal}, the orthonormal list is an orthonormal basis of $V$.

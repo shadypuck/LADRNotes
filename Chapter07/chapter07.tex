@@ -202,7 +202,7 @@
         \end{proof}
     \end{theorem}
     \item The next result provides another example of how self-adjoint operators behave like real numbers, and is also false for real inner product spaces (consider a operator on such a space that is not self-adjoint).
-    \begin{theorem}
+    \begin{theorem}\label{trm:selfAdjointTvvReal}
         Suppose $V$ is a complex inner product space and $T\in\ope{V}$. Then $T$ is self-adjoint if and only if $\inp{Tv}{v}\in\R$ for every $v\in V$.
         \begin{proof}
             Suppose first that $T$ is self-adjoint. Let $v\in V$ be arbitrary. Then
@@ -210,7 +210,7 @@
                 \inp{Tv}{v}-\overline{\inp{Tv}{v}} = \inp{Tv}{v}-\inp{v}{Tv}
                 = \inp{Tv}{v}-\inp{T^*v}{v}
                 = \inp{(T-T^*)v}{v}
-                = \inp{0v}{v}\\
+                = \inp{0v}{v}
                 = 0
             \end{equation*}
             so $\inp{Tv}{v}=\overline{\inp{Tv}{v}}$. Therefore, $\inp{Tv}{v}\in\R$, as desired.\par
@@ -324,7 +324,7 @@
     \end{itemize}
     \item For the purposes of proving the Spectral Theorem, we will break it into a Complex Spectral Theorem and a Real Spectral Theorem.
     \item The complex portion is simpler, so we begin with it.
-    \begin{theorem}[Complex Spectral Theorem]
+    \begin{theorem}[Complex Spectral Theorem]\label{trm:ComplexSpectral}
         Suppoe $\F=\C$ and $T\in\ope{V}$. Then the following are equivalent.
         \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
             \item $T$ is normal.
@@ -421,7 +421,7 @@
         \end{enumerate}
     \end{theorem}
     \item We can now prove the real portion of the spectral theorem.
-    \begin{theorem}[Real Spectral Theorem]
+    \begin{theorem}[Real Spectral Theorem]\label{trm:RealSpectral}
         Suppose $\F=\R$ and $T\in\ope{V}$. Then the following are equivalent.
         \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
             \item $T$ is self-adjoint.
@@ -437,6 +437,201 @@
             \end{equation*}
             for all $j$, we have by the definition that $\mat{T,(e_1,\dots,e_n)}$ is diagonal, as desired.\par
             Third, suppose that $T$ has a diagonal matrix $\mat{T}$ with respect to some orthonormal basis of $V$. In a real inner product space, $\overline{\mat{T}}=\mat{T}$. Additionally, any diagonal matrix is equal to its transpose. Thus, $T=T^*$, so $T$ is self-adjoint, as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Positive Operators and Isometries}
+\begin{itemize}
+    \item \marginnote{10/11:}\textbf{Positive} ($T\in\ope{V}$): A self-adjoint operator $T\in\ope{V}$ such that
+    \begin{equation*}
+        \inp{Tv}{v} \geq 0
+    \end{equation*}
+    for all $v\in V$. \emph{Also known as} \textbf{positive semidefinite} (operator).
+    \begin{itemize}
+        \item Note that if $V$ is complex, Theorem \ref{trm:selfAdjointTvvReal} implies based on the condition that $\inp{Tv}{v}\geq 0$ for all $v\in V$ that $T$ is self-adjoint. Therefore, in this case, we need not explicitly postulate that $T$ is self-adjoint.
+    \end{itemize}
+    \item \textbf{Square root} (of $T\in\ope{V}$): An operator $R$ such that $R^2=T$.
+    \item The following characterization of positive operators is directly analogous to the characterization of nonnegative complex numbers.
+    \begin{theorem}\label{trm:positiveConditions}
+        Let $T\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is positive.
+            \item $T$ is self-adjoint and all the eigenvalues of $T$ are nonnegative.
+            \item $T$ has a positive square root.
+            \item $T$ has a self-adjoint square root.
+            \item There exists an operator $R\in\ope{V}$ such that $T=R^*R$.
+        \end{enumerate}
+        \begin{proof}
+            We will prove that $\text{(a)}\Rightarrow\text{(b)}\Rightarrow\text{(c)}\Rightarrow\text{(d)}\Rightarrow\text{(e)}\Rightarrow\text{(a)}$. Let's begin.\par\smallskip
+            First, suppose that $T$ is positive. Then by definition, $T$ is self-adjoint. Additionally, let $\lambda\in\F$ be an eigenvalue of $T$. It follows by the definition of positive operators and by the positivity of the inner product that
+            \begin{align*}
+                0 &\leq \inp{Tv}{v} = \inp{\lambda v}{v} = \lambda\inp{v}{v}\\
+                0 &\leq \lambda
+            \end{align*}
+            as desired.\par
+            Second, suppose that $T$ is self-adjoint and all the eigenvalues of $T$ are nonnegative. Since $T$ is self-adjoint, the \hyperref[trm:RealSpectral]{Real} and \hyperref[trm:ComplexSpectral]{Complex} Spectral Theorems imply that there exists an orthonormal basis $e_1,\dots,e_n$ of $V$ consisting of eigenvectors of $T$. Let $\lambda_1,\dots,\lambda_n$ be the corresponding eigenvalues; it follows by hypothesis that $\lambda_j\geq 0$ for all $j$. We now define $R\in\ope{V}$ by
+            \begin{equation*}
+                Re_j = \sqrt{\lambda_j}e_j
+            \end{equation*}
+            for all $j$. To prove that $R$ is positive, let $v\in V$ be arbitrary. Suppose $v=a_1e_1+\cdots+a_ne_n$ where $a_1,\dots,a_n\in\F$. Then
+            \begin{align*}
+                \inp{Rv}{v} &= \inp{R(a_1e_1+\cdots+a_ne_n)}{a_1e_1+\cdots+a_ne_n}\\
+                &= \inp{\sqrt{\lambda_1}a_1e_1+\cdots+\sqrt{\lambda_n}a_ne_n}{a_1e_1+\cdots+a_ne_n}\\
+                &= \sum_{i=1}^n\sum_{j=1}^n\inp{\sqrt{\lambda_i}a_ie_i}{a_je_j}\\
+                &= \sum_{i=1}^n\inp{\sqrt{\lambda_i}a_ie_i}{a_ie_i}\\
+                &= \sum_{i=1}^n\sqrt{\lambda_i}\\
+                &\geq 0
+            \end{align*}
+            as desired. Furthermore, $R^2e_j=\lambda_je_j=Te_j$ for each $j$, so by Theorem \ref{trm:mapBasisToBasis}, $R^2=T$, as desired.\par
+            Third, suppose that $T$ has a positive square root $R$. Then by the definition of a positive operator, $R$ is self-adjoint as well, as desired.\par
+            Fourth, suppose that $T$ has a self-adjoint square root $R$. Since $R$ is self-adjoint, $R=R^*$. Therefore,
+            \begin{equation*}
+                T = R^2 = R^*R
+            \end{equation*}
+            as desired.\par
+            Fifth, suppose that there exists an operator $R\in\ope{V}$ such that $T=R^*R$. To prove that $T$ is positive, it will suffice to show that it is self-adjoint and that $\inp{Tv}{v}\geq 0$ for all $v\in V$. First off, $T$ is self-adjoint since
+            \begin{equation*}
+                T^* = (R^*R)^* = R^*(R^*)^* = R^*R = T
+            \end{equation*}
+            Second, we have that
+            \begin{equation*}
+                \inp{Tv}{v} = \inp{R^*Rv}{v} = \inp{Rv}{Rv} \geq 0
+            \end{equation*}
+            for all $v\in V$. Therefore, $T$ is positive, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Since each nonnegative number has a unique nonnegative square root, the next result makes sense by analogy.
+    \begin{theorem}
+        Every positive operator on $V$ has a unique positive square root.
+        \begin{proof}
+            Let $T$ be a positive operator on $V$, let $v\in V$ be an eigenvector of $T$, let $\lambda\in\F$ be the corresponding eigenvalue, and let $R$ be a positive square root of $T$ (Theorem \ref{trm:positiveConditions} guarantees that at least one such operator exists). Since $T$ is positive, Theorem \ref{trm:positiveConditions} implies that $\lambda\geq 0$. Thus, to prove that $R$ is unique, we will prove that $Rv=\sqrt{\lambda}v$. This will imply that the behavior of $R$ on the eigenvectors of $T$ is uniquely determined. It will follows since there is a basis of $V$ consisting of the eigenvectors of $T$ (by the \hyperref[trm:RealSpectral]{Real} and \hyperref[trm:ComplexSpectral]{Complex} Spectral Theorems), the behavior of $R$ on $V$ (and hence $R$) is uniquely determined. Let's begin.\par\smallskip
+            Since $R$ is positive (hence self-adjoint), the \hyperref[trm:RealSpectral]{Real} and \hyperref[trm:ComplexSpectral]{Complex} Spectral Theorems assert that there exists an orthonormal basis $e_1,\dots,e_n$ of $V$ consisting of eigenvectors of $R$. Additionally, because $R$ is positive, the corresponding eigenvalues $\sqrt{\lambda_1},\dots,\sqrt{\lambda_n}$ are nonnegative.\par
+            Now let
+            \begin{equation*}
+                v = a_1e_1+\cdots+a_ne_n
+            \end{equation*}
+            for $a_1,\dots,a_n\in\F$. Then
+            \begin{equation*}
+                a_1\lambda e_1+\cdots+a_n\lambda e_n = Tv = R^2v = a_1\lambda_1e_1+\cdots+a_n\lambda_ne_n
+            \end{equation*}
+            so since $e_1,\dots,e_n$ is linearly independent, $a_j(\lambda-\lambda_j)=0$ for all $j$. It follows that
+            \begin{equation*}
+                v = \sum_{\{j:\lambda_j=\lambda\}}a_je_j
+            \end{equation*}
+            so that
+            \begin{align*}
+                Rv &= \sum_{j=1}^na_j\sqrt{\lambda_j}e_j\\
+                &= \sum_{\{j:\lambda_j=\lambda\}}a_j\sqrt{\lambda_j}e_j\\
+                &= \sum_{\{j:\lambda_j=\lambda\}}a_j\sqrt{\lambda}e_j\\
+                &= \sqrt{\lambda}v
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Isometry}: An operator $S\in\ope{V}$ such that
+    \begin{equation*}
+        \norm{Sv} = \norm{v}
+    \end{equation*}
+    for all $v\in V$.
+    \begin{itemize}
+        \item In other words, an isometry is an operator that preserves norms.
+    \end{itemize}
+    \item \textbf{Orthogonal} (operator): An isometry on a real inner product space.
+    \item \textbf{Unitary} (operator): An isometry on a complex inner product space.
+    \item Characterizing isometries.
+    \begin{theorem}
+        Suppose $S\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $S$ is an isometry.
+            \item $\inp{Su}{Sv}=\inp{u}{v}$ for all $u,v\in V$.
+            \item $Se_1,\dots,Se_n$ is orthonormal for every orthonormal list of vectors $e_1,\dots,e_n$ in $V$.
+            \item There exists an orthonormal basis $e_1,\dots,e_n$ of $V$ such that $Se_1,\dots,Se_n$ is orthonormal.
+            \item $S^*S=I$.
+            \item $SS^*=I$.
+            \item $S^*$ is an isometry.
+            \item $S$ is invertible and $S^{-1}=S^*$.
+        \end{enumerate}
+        \begin{proof}
+            We will prove that $\text{(a)}\Rightarrow\text{(b)}\Rightarrow\text{(c)}\Rightarrow\text{(d)}\Rightarrow\text{(e)}\Rightarrow\text{(f)}\Rightarrow\text{(g)}\Rightarrow\text{(h)}\Rightarrow\text{(a)}$. Let's begin.\par\smallskip
+            First, suppose that $S$ is an isometry. Let $u,v\in V$ be arbitrary. We divide into two cases ($V$ is a real inner product space and $V$ is a complex inner product space). If $V$ is a real inner product space, then
+            \begin{align*}
+                \inp{Su}{Sv} &= \frac{\norm{Su+Sv}^2-\norm{Su-Sv}^2}{4}\tag*{Exercise \ref{exr:6A19}}\\
+                &= \frac{\norm{S(u+v)}^2-\norm{S(u-v)}^2}{4}\\
+                &= \frac{\norm{u+v}^2-\norm{u-v}^2}{4}\\
+                &= \inp{u}{v}\tag*{Exercise \ref{exr:6A19}}
+            \end{align*}
+            as desired. On the other hand, if $V$ is a complex vector space, then the proof is symmetric to the above except with the use of Exercise \ref{exr:6A20} instead of Exercise \ref{exr:6A19}.\par
+            Second, suppose that $\inp{Su}{Sv}=\inp{u}{v}$ for all $u,v\in V$. Let $e_1,\dots,e_n$ be an orthonormal list of vectors in $V$. Then by hypothesis,
+            \begin{equation*}
+                \inp{Se_i}{Se_j} = \inp{e_i}{e_j} = \delta_{ij}
+            \end{equation*}
+            for all $1\leq i,j\leq n$, proving that $Se_1,\dots,Se_n$ is orthonormal, as desired.\par
+            Third, suppose that $Se_1,\dots,Se_n$ is orthonormal for every orthonormal list of vectors $e_1,\dots,e_n$ in $V$. By Theorem \ref{trm:orthonormalExists}, there exists an orthonormal basis $e_1,\dots,e_n$ of $V$. It follows by hypothesis that $Se_1,\dots,Se_n$ is orthonormal, as desired.\par
+            Fourth, suppose that there exists an orthonormal basis $e_1,\dots,e_n$ of $V$ such that $Se_1,\dots,Se_n$ is orthonormal. Then
+            \begin{equation*}
+                \inp{S^*Se_j}{e_k} = \inp{Se_j}{Se_k} = \delta_{jk} = \inp{e_j}{e_k}
+            \end{equation*}
+            for all $1\leq j,k\leq n$. It follows that if $u,v\in V$, then
+            \begin{align*}
+                \inp{S^*Su}{v} &= \inp{S^*S(a_1e_1+\cdots+a_ne_n)}{b_1e_1+\cdots+b_ne_n}\\
+                &= \inp{S^*Sa_1e_1}{b_1e_1}+\cdots+\inp{S^*Sa_ne_n}{b_ne_n}\\
+                &= \inp{a_1e_1}{b_1e_1}+\cdots+\inp{a_ne_n}{b_ne_n}\\
+                &= \inp{a_1e_1+\cdots+a_ne_n}{b_1e_1+\cdots+b_ne_n}\\
+                &= \inp{u}{v}
+            \end{align*}
+            Therefore, $S^*S=I$, as desired.\par
+            Fifth, suppose that $S^*S=I$. Then by Exercise \ref{exr:3D10}, $SS^*=I$, as desired.\par
+            Sixth, suppose that $SS^*=I$. To prove that $S^*$ is an isometry, it will suffice to show that $\norm{S^*v}=\norm{v}$ for all $v\in V$. Let $v\in V$ be arbitrary. Then
+            \begin{equation*}
+                \norm{S^*v}^2 = \inp{S^*v}{S^*v} = \inp{SS^*v}{v} = \inp{v}{v} = \norm{v}^2
+            \end{equation*}
+            Taking square roots yields the desired equality.\par
+            Seventh, suppose that $S^*$ is an isometry. It follows by our previous chain of proofs that $(S^*)^*S^*=SS^*=I$ and $S^*(S^*)^*=S^*S=I$. Therefore, $S$ is invertible with inverse $S^{-1}=S^*$, as desired.\par
+            Eighth, suppose that $S$ is invertible and $S^{-1}=S^*$. Then if $v\in V$, we have that
+            \begin{equation*}
+                \norm{Sv}^2 = \inp{Sv}{Sv} = \inp{S^*Sv}{v} = \inp{S^{-1}Sv}{v} = \inp{v}{v} = \norm{v}^2
+            \end{equation*}
+            Taking square roots yields the desired equality.
+        \end{proof}
+    \end{theorem}
+    \item It follows from (e) and (f) that every isometry is normal.
+    \item Thus, characterizations of normal operators (e.g., the \hyperref[trm:ComplexSpectral]{Complex Spectral Theorem}) can be used to give descriptions of isometries.
+    \begin{theorem}
+        Suppose $V$ is a complex inner product space and $S\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $S$ is an isometry.
+            \item There is an orthonormal basis of $V$ consisting of eigenvectors of $S$ whose corresponding eigenvalues all have absolute value 1.
+        \end{enumerate}
+        \begin{proof}
+            Suppose first that $S$ is an isometry. Then by the \hyperref[trm:ComplexSpectral]{Complex Spectral Theorem}, there is an orthonormal basis $e_1,\dots,e_n$ of $V$ consisting of the eigenvectors of $S$. Let $\lambda_1,\dots,\lambda_n$ be the corresponding eigenvalues. Then for each $j=1,\dots,n$, we have that
+            \begin{equation*}
+                |\lambda_j| = \norm{\lambda_je_j} = \norm{Se_j} = \norm{e_j} = 1
+            \end{equation*}
+            as desired.\par
+            Now suppose that there is an orthonormal basis $e_1,\dots,e_n$ of $V$ consisting of eigenvectors of $S$ whose corresponding eigenvalues $\lambda_1,\dots,\lambda_n$ all have absolute value 1. Let $v\in V$ be arbitrary. Then by Theorem \ref{trm:linCombOrthonormal}, we have that
+            \begin{align*}
+                v &= \inp{v}{e_1}e_1+\cdots+\inp{v}{e_n}e_n&
+                \norm{v}^2 &= |\inp{v}{e_1}|^2+\cdots+|\inp{v}{e_n}|^2
+            \end{align*}
+            It follows that
+            \begin{align*}
+                Sv &= \inp{v}{e_1}Se_1+\cdots+\inp{v}{e_n}Se_n\\
+                &= \inp{v}{e_1}\lambda_1e_1+\cdots+\inp{v}{e_n}\lambda_ne_n
+            \end{align*}
+            Thus, we have that
+            \begin{align*}
+                \norm{Sv}^2 &= \inp{\inp{v}{e_1}\lambda_1e_1+\cdots+\inp{v}{e_n}\lambda_ne_n}{\inp{v}{e_1}\lambda_1e_1+\cdots+\inp{v}{e_n}\lambda_ne_n}\\
+                &= \inp{\inp{v}{e_1}\lambda_1e_1}{\inp{v}{e_1}\lambda_1e_1}+\cdots+\inp{\inp{v}{e_n}\lambda_ne_n}{\inp{v}{e_n}\lambda_ne_n}\\
+                &= \inp{v}{e_1}\lambda_1\cdot\overline{\inp{v}{e_1}\lambda_1}\cdot\inp{e_1}{e_1}+\cdots+\inp{v}{e_n}\lambda_n\cdot\overline{\inp{v}{e_n}\lambda_n}\cdot\inp{e_n}{e_n}\\
+                &= \inp{v}{e_1}\lambda_1\cdot\overline{\inp{v}{e_1}}\bar{\lambda}_1\cdot 1+\cdots+\inp{v}{e_n}\lambda_n\cdot\overline{\inp{v}{e_n}}\bar{\lambda}_n\cdot 1\\
+                &= |\inp{v}{e_1}|^2|\bar{\lambda}_1|^2+\cdots+|\inp{v}{e_n}|^2|\bar{\lambda}_n|^2\\
+                &= |\inp{v}{e_1}|^2\cdot 1+\cdots+|\inp{v}{e_n}|^2\cdot 1\\
+                &= \norm{v}^2
+            \end{align*}
+            Taking square roots yields the desired equality.
         \end{proof}
     \end{theorem}
 \end{itemize}

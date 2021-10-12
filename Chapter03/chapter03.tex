@@ -362,7 +362,7 @@
     \item \marginnote{9/6:}\textbf{Invertible} (linear map): A linear map $T\in\lin{V}{W}$ such that there exists a linear map $S\in\lin{V}{W}$ such that $ST$ equals the identity map on $V$ and $TS$ equals the identity map on $W$.
     \item \textbf{Inverse} (of $T\in\lin{V}{W}$): The linear map $S\in\lin{W}{V}$ satisfying $ST=I_V$ and $TS=I_W$. \emph{Denoted by} $\bm{T^{-1}}$.
     \item We now justify the use of the word "the" in the definition of the inverse.
-    \begin{theorem}
+    \begin{theorem}\label{trm:uniqueInverse}
         An invertible linear map has a unique inverse.
         \begin{proof}
             Suppose $T\in\lin{V}{W}$ is invertible and $S_1,S_2$ are inverses of $T$. Then
@@ -512,10 +512,39 @@
 \end{itemize}
 
 
+\subsection*{Exercises}
+\begin{enumerate}[label={\textbf{\arabic*}},labelsep=1em,ref={\thesection.\arabic*}]
+    \setcounter{enumi}{8}
+    \item \marginnote{10/11:}\label{exr:3D9}Suppose $V$ is finite-dimensional and $S,T\in\ope{V}$. Prove that $ST$ is invertible if and only if both $S$ and $T$ are invertible.
+    \begin{proof}
+        Suppose first that $ST$ is invertible. Then by Theorem \ref{trm:invertInjSurjFiniteEquivalence}, $ST$ is injective and surjective. We will prove that $S,T$ are invertible in turn; in particular, we will first prove that $S$ is surjective and then prove that $T$ is injective. Let's begin. To prove that $S$ is surjective, it will suffice to show that $\range S=V$. Let $v\in V$ be arbitrary. Since $ST$ is surjective, there exists $v'\in V$ such that $STv'=v$. Thus, since $Tv'\in V$, the fact that $S(Tv')=v$ implies that $v\in\range S$. The inclusion in the other direction is obvious. Now to prove that $T$ is injective, it will suffice to show that $Tv=Tv'$ implies $v'=v'$. Let $Tv=Tv'$. Then $STv=STv'$. It follows that $v=v'$ by the injectivity of $ST$, as desired.\par
+        Now suppose that $S$ and $T$ are invertible. Then by Theorem \ref{trm:uniqueInverse}, there exist $S^{-1},T^{-1}$ such that
+        \begin{align*}
+            SS^{-1} &= I = S^{-1}S&
+            TT^{-1} &= I = T^{-1}T
+        \end{align*}
+        Let $(ST)^{-1}=T^{-1}S^{-1}$. Then
+        \begin{equation*}
+            ST(ST)^{-1} = STT^{-1}S^{-1} = SIS^{-1} = SS^{-1} = I = T^{-1}T = T^{-1}IT = T^{-1}S^{-1}ST = (ST)^{-1}ST
+        \end{equation*}
+        so $ST$ is invertible, as desired.
+    \end{proof}
+    \item \label{exr:3D10}Suppose $V$ is finite-dimensional and $S,T\in\ope{V}$. Prove that $ST=I$ if and only if $TS=I$.
+    \begin{proof}
+        Suppose first that $ST=I$. It is easy to see that defining $(ST)^{-1}=I^{-1}=I$ yields an inverse of $ST$. Thus, since $ST$ is invertible, we have by Exercise \ref{exr:3D9} that $S$ and $T$ are invertible. It follows since $ST=I$ that $S=T^{-1}$, meaning that
+        \begin{equation*}
+            TS = TT^{-1} = I
+        \end{equation*}
+        as desired.\par
+        The proof is symmetric in the other direction.
+    \end{proof}
+\end{enumerate}
+
+
 
 \section{Products and Quotients of Vector Spaces}
 \begin{itemize}
-    \item \textbf{Product} (of $V_1,\dots,V_m$): The set
+    \item \marginnote{9/6:}\textbf{Product} (of $V_1,\dots,V_m$): The set
     \begin{equation*}
         V_1\times\cdots\times V_m = \{(v_1,\dots,v_m):v_1\in V_1,\dots,v_m\in V_m\}
     \end{equation*}
