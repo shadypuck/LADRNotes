@@ -290,7 +290,7 @@
             \begin{equation*}
                 0 = \norm{(T-\lambda I)v} = \norm{(T-\lambda I)^*v} = \norm{(T^*-\bar{\lambda}I)v}
             \end{equation*}
-            Hence $v$ is an eigenvector of $T^*$ with eigenvalue $\bar{\lambda}$, as desired.
+            Hence $(T^*-\bar{\lambda}I)v=0$, so $T^*v=\bar{\lambda}v$, so $v$ is an eigenvector of $T^*$ with eigenvalue $\bar{\lambda}$, as desired.
         \end{proof}
     \end{theorem}
     \item Normal operators have orthogonal eigenvectors.
@@ -504,7 +504,7 @@
         \end{proof}
     \end{theorem}
     \item Since each nonnegative number has a unique nonnegative square root, the next result makes sense by analogy.
-    \begin{theorem}
+    \begin{theorem}\label{trm:posSquareRoot}
         Every positive operator on $V$ has a unique positive square root.
         \begin{proof}
             Let $T$ be a positive operator on $V$, let $v\in V$ be an eigenvector of $T$, let $\lambda\in\F$ be the corresponding eigenvalue, and let $R$ be a positive square root of $T$ (Theorem \ref{trm:positiveConditions} guarantees that at least one such operator exists). Since $T$ is positive, Theorem \ref{trm:positiveConditions} implies that $\lambda\geq 0$. Thus, to prove that $R$ is unique, we will prove that $Rv=\sqrt{\lambda}v$. This will imply that the behavior of $R$ on the eigenvectors of $T$ is uniquely determined. It will follows since there is a basis of $V$ consisting of the eigenvectors of $T$ (by the \hyperref[trm:RealSpectral]{Real} and \hyperref[trm:ComplexSpectral]{Complex} Spectral Theorems), the behavior of $R$ on $V$ (and hence $R$) is uniquely determined. Let's begin.\par\smallskip
@@ -542,7 +542,7 @@
     \item \textbf{Orthogonal} (operator): An isometry on a real inner product space.
     \item \textbf{Unitary} (operator): An isometry on a complex inner product space.
     \item Characterizing isometries.
-    \begin{theorem}
+    \begin{theorem}\label{trm:isomConditions}
         Suppose $S\in\ope{V}$. Then the following are equivalent.
         \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
             \item $S$ is an isometry.
@@ -632,6 +632,149 @@
                 &= \norm{v}^2
             \end{align*}
             Taking square roots yields the desired equality.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Polar Decomposition and Singular Value Decomposition}
+\begin{itemize}
+    \item \marginnote{10/16:}\textbf{Square root} (of a positive $T\in\ope{V}$): The unique positive operator $R\in\ope{V}$ such that $R^2=T$. \emph{Denoted by} $\bm{\sqrt{T}}$.
+    \begin{itemize}
+        \item The existence of such an operator is justified by Theorem \ref{trm:posSquareRoot}.
+    \end{itemize}
+    \item \marginnote{10/18:}Continuing with our analogy between $\C$ and $\ope{V}$, we now prove an analogous theorem to the decomposition of any complex number $z$ into the form $z=(z/|z|)|z|=(z/|z|)\sqrt{\bar{z}z}$, where $z/|z|$ (as an element of the unit circle) is analogous to an isometry, and $\bar{z}$ is analogous to the adjoint.
+    \begin{theorem}[Polar Decomposition]\label{trm:polarDecomp}
+        Suppose $T\in\ope{V}$. Then there exists an isometry $S\in\ope{V}$ such that
+        \begin{equation*}
+            T = S\sqrt{T^*T}
+        \end{equation*}
+        \begin{lemma*}\label{lem:normTroot}
+            If $v\in V$, then
+            \begin{equation*}
+                \norm{Tv} = \norm{\sqrt{T^*T}v}
+            \end{equation*}
+            \begin{proof}
+                Let $v\in V$ be arbitrary. Then
+                \begin{align*}
+                    \norm{Tv}^2 &= \inp{Tv}{Tv}\\
+                    &= \inp{T^*Tv}{v}\\
+                    &= \inp{\sqrt{T^*T}\sqrt{T^*T}v}{v}\\
+                    &= \inp{\sqrt{T^*T}v}{\sqrt{T^*T}v}\\
+                    &= \norm{\sqrt{T^*T}v}^2
+                \end{align*}
+                where the third equality holds because $T^*T$ is positive by Theorem \ref{trm:positiveConditions} and thus has a positive square root, and the fourth equality holds because $\sqrt{T^*T}$ is positive and thus is self-adjoint by definition. Taking square roots of the above gives the desired inequality.
+            \end{proof}
+        \end{lemma*}
+        \begin{proof}[Proof of Theorem {\hyperref[trm:polarDecomp]{7.21}}]
+            For this proof, we will first define a map $S_1:\range\sqrt{T^*T}\to\range T$. We will then prove that it is a well-defined function and that it is a linear map. $S_1$ thus has the desired property; all that remains is to extend it to an isometry. To do so, we define $S_2:(\range\sqrt{T^*T})^\perp\to(\range T)^\perp$ so that $S$, defined as $S_1$ on the appropriate domain and $S_2$ on its complement, is an isometry. Let's begin.\par\medskip
+            Let $S_1:\range\sqrt{T^*Tv}\to\range T$ be defined by
+            \begin{equation*}
+                S_1(\sqrt{T^*T}v) = Tv
+            \end{equation*}
+            for all $\sqrt{T^*T}v\in\range\sqrt{T^*T}$.\par
+            To prove that $S_1$ is a function, it will suffice to show that if $\sqrt{T^*T}v_1=\sqrt{T^*T}v_2$, then $Tv_1=Tv_2$. But if $\sqrt{T^*T}v_1=\sqrt{T^*T}v_2$, then
+            \begin{align*}
+                \norm{Tv_1-Tv_2} &= \norm{T(v_1-v_2)}\\
+                &= \norm{\sqrt{T^*T}(v_1-v_2)}\tag*{\hyperref[lem:normTroot]{Lemma}}\\
+                &= \norm{\sqrt{T^*T}v_1-\sqrt{T^*T}v_2}\\
+                &= 0
+            \end{align*}
+            Thus, by Theorem \ref{trm:normPropertiesa}, $Tv_1-Tv_2=0$, so $Tv_1=Tv_2$, as desired.\par
+            To prove that $S_1$ is a linear map, it will suffice to show that $S_1(\alpha\sqrt{T^*T}v)=\alpha S_1(\sqrt{T^*T}v)$ where $\alpha\in\F$ and $S_1(\sqrt{T^*T}v_1+\sqrt{T^*T}v_2)=S_1(\sqrt{T^*T}v_1)+S_1(\sqrt{T^*T}v_2)$. But since $\sqrt{T^*T}$ and $T$ are both linear maps themselves, we have that
+            \begin{align*}
+                S_1(\alpha\sqrt{T^*T}v) &= S_1(\sqrt{T^*T}(\alpha v))&
+                    S_1(\sqrt{T^*T}v_1+\sqrt{T^*T}v_2) &= S_1(\sqrt{T^*T}(v_1+v_2))\\
+                &= T(\alpha v)&
+                    &= T(v_1+v_2)\\
+                &= \alpha Tv&
+                    &= Tv_1+Tv_2\\
+                &= \alpha S_1(\sqrt{T^*T}v)&
+                    &= S_1(\sqrt{T^*T}v_1)+S_1(\sqrt{T^*T}v_2)
+            \end{align*}
+            as desired.\par
+            To prove that $S_1$ is an isometry, it will suffice to show that $\norm*{S_1(\sqrt{T^*T}v)}=\norm*{\sqrt{T^*T}v}$ for all $\sqrt{T^*T}v\in\range\sqrt{T^*T}$. But if $\sqrt{T^*T}v\in\range\sqrt{T^*T}$, then
+            \begin{align*}
+                \norm{S_1(\sqrt{T^*T}v)} &= \norm{Tv}\\
+                &= \norm{\sqrt{T^*T}v}
+            \end{align*}
+            where the first equality holds by the definition of $S_1$, and the second holds by the \hyperref[lem:normTroot]{Lemma}.\par\smallskip
+            We now build up to our definition of $S_2$. For starters, notice that it follows from the \hyperref[lem:normTroot]{Lemma} that $S_1$ is injective much the same way it followed that $S_1$ was a function. Consequently, Theorem \ref{trm:nullSpaceInjective} asserts that $\nul S_1=\{0\}$. Thus, since $S_1\in\lin{\range\sqrt{T^*T}}{\range T}$, we have by the \hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps} that
+            \begin{align*}
+                \dim\range\sqrt{T^*T} &= \dim\nul S_1+\dim\range S_1\\
+                &= 0+\dim\range T\\
+                &= \dim\range T
+            \end{align*}
+            Thus, since $\range\sqrt{T^*T}\subset V$ and $\range T\subset V$, we have that
+            \begin{align*}
+                \dim(\range T)^\perp &= \dim V-\dim\range T\tag*{Theorem \ref{trm:dimPerp}}\\
+                &= \dim V-\dim\range\sqrt{T^*T}\\
+                &= \dim(\range\sqrt{T^*T})^\perp\tag*{Theorem \ref{trm:dimPerp}}
+            \end{align*}
+            It follows that we can choose orthonormal bases $e_1,\dots,e_m$ and $f_1,\dots,f_m$ of $(\range\sqrt{T^*T})^\perp$ and $(\range T)^\perp$ of equal length. Let $S_2:(\range\sqrt{T^*T})^\perp\to(\range T)^\perp$ be the unique linear transformation such that $Te_j=f_j$ for each $j=1,\dots,n$ implied to exist by Theorem \ref{trm:mapBasisToBasis}. Note that $S_2$ is also an isometry since if $x\in(\range\sqrt{T^*T})^\perp$, then
+            \begin{align*}
+                \norm{S_2x}^2 &= \norm{S_1(a_1e_1+\cdots+a_me_m)}^2\\
+                &= \norm{a_1f_1+\cdots+a_mf_m}^2\\
+                &= |a_1|^2+\cdots+|a_m|^2\tag*{Theorem \ref{trm:normOrthoLnlComb}}\\
+                &= \norm{a_1e_1+\cdots+a_mf_m}^2\tag*{Theorem \ref{trm:normOrthoLnlComb}}\\
+                &= \norm{x}^2
+            \end{align*}
+            where taking square roots yields the desired equality.\par
+            We are now ready to define $S\in\ope{V}$. Let $v\in V$ be arbitrary. It follows by Theorem \ref{trm:perpDirectSum} that we can uniquely decompose $v$ into a sum $v=u+w$ where $u\in\range\sqrt{T^*T}$ and $v\in(\range\sqrt{T^*T})^\perp$. Thus, we define
+            \begin{equation*}
+                Sv = S_1u+S_2w
+            \end{equation*}
+            We could (but will not) explicitly show based on the previously proven properties that $S$ is well-defined and linear. We will, however, show that $S$ is an isometry: for any $v\in V$,
+            \begin{align*}
+                \norm{Sv}^2 &= \norm{S_1u+S_2v}^2\\
+                &= \norm{S_1u}^2+\norm{S_2w}\tag*{\hyperref[trm:pythagorean]{Pythagorean Theorem}}\\
+                &= \norm{u}^2+\norm{w}^2\\
+                &= \norm{v}^2\tag*{\hyperref[trm:pythagorean]{Pythagorean Theorem}}
+            \end{align*}
+            Lastly, we have by its definition that for any $v\in V$,
+            \begin{equation*}
+                (S\sqrt{T^*T})v = S(\sqrt{T^*T}v) = S_1(\sqrt{T^*T}v) = Tv
+            \end{equation*}
+            so $T=S\sqrt{T^*T}$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \marginnote{10/21:}The main conclusion from the Polar Decomposition is that \emph{any} linear operator, no matter how ill-defined, can be decomposed into the product of an isometry and a positive operator, two very well characterized classes of operators.
+    \begin{itemize}
+        \item In particular, if $\F=\C$, then $T$ is the product of two operators, both of which are orthonormally diagonalizable (though not necessarily with respect to the same orthonormal bases).
+    \end{itemize}
+    \item \textbf{Singular values} (of $T\in\ope{V}$): The eigenvalues of $\sqrt{T^*T}$, with each value $\lambda$ repeated $\dim E(\lambda,\sqrt{T^*T})$ times.
+    \item The singular values of $T$ are all nonnegative (because $\sqrt{T^*T}$ is a positive operator [see Theorem \ref{trm:positiveConditions}]). 
+    \item Each $T\in\ope{V}$ has $\dim V$ singular values (because $\sqrt{T^*T}$ is positive, hence self-adjoint, hence $\sqrt{T^*T}$ has a diagonal matrix [see the \hyperref[trm:RealSpectral]{Real} Spectral Theorem], hence $\sqrt{T^*T}$ has $\dim V$ distinct eigenvalues).
+    \item We now show that every operator on $V$ can be described in terms of its singular values and two orthonormal bases on $V$.
+    \begin{theorem}[Singular Value Decomposition]\label{trm:SVD}
+        Suppose $T\in\ope{V}$ has singular values $s_1,\dots,s_n$. Then there exist orthonormal bases $e_1,\dots,e_n$ and $f_1,\dots,f_n$ of $V$ such that
+        \begin{equation*}
+            Tv = s_1\inp{v}{e_1}f_1+\cdots+s_n\inp{v}{e_n}f_n
+        \end{equation*}
+        for every $v\in V$.
+        \begin{proof}
+            Applying the \hyperref[trm:RealSpectral]{Real} Spectral Theorem to the self-adjoint operator $\sqrt{T^*T}$ reveals that $V$ has an orthonormal basis $e_1,\dots,e_n$ of eigenvectors of $\sqrt{T^*T}$. Therefore, if we let $v\in V$ be arbitrary, then we have that
+            \begin{align*}
+                Tv &= (S\sqrt{T^*T})v\tag*{\hyperref[trm:polarDecomp]{Polar Decomposition}}\\
+                &= S(\sqrt{T^*T}(\inp{v}{e_1}e_1+\cdots+\inp{v}{e_n}e_n))\tag*{Theorem \ref{trm:linCombOrthonormal}}\\
+                &= S(\inp{v}{e_1}\sqrt{T^*T}e_1+\cdots+\inp{v}{e_n}\sqrt{T^*T}e_n)\\
+                &= S(\inp{v}{e_1}s_1e_1+\cdots+\inp{v}{e_n}s_ne_n)\\
+                &= s_1\inp{v}{e_1}Se_1+\cdots+s_n\inp{v}{e_n}Se_n\\
+                &= s_1\inp{v}{e_1}f_1+\cdots+s_n\inp{v}{e_n}f_n\tag*{Theorem \ref{trm:isomConditions}}
+            \end{align*}
+            where $s_1,\dots,s_n$ are the singular values of $T$ (the eigenvalues of $\sqrt{T^*T}$) and $f_1,\dots,f_n$ is another orthonormal basis of $V$.
+        \end{proof}
+    \end{theorem}
+    \item If $e_1,\dots,e_n$ and $f_1,\dots,f_n$ are orthonormal bases of $V$ that satisfy the \hyperref[trm:SVD]{Singular Value Decomposition} for some operator $T$, then $Te_j=s_jf_j$ for each $j=1,\dots,n$.
+    \begin{itemize}
+        \item In other words, every operator on $V$ has a diagonal matrix with respect to some orthonormal \emph{bases} (plural) of $V$.
+    \end{itemize}
+    \item The \hyperref[trm:SVD]{Singular Value Decomposition} has many applications, especially in the realm of computational linear algebra, where working with $T^*T$ is much easier than working with $\sqrt{T^*T}$. A powerful tool in this pursuit is the following.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$. Then the singular values of $T$ are the nonnegative square roots of the eigenvalues of $T^*T$, with each eigenvalue $\lambda$ repeated $\dim E(\lambda,T^*T)$ times.
+        \begin{proof}
+            Since $T^*T$ is positive and self-adjoint, we have by the hyperref[trm:RealSpectral]{Real} Spectral Theorem that there exists an orthonormal basis $e_1,\dots,e_n$ of $V$ and nonnegative numbers $\lambda_1,\dots,\lambda_n$ such that $T^*Te_j=\lambda_je_j$ for each $j=1,\dots,n$. It follows since $\sqrt{T^*T}$ is also a positive, self-adjoint operator that its eigenvalues (which exist) must be of the form $\sqrt{\lambda_1},\dots,\sqrt{\lambda_n}$ to satisfy $(\sqrt{T^*T})^2=T^*T$ and to be nonnegative.
         \end{proof}
     \end{theorem}
 \end{itemize}

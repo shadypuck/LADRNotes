@@ -35,7 +35,7 @@
     \begin{itemize}
         \item Note that $\norm{z}^2=z\cdot\bar{z}$.
     \end{itemize}
-    \item \textbf{Inner product} (on $V$): A function that takes each ordered pair $(u,v)\in V$ to a number $\inp{u}{v}\in\F$ and has the following properties.
+    \item \textbf{Inner product} (on $V$): A function that takes each ordered pair $(u,v)\in V\times V$ to a number $\inp{u}{v}\in\F$ and has the following properties.
     \begin{description}
         \item[positivity] \hfill\\ $\inp{v}{v}\geq 0$ for all $v\in V$.
         \item[definiteness] \hfill\\ $\inp{v}{v}=0$ iff $v=0$.
@@ -57,7 +57,7 @@
     \end{itemize}
     \item Basic properties of an inner product.
     \begin{theorem}\label{trm:inpProperties}\leavevmode
-        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\arabic*}]
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
             \item \label{trm:inpPropertiesa}For each fixed $u\in V$, the function that takes $v$ to $\inp{v}{u}$ is a linear map from $V$ to $\F$.
             \begin{proof}
                 Let $u\in V$ be arbitrary, and let $T:V\to\F$ be defined by $Tv=\inp{v}{u}$. Let $v,w\in V$ be arbitrary, and let $\lambda\in\F$. Then
@@ -153,7 +153,7 @@
         \begin{proof}
             We have
             \begin{align*}
-                \norm{u+v}^2 = \inp{u+v}{u+v}\\
+                \norm{u+v}^2 &= \inp{u+v}{u+v}\\
                 &= (\inp{u}{u}+\inp{u}{v})+(\inp{v}{u}+\inp{v}{v})\\
                 &= \norm{u}^2+0+0+\norm{v}^2\\
                 &= \norm{u}^2+\norm{v}^2
@@ -164,12 +164,15 @@
     \begin{itemize}
         \item Note that we can prove the converse of the Pythagorean Theorem in \emph{real} inner product spaces as follows: If $\norm{u+v}^2=\norm{u}^2+\norm{v}^2$ for $u,v$ real, then
         \begin{align*}
+            \inp{u}{u}+\inp{v}{v} &= \inp{u+v}{u+v}\\
+            \inp{u}{u}+\inp{v}{v} &= \inp{u}{u}+\inp{v}{u}+\inp{u}{v}+\inp{v}{v}\\
             0 &= \inp{u}{v}+\inp{v}{u}\\
             &= \inp{u}{v}+\overline{\inp{u}{v}}\\
             &= 2\Re\inp{u}{v}\\
+            &= 2\inp{u}{v}\\
             &= \inp{u}{v}
         \end{align*}
-        as desired.
+        where the first equality holds by the definition of the norm, the second by the additivity of the inner product and Theorem \ref{trm:inpPropertiesd}, the fifth by Theorem \ref{trm:propertiesComplex}, and the sixth by the hypothesis that the inner product space is real, as desired.
     \end{itemize}
     \item Let $u,v\in V$ with $v\neq 0$. We are now equipped to consider how to write $u$ as the sum of $v$ plus a vector $w$ orthogonal to $v$, as in Figure \ref{fig:orthogonalDecomposition} below.
     \begin{theorem}\label{trm:orthogonalDecomposition}
@@ -223,9 +226,7 @@
             where $\inp{v}{w}=0$. It follows by the \hyperref[trm:pythagorean]{Pythagorean Theorem} that
             \begin{align*}
                 \norm{u}^2 &= \norm{\frac{\inp{u}{v}}{\norm{v}^2}v}^2+\norm{w}^2\\
-                &= \inp{\frac{\inp{u}{v}}{\norm{v}^2}v}{\frac{\inp{u}{v}}{\norm{v}^2}v}+\norm{w}^2\\
-                &= \frac{\inp{u}{v}}{\norm{v}^2}\overline{\frac{\inp{u}{v}}{\norm{v}^2}}\inp{v}{v}+\norm{w}^2\\
-                &= \frac{\inp{u}{v}\overline{\inp{u}{v}}}{\norm{v}^4}\norm{v}^2+\norm{w}^2\\
+                &= \frac{|\inp{u}{v}|^2}{\norm{v}^4}\norm{v}^2+\norm{w}^2\tag*{Theorem \ref{trm:normPropertiesb}}\\
                 &= \frac{|\inp{u}{v}|^2}{\norm{v}^2}+\norm{w}^2\\
                 &\geq \frac{|\inp{u}{v}|^2}{\norm{v}^2}
             \end{align*}
@@ -266,9 +267,7 @@
                 \inp{u}{v} &= \inp{cv}{v}\\
                 &= c\inp{v}{v}\\
                 &= c\norm{v}^2\\
-                &= c\sqrt{\inp{v}{v}}\norm{v}\\
-                &= \sqrt{c^2\inp{v}{v}}\norm{v}\\
-                &= \sqrt{\inp{cv}{cv}}\norm{v}\\
+                &= \norm{cv}\norm{v}\\
                 &= \norm{u}\norm{v}
             \end{align*}
             The proof is the same in the reverse direction.
@@ -497,7 +496,7 @@
             Lastly, by Theorem \ref{trm:dimOrthonormal}, we know that $e_1,\dots,e_m,f_1,\dots,f_n$ is a basis of $V$.
         \end{proof}
     \end{theorem}
-    \item The next result build on Theorem \ref{trm:upperTriangularExists}.
+    \item The next result builds on Theorem \ref{trm:upperTriangularExists}.
     \begin{theorem}\label{trm:upperTriangularOrthonormal}
         Suppose $T\in\ope{V}$. If $T$ has an upper-triangular matrix with respect to some basis of $V$, then $T$ has an upper-triangular matrix with respect to some orthonormal basis of $V$.
         \begin{proof}
@@ -617,7 +616,7 @@
         \end{proof}
     \end{theorem}
     \item Dimension of the orthogonal complement.
-    \begin{theorem}
+    \begin{theorem}\label{trm:dimPerp}
         Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$. Then
         \begin{equation*}
             \dim U^\perp = \dim V-\dim U
@@ -661,7 +660,7 @@
                 \begin{align*}
                     P_U(a_1v_1+a_2v_2) &= P_U(a_1u_1+a_2u_2+a_1w_1+a_2w_2)\\
                     &= a_1u_1+a_2u_2\\
-                    &= a_1P_uv_1+a_2P_2v_2
+                    &= a_1P_Uv_1+a_2P_Uv_2
                 \end{align*}
                 as desired.
             \end{proof}
