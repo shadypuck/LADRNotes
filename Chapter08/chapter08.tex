@@ -1,0 +1,189 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{7}
+
+\begin{document}
+
+
+
+
+\chapter{Operators on Complex Vector Spaces}
+\section{Generalized Eigenvectors and Nilpotent Operators}
+\begin{itemize}
+    \item \marginnote{10/22:}In this chapter, we will assume that $V$ is a finite-dimensional \emph{nonzero} vector space over $\F$ (just to avoid dealing with some trivialities).
+    \item Null spaces and powers of an operator.
+    \begin{theorem}\label{trm:nullExponentSequence}
+        Suppose $T\in\ope{V}$. Then
+        \begin{equation*}
+            \{0\} = \nul T^0
+            \subset \nul T^1
+            \subset \cdots
+        \end{equation*}
+        \begin{proof}
+            We induct on the exponent $k$ of $T$. For the base case $k=0$, suppose $v\in\nul T^0$. Then $v\in\nul I$ since $T^0=I$ by definition. It follows that
+            \begin{equation*}
+                0 = Iv = v
+            \end{equation*}
+            so $\{0\}=\nul T^0$, as desired. Now suppose inductively that we have proven the claim for $k$; we now wish to show that $\nul T^k\subset\nul T^{k+1}$. Suppose $v\in\nul T^k$. Then $T^kv=0$. It follows that
+            \begin{equation*}
+                T^{k+1}v = T(T^kv) = T(0) = 0
+            \end{equation*}
+            so $v\in T^{k+1}$, as desired.
+        \end{proof}
+    \end{theorem}
+    \begin{theorem}\label{trm:nullSequenceBound}
+        Let $T\in\ope{V}$, and suppose $m$ is a nonnegative integer such that $\nul T^m=\nul T^{m+1}$. Then
+        \begin{equation*}
+            \nul T^m = \nul T^{m+1}
+            = \nul T^{m+2}
+            = \cdots
+        \end{equation*}
+        \begin{proof}
+            We induct on $k$, defined as follows. For the base case $k=0$, we have that
+            \begin{equation*}
+                \nul T^{m+0} = \nul T^m = \nul T^{m+1} = \nul T^{m+0+1}
+            \end{equation*}
+            by hypothesis, as desired. Now suppose inductively that we have proven that $\nul T^{m+k-1}=\nul T^{m+k}$; we now wish to show that $\nul T^{m+k}=\nul T^{m+k+1}$. By Theorem \ref{trm:nullExponentSequence}, we have that $\nul T^{m+k}\subset\nul T^{m+k+1}$. On the other hand, suppose that $v\in\nul T^{m+k+1}$. Then
+            \begin{equation*}
+                0 = T^{m+k+1}v = T^{m+1}(T^kv)
+            \end{equation*}
+            But this implies that $T^kv\in\nul T^{m+1}=\nul T^m$ by hypothesis. Therefore,
+            \begin{equation*}
+                0 = T^m(T^kv) = T^{m+k}v
+            \end{equation*}
+            so $v\in\nul T^{m+k}$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Theorem \ref{trm:nullSequenceBound} raises the question how to characterize/define/find nonnegative integers $m$ such that the null space stops growing. We tackle begin to tackle this question with the following.
+    \begin{theorem}\label{trm:nullSequenceDimEnd}
+        Suppose $T\in\ope{V}$. Let $n=\dim V$. Then
+        \begin{equation*}
+            \nul T^n = \nul T^{n+1} = \cdots
+        \end{equation*}
+        \begin{proof}
+            To prove the claim, Theorem \ref{trm:nullSequenceBound} tells us that we need only verify that $\nul T^n=\nul T^{n+1}$. Suppose for the sake of contradiction that $\nul T^n\neq\nul T^{n+1}$. Then by Theorem \ref{trm:nullSequenceBound}, we cannot have $\nul T^k=\nul T^{k+1}$ for any $0\leq k\leq n$. However, by Theorem \ref{trm:nullExponentSequence}, we must still have that $\nul T^k\subset\nul T^{k+1}$ for each $k=1,\dots,n$. Combining the last two results, we must have the following.
+            \begin{equation*}
+                \{0\} = \nul T^0
+                \subsetneq \nul T^1
+                \subsetneq \cdots
+                \subsetneq \nul T^n
+                \subsetneq \nul T^{n+1}
+            \end{equation*}
+            At each of these strict inclusions, the dimension from the previous to the next null space must increase by at least one. Thus, $\dim\nul T^{n+1}\geq n+1$. But since $\nul T^{n+1}\subset V$, Theorem \ref{trm:dimSubspaces} asserts that $\dim\nul T^{n+1}\leq n$, so we have that
+            \begin{equation*}
+                n+1 \leq \dim\nul T^{n+1} \leq n
+            \end{equation*}
+            a contradiction.
+        \end{proof}
+    \end{theorem}
+    \item While it is not true that $V=\nul T\oplus\range T$ for each $T\in\ope{V}$, we can prove the following related theorem.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$. Let $n=\dim V$. Then
+        \begin{equation*}
+            V = \nul T^n\oplus\range T^n
+        \end{equation*}
+        \begin{proof}
+            To prove that $V=\nul T^n\oplus\range T^n$, it will suffice to show that $(\nul T^n)\cap(\range T^n)=\{0\}$ and that $\dim(\nul T^n\oplus\range T^n)=\dim V$ (see Exercise \ref{exr:subspaceSameDim}). Let's begin.\par
+            Suppose $v\in(\nul T^n)\cap(\range T^n)$. Then $T^nv=0$ and there exists $u\in V$ such that $v=T^nu$. Combining these results reveals that
+            \begin{equation*}
+                T^{2n}u = T^nv = 0
+            \end{equation*}
+            so $u\in\nul T^{2n}=\nul T^n$ by Theorem \ref{trm:nullSequenceDimEnd}. Therefore, $v=T^nu=0$, as desired.\par
+            As to the other equality, we have that
+            \begin{align*}
+                \dim(\nul T^n\oplus\range T^n) &= \dim\nul T^n+\dim\range T^n\tag*{Theorem \ref{trm:dimDirectSum}}\\
+                &= \dim V\tag*{\hyperref[trm:fundamentalTheoremLinearMaps]{Fundamental Theorem of Linear Maps}}
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item Although many operators can be described by their eigenvectors, not all can. Thus, we introduce the following more general descriptor.
+    \item \textbf{Generalized eigenvector} (of $T\in\ope{V}$): A nonzero vector $v\in V$ such that
+    \begin{equation*}
+        (T-\lambda I)^jv = 0
+    \end{equation*}
+    for some positive integer $j$, where $\lambda$ is an eigenvalue of $T$.
+    \begin{itemize}
+        \item Although this definition lets $j$ be arbitrary, we will soon prove that if $j=\dim V$, every generalized eigenvector satisfies the above equation.
+        \item Note that we do not define generalized eigenvalues because generalized eigenvectors still pertain to the original set of eigenvalues.
+    \end{itemize}
+    \item Every eigenvector of $T$ is a generalized eigenvector of $T$ (take $j=1$ in the definition).
+    \item \textbf{Generalized eigenspace} (of $T\in\ope{V}$ and $\lambda$): The set of all generalized eigenvectors of $T$ corresponding to $\lambda$, and the 0 vector. \emph{Denoted by} $\bm{G(\lambda,T)}$.
+    \item Since every eigenvector of $T$ is a generalized eigenvector of $T$, we have that $E(\lambda,T)\subset G(\lambda,T)$.
+    \item We now characterize generalized eigenspaces.
+    \begin{theorem}\label{trm:generalizedEigenspaces}
+        Suppose $T\in\ope{V}$ and $\lambda\in\F$. Then $G(\lambda,T)=\nul(T-\lambda I)^{\dim V}$.
+        \begin{proof}
+            Suppose first that $v\in(T-\lambda I)^{\dim V}$. Then by the definition of $G(\lambda,T)$, $v\in G(\lambda,T)$, as desired.\par
+            Now suppose that $v\in G(\lambda,T)$. Then $(T-\lambda I)^jv=0$ for some positive integer $j$. Thus, $v\in\nul(T-\lambda I)^j$. We divide into two cases ($j<\dim V$ and $j\geq\dim V$). If $j<\dim V$, then by Theorem \ref{trm:nullExponentSequence}, $v\in\nul(T-\lambda I)^j\subset\nul(T-\lambda I)^{\dim V}$, as desired. On the other hand, if $j\geq\dim V$, then by Theorem \ref{trm:nullSequenceDimEnd} $v\in\nul(T-\lambda I)^j=\nul(T-\lambda I)^{\dim V}$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now prove an analogous result to Theorem \ref{trm:lnlIndependentEigenvectors} for generalized eigenvectors.
+    \begin{theorem}
+        Let $T\in\ope{V}$. Suppose $\lambda_1,\dots,\lambda_m$ are distinct eigenvalues of $T$ and $v_1,\dots,v_m$ are corresponding generalized eigenvectors. Then $v_1,\dots,v_m$ is linearly independent.
+        \begin{proof}
+            Suppose $a_1,\dots,a_m\in\F$ are numbers such that
+            \begin{equation*}
+                0 = a_1v_1+\cdots+a_mv_m
+            \end{equation*}
+            We will prove that each $a_j=0$ one at a time. Let's begin.\par
+            Let $j\in\{1,\dots,n\}$ be arbitrary, and let $k$ be the largest nonnegative integer such that $(T-\lambda_jI)^kv_j\neq 0$. Let
+            \begin{equation*}
+                w = (T-\lambda_jI)^kv_j
+            \end{equation*}
+            Then by the definition of $k$,
+            \begin{align*}
+                (T-\lambda_jI)w &= (T-\lambda_jI)^{k+1}v_1 = 0\\
+                Tw &= \lambda_jw
+            \end{align*}
+            It follows that for any $\lambda\in\F$, $(T-\lambda I)w=(\lambda_j-\lambda)w$, which in turn implies that
+            \begin{equation*}
+                (T-\lambda I)^nw = (\lambda_j-\lambda)^nw
+            \end{equation*}
+            for any $\lambda\in\F$ where $n=\dim V$. Thus, we have that
+            \begin{align*}
+                (T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n0 &= (T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n(a_1v_1+\cdots+a_mv_m)\\
+                0 &= a_j(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_j\\
+                &= a_j(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^nv_j\\
+                &= a_j\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^n(T-\lambda_jI)^kv_j\\
+                &= a_j\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^nw
+            \end{align*}
+            so $a_j=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Nilpotent} (operator): An operator $T$ such that $T^j=0$ for some positive integer $j$.
+    \item We now show that we never need to raise a nilpotent operator to a $j>\dim V$ to make it equal to zero.
+    \begin{theorem}\label{trm:NtothedimV}
+        Suppose $N\in\ope{V}$ is nilpotent. Then $N^{\dim V}=0$.
+        \begin{proof}
+            Since $N$ is nilpotent, we know that there exists a nonnegative integer $j$ such that
+            \begin{equation*}
+                (N-0I)^jv = N^jv = 0 = 0v
+            \end{equation*}
+            for any $v\in V$. Thus, $G(0,N)=V$. It follows by Theorem \ref{trm:generalizedEigenspaces} that $V=G(0,N)=\nul(N-0I)^{\dim V}=\nul N^{\dim V}$. Consequently, for any $v\in V$, $N^{\dim V}v=0$, so $N^{\dim V}=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now show that if $N$ is nilpotent, there exists a basis of $V$ such that $\mat{N}$ is more than half zeroes.
+    \begin{theorem}
+        Suppose $N$ is a nilpotent operator on $V$. Then there is a basis of $V$ with respect to which the matrix of $N$ has the form
+        \begin{equation*}
+            \begin{pmatrix}
+                0 &  & *\\
+                 & \ddots & \\
+                0 &  & 0\\
+            \end{pmatrix}
+        \end{equation*}
+        , i.e., where all entries on and below the diagonal are zeroes.
+        \begin{proof}
+            First choose a basis of $\nul N$. Then extend this to a basis of $\nul N^2$, then to a basis of $\nul N^3$, on and on up until we have extended it to a basis $v_1,\dots,v_n$ of $\nul N^{\dim V}$ (which, incidentally, will be a basis of $V$ since $\nul N^{\dim V}=V$ by Theorem \ref{trm:NtothedimV}). We will prove that $\mat{N,(v_1,\dots,v_n)}$ has the desired form.\par
+            Let $k$ be the smallest positive integer such that $v_1\in\nul N^k$. Then $0=N^kv_1=N^{k-1}Nv_1$, so $Nv_1\in\nul N^{k-1}=\{0\}$ by the condition on $k$. It follows that $Nv_1=0$, so since $v_1,\dots,v_n$ is linearly independent (as a basis), $\mat{N,(v_1,\dots,v_n)}_{\cdot,1}=\mat{Nv_1}$ has only zero entries. Apply the same argument to any other vector in $\nul N^k$, getting all zero columns for some number of columns. Having done this, move onto the first vector in the basis that is not in $\nul N^k$. Let this vector be $v_i$. Then in a similar fashion to before, $Nv_i\in\nul N^k$, so $Nv_i$ is a linear combination of all vectors before $v_i$. Thus, all nonzero entries in $\mat(N,(v_1,\dots,v_n))_{\cdots,i}=\mat(Nv_i)$ are above the diagonal. We continue in this fashion for the whole basis.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+
+\end{document}
