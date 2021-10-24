@@ -79,7 +79,7 @@
         \end{proof}
     \end{theorem}
     \item While it is not true that $V=\nul T\oplus\range T$ for each $T\in\ope{V}$, we can prove the following related theorem.
-    \begin{theorem}
+    \begin{theorem}\label{trm:nulRangeDimPower}
         Suppose $T\in\ope{V}$. Let $n=\dim V$. Then
         \begin{equation*}
             V = \nul T^n\oplus\range T^n
@@ -121,7 +121,7 @@
         \end{proof}
     \end{theorem}
     \item We now prove an analogous result to Theorem \ref{trm:lnlIndependentEigenvectors} for generalized eigenvectors.
-    \begin{theorem}
+    \begin{theorem}\label{trm:lnlIndependentGenEigenvectors}
         Let $T\in\ope{V}$. Suppose $\lambda_1,\dots,\lambda_m$ are distinct eigenvalues of $T$ and $v_1,\dots,v_m$ are corresponding generalized eigenvectors. Then $v_1,\dots,v_m$ is linearly independent.
         \begin{proof}
             Suppose $a_1,\dots,a_m\in\F$ are numbers such that
@@ -143,13 +143,26 @@
                 (T-\lambda I)^nw = (\lambda_j-\lambda)^nw
             \end{equation*}
             for any $\lambda\in\F$ where $n=\dim V$. Thus, we have that
+            \begingroup
+            \allowdisplaybreaks
             \begin{align*}
-                (T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n0 &= (T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n(a_1v_1+\cdots+a_mv_m)\\
-                0 &= a_j(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_j\\
-                &= a_j(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^nv_j\\
-                &= a_j\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^n(T-\lambda_jI)^kv_j\\
-                &= a_j\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^nw
+                (T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n0 ={}& (T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n(a_1v_1+\cdots+a_mv_m)\\
+                \begin{split}
+                    0 ={}& a_1(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_1+\cdots+a_{j-1}(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_{j-1}\\
+                    &+ a_j(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_j\\
+                    &+ a_{j+1}(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_{j+1}+\cdots+a_m(T-\lambda_jI)^k\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nv_m
+                \end{split}\\
+                \begin{split}
+                    ={}& a_1(T-\lambda_jI)^k\left( \prod_{\substack{i=1\\i\neq j,1}}^m(T-\lambda_iI)^n \right)(T-\lambda_1I)^nv_1\\
+                    &+ \cdots+a_{j-1}(T-\lambda_jI)^k\left( \prod_{\substack{i=1\\i\neq j,j-1}}^m(T-\lambda_iI)^n \right)(T-\lambda_{j-1}I)^nv_{j-1}\\
+                    &+ a_j\left( \prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^n \right)(T-\lambda_jI)^kv_j\\
+                    &+ a_{j+1}(T-\lambda_jI)^k\left( \prod_{\substack{i=1\\i\neq j,j+1}}^m(T-\lambda_iI)^n \right)(T-\lambda_{j+1}I)^nv_{j+1}\\
+                    &+ \cdots+a_m(T-\lambda_jI)^k\left( \prod_{\substack{i=1\\i\neq j,m}}^m(T-\lambda_iI)^n \right)(T-\lambda_mI)^nv_m
+                \end{split}\tag*{Theorem \ref{trm:polTMultiplicative}}\\
+                ={}& a_j\prod_{\substack{i=1\\i\neq j}}^m(T-\lambda_iI)^nw\tag*{Theorem \ref{trm:generalizedEigenspaces}}\\
+                ={}& a_j\prod_{\substack{i=1\\i\neq j}}^m(\lambda_j-\lambda_i)^nw
             \end{align*}
+            \endgroup
             so $a_j=0$, as desired.
         \end{proof}
     \end{theorem}
@@ -166,7 +179,7 @@
         \end{proof}
     \end{theorem}
     \item We now show that if $N$ is nilpotent, there exists a basis of $V$ such that $\mat{N}$ is more than half zeroes.
-    \begin{theorem}
+    \begin{theorem}\label{trm:nilpotentMatrix}
         Suppose $N$ is a nilpotent operator on $V$. Then there is a basis of $V$ with respect to which the matrix of $N$ has the form
         \begin{equation*}
             \begin{pmatrix}
@@ -179,6 +192,373 @@
         \begin{proof}
             First choose a basis of $\nul N$. Then extend this to a basis of $\nul N^2$, then to a basis of $\nul N^3$, on and on up until we have extended it to a basis $v_1,\dots,v_n$ of $\nul N^{\dim V}$ (which, incidentally, will be a basis of $V$ since $\nul N^{\dim V}=V$ by Theorem \ref{trm:NtothedimV}). We will prove that $\mat{N,(v_1,\dots,v_n)}$ has the desired form.\par
             Let $k$ be the smallest positive integer such that $v_1\in\nul N^k$. Then $0=N^kv_1=N^{k-1}Nv_1$, so $Nv_1\in\nul N^{k-1}=\{0\}$ by the condition on $k$. It follows that $Nv_1=0$, so since $v_1,\dots,v_n$ is linearly independent (as a basis), $\mat{N,(v_1,\dots,v_n)}_{\cdot,1}=\mat{Nv_1}$ has only zero entries. Apply the same argument to any other vector in $\nul N^k$, getting all zero columns for some number of columns. Having done this, move onto the first vector in the basis that is not in $\nul N^k$. Let this vector be $v_i$. Then in a similar fashion to before, $Nv_i\in\nul N^k$, so $Nv_i$ is a linear combination of all vectors before $v_i$. Thus, all nonzero entries in $\mat(N,(v_1,\dots,v_n))_{\cdots,i}=\mat(Nv_i)$ are above the diagonal. We continue in this fashion for the whole basis.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+\subsection*{Exercises}
+\begin{enumerate}[label={\textbf{\arabic*}},labelsep=1em,ref={\thesection.\arabic*}]
+    \item \label{exr:8.A.7}Suppose $N\in\ope{V}$ is nilpotent. Prove that 0 is the only eigenvalue of $N$.
+    \begin{proof}
+        Suppose for the sake of contradiction that $\lambda\neq 0$ is an eigenvalue of $N$ with corresponding eigenvector $v$. Then
+        \begin{equation*}
+            0 = 0v = N^{\dim V}v = \lambda^{\dim V}v \neq 0
+        \end{equation*}
+        a contradiction.
+    \end{proof}
+\end{enumerate}
+
+
+
+\section{Decomposition of an Operator}
+\begin{itemize}
+    \item \marginnote{10/23:}We are going to build up in this section to a proof that while not every operator's domain can be decomposed into eigenspaces, every operator's domain can be decomposed into generalized eigenspaces.
+    \item We first show that the null and rance spaces of every polynomial of an operator $T$ are invariant under $T$.
+    \begin{theorem}\label{trm:polTinvariant}
+        Suppose $T\in\ope{V}$ and $p\in\pol{\F}$. Then $\nul p(T)$ and $\range p(T)$ are invariant under $T$.
+        \begin{proof}
+            To prove that $\nul p(T)$ is invariant under $T$, it will suffice to show that for any $v\in\nul p(T)$, $Tv\in\nul p(T)$. Let $v\in\nul p(T)$ be arbitrary. Then $(p(T))v=0$. It follows that
+            \begin{align*}
+                (p(T))(Tv) &= (p(T)T)v\\
+                &= (Tp(T))v\tag*{Theorem \ref{trm:polTMultiplicative}}\\
+                &= T(p(T)v)\\
+                &= T(0)\\
+                &= 0\tag*{Theorem \ref{trm:linSendsZero}}
+            \end{align*}
+            Therefore, $Tv\in\nul p(T)$, as desired.\par
+            To prove that $\range p(T)$ is invariant under $T$, it will suffice to show that for any $v\in\range p(T)$, $Tv\in\range p(T)$. Let $v\in\range p(T)$ ve arbitrary. Then there exists $u\in V$ such that $p(T)u=v$. It follows that
+            \begin{align*}
+                Tv &= T(p(T)u)\\
+                &= p(T)(Tu)\tag*{Theorem \ref{trm:polTMultiplicative}}
+            \end{align*}
+            Therefore, $Tv\in\range p(T)$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now prove the main result we've been working up to. It shows that \dq{every operator on a complex vector space can be thought of as composed of pieces, each of which is a nilpotent operator plus a scalar multiple of the identity}{252}
+    \begin{theorem}\label{trm:genEigenDecomp}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$. Let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:genEigenDecompa}$V=G(\lambda_1,T)\oplus\cdots\oplus G(\lambda_m,T)$.
+            \begin{proof}
+                We induct on $n=\dim V$. For the base case $n=1$, since we know that there exists \emph{an} eigenvalue of $T$ (see Theorem \ref{trm:eigenExists}) to which there can only correspond one set of eigenvector of $T$ (because $V$ is one-dimensional), we have that $V=G(\lambda_1,T)$, as desired. Now suppose using strong induction that we have proven the claim for all dimensions strictly less than $n$; we now seek to prove it for $n$. Let's begin.\par
+                By Theorem \ref{trm:eigenExists}, $T$ has an eigenvalue $\lambda_1$. Thus,
+                \begin{align*}
+                    V &= \nul(T-\lambda_1I)^n\oplus\range(T-\lambda_1I)^n\tag*{Theorem \ref{trm:nulRangeDimPower}}\\
+                    &= G(\lambda_1,T)\oplus U\tag*{Theorem \ref{trm:generalizedEigenspaces}}
+                \end{align*}
+                where we let $U=\range(T-\lambda_1I)^n$. Under this definition, we have by Theorem \ref{trm:polTinvariant} with $p(z)=(z-\lambda_1)^n$ that $U$ is invariant under $T$. Additionally, since $\lambda_1$ is an eigenvalue of $T$ (thus with some corresponding generalized eigenvector), $G(\lambda_1,T)\neq\{0\}$. Therefore, $\dim U<n$ by Theorem \ref{trm:dimDirectSum}.\par
+                Consider $T|_U$. None of the generalized eigenvectors of $T|_U$ correspond to the eigenvalue $\lambda_1$, because all generalized eigenvectors of $T$ corresponding to $\lambda_1$ are elements of $G(\lambda_1,T)$. Thus, the eigenvalues of $T|_U$ are exactly $\lambda_1,\dots,\lambda_m$.\par
+                Having established that $\dim U<n$ and $\lambda_2,\dots,\lambda_m$ are the distinct eigenvalues of $T|_U$, we have by the induction hypothesis that $U=G(\lambda_2,T|_U)\oplus\cdots+G(\lambda_m,T|_U)$. Consequently, all that's left is to show that $G(\lambda_k,T|_U)=G(\lambda_k,T)$ for each $k=2,\dots,m$. Clearly, $G(\lambda_k,T|_U)\subset G(\lambda_k,T)$. In the other direction, suppose that $v\in G(\lambda_k,T)$. As an element of $V=G(\lambda_1,T)\oplus U$, we have that $v=v_1+u$ where $v_1\in G(\lambda_1,T)$ and $u\in U$. However, since $v$ and $v_1$ correspond to different eigenvalues, we have by Theorem \ref{trm:lnlIndependentGenEigenvectors} that they are linearly independent. Thus, $v_1=0$. Therefore, $v=u\in U$, so $v\in G(\lambda_k,T|_U)$, as desired.
+            \end{proof}
+            \item \label{trm:genEigenDecompb}Each $G(\lambda_j,T)$ is invariant under $T$.
+            \begin{proof}
+                By Theorem \ref{trm:generalizedEigenspaces}, $G(\lambda_j,T)=\nul(T-\lambda_jI)^{\dim V}$. By Theorem \ref{trm:polTinvariant}, if $p(z)=(z-\lambda_j)^{\dim V}$, then $\nul p(T)=\nul(T-\lambda_jI)^{\dim V}$ is invariant under $T$. Therefore, $G(\lambda_j,T)$ is invariant under $T$, as desired.
+            \end{proof}
+            \item \label{trm:genEigenDecompc}Each $(T-\lambda_jI)|_{G(\lambda_j,T)}$ is nilpotent.
+            \begin{proof}
+                Let $v\in G(\lambda_j,T)$. Then
+                \begin{align*}
+                    ((T-\lambda_jI)|_{G(\lambda_j,T)})^{\dim V}v &= (T-\lambda_jI)^{\dim V}v\\
+                    &= 0\tag*{Theorem \ref{trm:generalizedEigenspaces}}
+                \end{align*}
+                Thus, since there is a positive integer power of $(T-\lambda_jI)|_{G(\lambda_j,T)}$ such that $(T-\lambda_jI)|_{G(\lambda_j,T)}=0$, $(T-\lambda_jI)|_{G(\lambda_j,T)}$ is nilpotent, as desired.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item We now show that while $T$ may not have enough eigenvectors to form an eigenbasis, $T$ always has enough generalized eigenvectors to form a basis.
+    \begin{theorem}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$. Then there is a basis of $V$ consisting of generalized eigenvectors of $T$.
+        \begin{proof}
+            Choose a basis of each $G(\lambda_j,T)$ proven to compose $V$ in Theorem \ref{trm:genEigenDecompa}. Concatenate these bases to form a basis of $V$ consisting of generalized eigenvectors of $V$.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Multiplicity} (of an eigenvalue $\lambda$ of $T\in\ope{V}$): The dimension of $G(\lambda,T)$. \emph{Also known as} \textbf{algebraic multiplicity}.
+    \item We now prove an obvious consequence of the definition of multiplicity.
+    \begin{theorem}\label{trm:dimGenEigenDecomp}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$. Then the sum of the multiplicities of all the eigenvalues of $T$ equals $\dim V$.
+        \begin{proof}
+            We have from Theorem \ref{trm:genEigenDecompa} that
+            \begin{equation*}
+                V = G(\lambda_1,T)\oplus\cdots\oplus G(\lambda_m,T)
+            \end{equation*}
+            Thus, by Theorem \ref{trm:dimDirectSum},
+            \begin{equation*}
+                \dim V = \dim G(\lambda_1,T)+\cdots+\dim G(\lambda_m,T)
+            \end{equation*}
+            Therefore, by the definition of the multiplicity of an eigenvalue of $T$, the above equation proves the desired result.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Geometric multiplicity} (of an eigenvalue $\lambda$ of $T\in\ope{V}$): The dimension of $E(\lambda,T)$.
+    \item \textbf{Block diagonal matrix}: A square matrix of the form
+    \begin{equation*}
+        \begin{pmatrix}
+            A_1 &  & 0\\
+             & \ddots & \\
+            0 &  & A_m\\
+        \end{pmatrix}
+    \end{equation*}
+    where $A_1,\dots,A_m$ are square matrices lying along the diagonal and all the other entries of the matrix equal 0.
+    \item We now prove the results we have proven before, but in matrix form.
+    \begin{theorem}\label{trm:blockDiagonalUpperTriangular}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$. Let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$, with multiplicities $d_1,\dots,d_m$. Then there is a basis of $V$ with respect to which $T$ has a block diagonal matrix of the form
+        \begin{equation*}
+            \begin{pmatrix}
+                A_1 &  & 0\\
+                 & \ddots & \\
+                0 &  & A_m\\
+            \end{pmatrix}
+        \end{equation*}
+        where each $A_j$ is a $d_j$-by-$d_j$ upper-triangular matrix of the form
+        \begin{equation*}
+            A_j =
+            \begin{pmatrix}
+                \lambda_j &  & *\\
+                 & \ddots & \\
+                0 &  & \lambda_j\\
+            \end{pmatrix}
+        \end{equation*}
+        \begin{proof}
+            Let $j\in\{1,\dots,m\}$ be arbitrary. By Theorem \ref{trm:genEigenDecompc}, $(T-\lambda_jI)|_{G(\lambda_j,T)}$ is nilpotent. Thus, by Theorem \ref{trm:nilpotentMatrix}, we can choose a basis of $G(\lambda_j,T)$ (which will be of length $d_j$) such that $\mat{(T-\lambda_jI)|_{G(\lambda_j,T)}}$ with respect to this basis has all zeroes on and below the diagonal. It follows that $\mat{T|_{G(\lambda_j,T)}}=\mat{(T-\lambda_jI)|_{G(\lambda_j,T)}}+\mat{\lambda_jI|_{G(\lambda_j,T)}}$ will have the necessary form to be an $A_j$. Therefore, since concatenating the bases of each $G(\lambda_j,T)$ gives a basis of $V$ by Theorem \ref{trm:genEigenDecompa}, $\mat{T}$ with respect to this basis will have the desired form.
+        \end{proof}
+    \end{theorem}
+    \item We now harness the power of some of our newer theorems to prove some further results about square roots.
+    \begin{theorem}\label{trm:INsquareRoot}
+        Suppose $N\in\ope{V}$ is nilpotent. Then $I+N$ has a square root.
+        \begin{proof}
+            Consider the Taylor series expansion of $\sqrt{I+N}$, as if $I$ were the number 1 and $N$ were some number $x$. We would have
+            \begin{equation*}
+                \sqrt{I+N} = I+a_1N+a_2N^2+\cdots
+            \end{equation*}
+            for some set of coefficients $a_1,a_2,\dots$. Now while an infinite sum of operators cannot be an operator, this sum can: Since $N$ is nilpotent, $N^m=0$ for some positive integer $m$, so every term of degree $j\geq m$ is zero and the sum is finite. Indeed, for the sum above to be a square root of $I+N$, we need only require that
+            \begin{align*}
+                I+N &= \left( \sqrt{I+N} \right)^2\\
+                &= \left( I+a_1N+\cdots+a_{m-1}N^{m-1} \right)^2\\
+                &= I+2a_1N+(2a_2+a_1^2)N^2+(2a_3+2a_1a_2)N^3+\cdots+cN^{m-1}
+            \end{align*}
+            where $c$ stands in for a much more complicated coefficient in terms of $a_1,\dots,a_{m-1}$. To do so, simply choose $a_1$ such that $2a_1=1$ (i.e., choose $a_1=1/2$), choose $a_2$ such that $2a_2+a_1^2=0$ (i.e., choose $a_2=-1/8$), choose $a_3$ such that $2a_3+2a_1a_2=0$, and on and on.
+        \end{proof}
+    \end{theorem}
+    \begin{theorem}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$ is invertible. Then $T$ has a square root.
+        \begin{proof}
+            Let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$. Let $j\in\{1,\dots,m\}$ be arbitrary. Since $(T-\lambda_jI)|_{G(\lambda_j,T)}$ is nilpotent (see Theorem \ref{trm:genEigenDecompc}), we have that there exists a nilpotent operator $N_j\in\ope{G(\lambda_j,T)}$ such that $T|_{G(\lambda_j,T)}=\lambda_jI+N_j$. Additionally, we know that $\lambda_j\neq 0$: Since $T$ is an operator on a finite-dimensional complex vector space, Theorem \ref{trm:upperTriangularExists} implies that $T$ has an upper-triangular matrix with respect to some basis of $V$; since $T$ is invertible, Theorem \ref{trm:upperTriangularInvertible} implies all of the diagonal entries of this matrix are nonzero; since Theorem \ref{trm:upperTriangularEigenvalues} implies that the eigenvalues of $T$ are exactly the diagonal entries of this matrix, we know that they are nonzero, i.e., in particular, $\lambda_j\neq 0$. Thus, since we can divide by $\lambda_j$, we have that
+            \begin{equation*}
+                T|_{G(\lambda_j,T)} = \lambda_j\left( I+\frac{N_j}{\lambda_j} \right)
+            \end{equation*}
+            By Theorem \ref{trm:INsquareRoot}, $I+N_j/\lambda_j$ has a square root. Naturally, this operator times a square root of $\lambda_j$ is a square root $R_j$ of $T|_{G(\lambda_j,T)}$. This combined with the fact that any $v\in V$ can be written uniquely in the form $u_1+\cdots+u_m$ where $u_i\in G(\lambda_i,T)$ for each $i=1,\dots,m$ allows us to define the operator $R\in\ope{V}$ by
+            \begin{equation*}
+                Rv = R_1u_1+\cdots+R_mu_m
+            \end{equation*}\par
+            To prove that $R^2=T$, it will suffice to show that $R^2v=Tv$ for all $v\in V$. Let $v\in V$ be arbitrary. Then it follows from all of our definitions that
+            \begin{align*}
+                R^2v &= R_1^2u_1+\cdots+R_m^2u_m\\
+                &= \lambda_1\left( I+\frac{N_1}{\lambda_1} \right)u_1+\cdots+\lambda_m\left( I+\frac{N_m}{\lambda_m} \right)u_m\\
+                &= T|_{G(\lambda_1,T)}u_1+\cdots+T|_{G(\lambda_m,T)}u_m\\
+                &= Tu_1+\cdots+Tu_m\\
+                &= Tv
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item Note that the techniques in this section can be adapted to prove that if $V$ is a complex vector space and $T\in\ope{V}$ is invertible, then $T$ has a $k^\text{th}$ root for every positive integer $k$.
+\end{itemize}
+
+
+
+\section{Characteristic and Minimal Polynomials}
+\begin{itemize}
+    \item \textbf{Characteristic polynomial} (of $T$): The polynomial
+    \begin{equation*}
+        (z-\lambda_1)^{d_1}\cdots(z-\lambda_m)^{d_m}
+    \end{equation*}
+    where $\lambda_1,\dots,\lambda_m$ are the distinct eigenvalues of $T$ with corresponding multiplicities $d_1,\dots,d_m$.
+    \item We first show some elementary properties of the characteristic polynomial.
+    \begin{theorem}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item The characteristic polynomial of $T$ has degree $\dim V$.
+            \begin{proof}
+                This follows from the definition of the characteristic polynomial and Theorem \ref{trm:dimGenEigenDecomp}.
+            \end{proof}
+            \item The zeroes of the characteristic polynomial of $T$ are the eigenvalues of $T$.
+            \begin{proof}
+                This follows from the definition of the characteristic polynomial.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item The simple definition (as opposed to the determinant-based definition) of the characteristic polynomial given here affords a simple proof of the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}.
+    \begin{theorem}[Cayley-Hamilton Theorem\footnote{This result is named for English mathematician Arthur Cayley and Irish mathematician William Rowan Hamilton, both of whom found great success even before the completion of their undergraduate degrees.}]\label{trm:CayleyHamilton}
+        Suppose $V$ is a complex vector space and $T\in\ope{V}$. Let $q$ denote the characteristic polynomial of $T$. Then $q(T)=0$.
+        \begin{proof}
+            Let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$. To prove that $q(T)=0$, it will suffice to show that $q(T)v=0$ for all $v\in V$. Let $v\in V$ be arbitrary. Then by Theorem \ref{trm:genEigenDecompa}, $v=u_1+\cdots+u_m$ where each $u_j\in G(\lambda_j,T)$. Additionally, Theorems \ref{trm:genEigenDecompc} and \ref{trm:NtothedimV} assert that each $(T-\lambda_jI)^{d_j}|_{G(\lambda_j,T)}=0$. Therefore, we have that
+            \begin{equation*}
+                q(T)v = \prod_{i=1}^m(T-\lambda_iI)^{d_i}(u_1+\cdots+u_m) = 0
+            \end{equation*}
+            since after distributing the operator to each term in the sum, we can restrict the domain of each exponential to $G(\lambda_j,T)$ and commute the $(T-\lambda_jI)^{d_j}|_{G(\lambda_j,T)}$ term to be applied first (by Theorem \ref{trm:polTMultiplicative}).
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Monic polynomial}: A polynomial whose highest-degree coefficient equals 1.
+    \item We now prove that we can associate a unique \textbf{minimal polynomial} with each operator $T$.
+    \begin{theorem}\label{trm:minPolynomial}
+        Suppose $T\in\ope{V}$. Then there is a unique monic polynomial $p$ of smallest degree such that $p(T)=0$.
+        \begin{proof}
+            We first show that such a polynomial exists; then we prove its uniqueness. Let's begin.\par
+            Let $n=\dim V$. Consider the list of operators $I,T,T^2,\dots,T^{n^2}\in\ope{V}$. Since $\dim\ope{V}=n^2$ (see Theorem \ref{trm:dimLVW}) and the length of this list is $n^2+1>n^2$, Theorem \ref{trm:linearIndependent-Spanning} implies that this list is linearly dependent. Let $m$ be the smallest positive integer such that
+            \begin{equation*}
+                I,T,T^2,\dots,T^m
+            \end{equation*}
+            is linearly dependent.\par
+            By the \hyperref[lem:linearDependenceLemma]{Linear Dependence Lemma}, one of the operators in the above list is a linear combination of the previous ones. By the choice of $m$, we know that this operator is $T^m$. Thus, there exist scalars $a_0,\dots,a_{m-1}\in\F$ such that
+            \begin{equation*}
+                a_0I+a_1T+a_2T^2+\cdots+a_{m-1}T^{m-1}+T^m = 0
+            \end{equation*}
+            Therefore, if we consider the monic polynomial $p\in\pol{\F}$ defined by
+            \begin{equation*}
+                p(z) = a_0+a_1z+a_2z^2+\cdots+a_{m-1}z^{m-1}+z^m
+            \end{equation*}
+            we know by the above that $p(T)=0$.\par
+            Suppose for the sake of contradiction that there exists a monic polynomial $q\in\pol{\F}$ of degree less than or equal to $m$ such that $q(T)=0$. If $\deg q<m$, then $I,T,T^2,\dots,T^{\deg q}$ will be linearly independent, so $q(z)=0$. But this implies the highest degree coefficient of $q$ is not 1, so $q$ is not monic, a contradiction. On the other hand, if $\deg q=m$, then we have that $(p-q)(T)=0$ as well. However, since both $p$ and $z$ have a $1z^m$ term that cancels in $p-q$, $\deg(p-q)<m$. Thus, we can reach the same contradiction in the other case.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Minimal polynomial} (of $T$): The unique monic polynomial $p$ of smallest degree such that $p(T)=0$.
+    \begin{itemize}
+        \item By the proof of Theorem \ref{trm:minPolynomial}, the degree of the minimal polynomial of each operator on $V$ is at most $(\dim V)^2$.
+        \item By the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}, the degree of the minimal polynomial of each operator on $V$ \emph{complex} is at most $\dim V$.
+        \item The minimal polynomial can be computed by considering a homogeneous system of equations
+        \begin{equation*}
+            a_0\mat{I}+a_1\mat{T}+\cdots+a_m\mat{T}^m = 0
+        \end{equation*}
+        with $(\dim V)^2$ equations in $a_0,\dots,a_m$ for successive values of $m$ until a solution exists. This solution would give the coefficients of the minimal polynomial.
+    \end{itemize}
+    \item We now characterize all polynomials that when applied to an operator give the 0 operator.
+    \begin{theorem}\label{trm:minPolyMultiple}
+        Suppose $T\in\ope{V}$ and $q\in\pol{\F}$. Then $q(T)=0$ if and only if $q$ is a polynomial multiple of the minimal polynomial of $T$.
+        \begin{proof}
+            Let $p$ denote the minimal polynomial of $T$.\par
+            Suppose first that $q(T)=0$. By the \hyperref[trm:DivisionAlgorithmforPolynomials]{Division Algorithm for Polynomials}, we have that $q=ps+r$ where $\deg r<\deg p$. Thus,
+            \begin{equation*}
+                0 = q(T) = p(T)s(T)+r(T) = r(T)
+            \end{equation*}
+            It follows that $r=0$ (otherwise, since $\deg r<\deg p$, $r$ divided by the coefficient of the highest-order term would be a monic polynomial that when applied to $T$ of degree less than minimal polynomial, a contradiction). Therefore, $q$ is a polynomial multiple of the minimal polynomial of $T$, as desired.\par
+            Now suppose that $q$ is a polynomial multiple of the minimal polynomial of $T$. The $q=ps$ for some $s\in\pol{\F}$. It follows that
+            \begin{equation*}
+                q(T) = p(T)s(T) = 0s(T) = 0
+            \end{equation*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We can now apply our discussion of the minimal polynomial back to the characteristic polynomial.
+    \begin{theorem}
+        Suppose $\F=\C$ and $T\in\ope{V}$. Then the characteristic polynomial of $T$ is a polynomial multiple of the minimal polynomial of $T$.
+        \begin{proof}
+            Let $q$ denote the characteristic polynomial of $T$. By the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}, $q(T)=0$. Therefore, by Theorem \ref{trm:minPolyMultiple}, $q(T)$ is a multiple of the minimal polynomial of $T$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now show that like the eigenvalues of $T$ are the zeroes of the characteristic polynomial, they are the zeroes of the minimal polynomial\footnote{It would appear then that the minimal polynomial can be written in the form $(z-\lambda_1)\cdots(z-\lambda_m)$.}.
+    \begin{theorem}
+        Let $T\in\ope{V}$. Then the zeroes of the minimal polynomial of $T$ are precisely the eigenvalues of $T$.
+        \begin{proof}
+            Let
+            \begin{equation*}
+                p(z) = a_0+a_1z+a_2z^2+\cdots+a_{m-1}z^{m-1}+z^m
+            \end{equation*}
+            be the minimal polynomial of $T$. We will first show that every zero of $p$ is an eigenvalue of $T$. Then, we will show that every eigenvalue of $T$ is a zero of $p$. Let's begin.\par
+            Suppose first that $\lambda\in\F$ satisfies $p(\lambda)=0$. Thus, by Theorem \ref{trm:polZeroFactor}, there exists a polynomial $q\in\pol{\F}$ such that $p(z)=(z-\lambda)q(z)$, where $q$ must be a monic polynomial since $p$ is one. Consequently, since $p(T)=0$, we have that
+            \begin{equation*}
+                0 = (T-\lambda I)q(T)v
+            \end{equation*}
+            for all $v\in V$. In particular, we must have $q(T)v\neq 0$ for some $v\in V$ (otherwise $q(T)$ with $\deg q<\deg p$ would be the minimal polynomial of $T$). Therefore, $\lambda$ is an eigenvalue of $T$ with corresponding eigenvector $q(T)v$ for this $v$, as desired.\par
+            Now suppose that $\lambda\in\F$ is an eigenvalue of $T$. Then there exists a nonzero $v\in V$ such that $Tv=\lambda v$. It follows that $T^jv=\lambda^jv$ for every nonnegative integer $j$. Thus, we have that
+            \begin{align*}
+                0 &= p(T)v\\
+                &= (a_0+a_1T+a_2T^2+\cdots+a_{m-1}T^{m-1}+T^m)v\\
+                &= (a_0+a_1\lambda+a_2\lambda^2+\cdots+a_{m-1}\lambda^{m-1}+\lambda^m)v\\
+                &= p(\lambda)v
+            \end{align*}
+            But since $v\neq 0$, we must have $p(\lambda)=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textcite{bib:Axler} gives some examples of how the previous results can be applied to tangible problems.
+\end{itemize}
+
+
+
+\section{Jordan Form}
+\begin{itemize}
+    \item Theorem \ref{trm:blockDiagonalUpperTriangular} got us to a pretty nice form for every operator $T$. We now build up to an even nicer one.
+    \item We first show that every nilpotent operator has a corresponding basis consisting of certain powers of $N$ applied to a select number of vectors.
+    \begin{theorem}\label{trm:nilpotentJordanBasis}
+        Suppose $N\in\ope{V}$ is nilpotent. Then there exist vectors $v_1,\dots,v_n\in V$ and nonnegative integers $m_1,\dots,m_n$ such that
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $N^{m_1}v_1,\dots,Nv_1,v_1,\dots,N^{m_n}v_n,\dots,Nv_n,v_n$ is a basis of $V$.
+            \item $N^{m_1+1}v_1=\cdots=N^{m_n+1}v_n=0$.
+        \end{enumerate}
+        \begin{proof}
+            We induct on $n=\dim V$. For the base case $n=1$, 0 is the only nilpotent operator on $V$. Thus, choose any nonzero $v_1$ and let $m_1=0$.\par\smallskip
+            Now suppose using strong induction that we have proven the claim for all vector spaces of dimension less than $n$; we now seek to prove the claim for $n$. First off, note that $N$ is not injective: If $j$ is the smallest nonnegative integer such that of $N^j=0$, then there exists $v\in V$ such that $N^{j-1}v\neq 0$; it follows that although $v\neq 2v$ and hence $N^{j-1}v\neq 2N^{j-1}v=N^{j-1}2v$, $N(N^{j-1}v)=0$ and $N(N^{j-1}(2v))=2N(N^{j-1}v)=2\cdot 0=0$. It follows by Theorem \ref{trm:invertInjSurjFiniteEquivalence} that $N$ is not surjective. Thus, $\range N\neq V$, so we must have $\dim\range N<\dim V$.\par
+            Consider $N|_{\range N}\in\ope{\range N}$, to which we can apply our inductive hypothesis by the previous result. Doing so, we find that there exist vectors $v_1,\dots,v_n\in\range N$ and nonnegative integers $m_1,\dots,m_n$ such that
+            \begin{equation}\label{eqn:8.1}
+                N^{m_1}v_1,\dots,Nv_1,v_1,\dots,N^{m_n}v_n,\dots,Nv_n,v_n
+            \end{equation}
+            is a basis of $\range N$ and
+            \begin{equation*}
+                N^{m_1+1}v_1 = \cdots = N^{m_n+1}v_n = 0
+            \end{equation*}\par
+            Let $j\in\{1,\dots,n\}$ be arbitrary. Since $v_j\in\range N$, there exists $u_j\in V$ such that $Nu_j=v_j$. It follows that $N^{k+1}u_j=N^kv_j$ for each $j$ and every nonnegative integer $k$. We now seek to prove that
+            \begin{equation}\label{eqn:8.2}
+                N^{m_1+1}u_1,\dots,Nu_1,u_1,\dots,N^{m_n+1}u_n,\dots,Nu_n,u_n
+            \end{equation}
+            is a linearly independent list of vectors in $V$. To do so, consider a linear combination of the vectors in List \ref{eqn:8.2} that is equal to zero. Applying $N$ to said linear combination gives a linear combination of List \ref{eqn:8.1} that is equal to zero with related coefficients (since $Nu_j=v_j$, $N(N^ku_j)=N^kv_j$ for all $1\leq k\leq m_j$, and $N(N^{m_j+1}u_j)=N^{m_j+1}v_j=0$ for each $j=1,\dots,n$). But since List \ref{eqn:8.1} is linearly independent as a basis, all coefficients are zero with the possible exception of those of the vectors $N^{m_1+1}u_1,\dots,N^{m_n+1}u_n$, since those vectors go to zero as described above. However, once again, the linear independence of List \ref{eqn:8.1}, to which each of these vectors belongs in the form $N^{m_j}v_j$, implies that their coefficients are equal to zero as well. Thus, we have proven that List \ref{eqn:8.2} is linearly independent, as desired.\par
+            Using Theorem \ref{trm:lnlIndependentExtendBasis}, extend List \ref{eqn:8.2} to a basis
+            \begin{equation}\label{eqn:8.3}
+                N^{m_1+1}u_1,\dots,Nu_1,u_1,\dots,N^{m_n+1}u_n,\dots,Nu_n,u_n,w_1,\dots,w_p
+            \end{equation}
+            of $V$. Let $j\in\{1,\dots,p\}$ be arbitrary. We know that $Nw_j\in\range N$. Thus, $Nw_j$ is in the span of List \ref{eqn:8.1}. But since each vector in List \ref{eqn:8.1} equals $N$ applied to a vector in List \ref{eqn:8.2}, we have that $Nw_j=Nx_j$ for some $x_j$ in the span of List \ref{eqn:8.2}. Let
+            \begin{equation*}
+                u_{n+j} = w_j-x_j
+            \end{equation*}
+            for each $j=1,\dots,n$. Then
+            \begin{equation*}
+                N^{m_1+1}u_1,\dots,Nu_1,u_1,\dots,N^{m_n+1}u_n,\dots,Nu_n,u_n,u_{n+1},\dots,u_{n+p}
+            \end{equation*}
+            spans $V$ since its span contains each $x_j$ (in the span of the List \ref{eqn:8.2} part) and each $u_{n+j}$ and hence each $w_j$ (and because List \ref{eqn:8.3} spans $V$). Thus, since the above spanning list has the same length as the basis of $V$ in List \ref{eqn:8.3}, Theorem \ref{trm:sameDimSpanning} implies that it is a basis of $V$. It clearly has the required form (choose $m_j=0$ for $j=n+1,\dots,n+p$). Additionally, we have $Nu_{n+j}=Nw_j-Nx_j=0$ for each $j=1,\dots,n$, verifying part (b).
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Jordan basis} (for $T\in\ope{V}$): A basis of $V$ such that with respect to this basis, $T$ has a block diagonal matrix
+    \begin{equation*}
+        \begin{pmatrix}
+            A_1 &  & 0\\
+             & \ddots & \\
+            0 &  & A_p\\
+        \end{pmatrix}
+    \end{equation*}
+    where each $A_j$ is an upper-triangular matrix of the form
+    \begin{equation*}
+        A_j =
+        \begin{pmatrix}
+            \lambda_j & 1 &  & 0\\
+             & \ddots & \ddots & \\
+             &  & \ddots & 1\\
+            0 &  &  & \lambda_j\\
+        \end{pmatrix}
+    \end{equation*}
+    \item We are now ready for the main result.
+    \begin{theorem}[Jordan Form\footnote{This result is named for French mathematician Camille Jordan, who published the first proof of this theorem.}]
+        Suppose $V$ is a complex vector space. If $T\in\ope{V}$, then there is a basis of $V$ that is a Jordan basis for $T$.
+        \begin{proof}
+            We divide into two cases ($T$ is nilpotent and $T$ is not nilpotent), using one to prove the other.
+            Suppose first that $T$ be a nilpotent operator on $V$. Consider the vectors $v_1,\dots,v_n\in V$ associated with it by Theorem \ref{trm:nilpotentJordanBasis}. Let $j\in\{1,\dots,n\}$ be arbitrary. Notice that $N$ sends the first vector in the list $N^{m_j}v_j,\dots,Nv_j,v_j$ to 0 and every other vector to the previous one in the list. Thus, applying this observation to all $j$, we realize that the matrix of $N$ with respect to the basis given by Theorem \ref{trm:nilpotentJordanBasis} is block diagonal with each matrix on the diagonal having the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    0 & 1 &  & 0\\
+                     & \ddots & \ddots & \\
+                     &  & \ddots & 1\\
+                    0 &  &  & 0\\
+                \end{pmatrix}
+            \end{equation*}
+            Combining this result with Exercise \ref{exr:8.A.7} proves that the desired result holds for nilpotent operators.\par
+            Now suppose that $T$ is not a nilpotent operator. Let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$. By Theorem \ref{trm:genEigenDecompc}, each $(T-\lambda_jI)|_{G(\lambda_j,T)}$ is nilpotent. Thus, by the proof of the first case, there exists a Jordan basis for each $(T-\lambda_jI)|_{G(\lambda_j,T)}$. It follows since $V=G(\lambda_1,T)\oplus\cdots\oplus G(\lambda_m,T)$ (see Theorem \ref{trm:genEigenDecompa}) that concatenating all of these bases gives a basis of $V$ that is a Jordan basis for $T$.
         \end{proof}
     \end{theorem}
 \end{itemize}
