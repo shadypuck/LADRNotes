@@ -1,0 +1,230 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{8}
+
+\begin{document}
+
+
+
+
+\chapter{Operators on Real Vector Spaces}
+\section{Complexification}
+\begin{itemize}
+    \item \marginnote{10/24:}\textbf{Complexification} (of $V$): The set $V\times V$, where $V$ is a real vector space. \emph{Denoted by} $\bm{V_\C}$.
+    \begin{itemize}
+        \item The complexification of $V$ allows us to embed a real vector space in a complex vector space so that our results concerning operators on complex vector spaces can be translated into information about operators on real vector spaces.
+    \end{itemize}
+    \item An element of $V_\C$ is an ordered pair $(u,v)$, where $u,v\in V$, but we will write this as $u+iv$.
+    \item Addition on $V_\C$ is defined by
+    \begin{equation*}
+        (u_1+iv_1)+(u_2+iv_2) = (u_1+u_2)+i(v_1+v_2)
+    \end{equation*}
+    for all $u_1,v_1,u_2,v_2\in V$.
+    \item Scalar multiplication on $V_\C$ is defined by
+    \begin{equation*}
+        (a+bi)(u+iv) = (au-bv)+i(av+bu)
+    \end{equation*}
+    for all $a,b\in\R$ and $u,v\in V$.
+    \item Thus, we can prove that $V\times V$ is a vector space.
+    \item If we identify $u\in V$ with $u+0i\in V_\C$, then we can think of $V$ as a subset of $V_\C$.
+    \begin{itemize}
+        \item Basically, the construction of $V_\C$ from $V$ generalizes the construction of $\C^n$ from $\R^n$.
+    \end{itemize}
+    \item Many things transfer nicely from $V$ to $V_\C$, as exemplified by the following.
+    \begin{theorem}
+        Suppose $V$ is a real vector space.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item If $v_1,\dots,v_n$ is a basis of $V$, then $v_1,\dots,v_n$ is a basis of $V_\C$.
+            \begin{proof}
+                Let $v_1,\dots,v_n$ be a basis of $V$.\par
+                To prove that $v_1,\dots,v_n$ spans $V_\C$, we will prove an inclusion in both directions. Clearly, $\spn(v_1,\dots,v_n)\subset V_\C$. In the other direction, let $u+iv\in V_\C$ be arbitrary. Since $u,v\in V$, 
+                \begin{align*}
+                    u &= \alpha_1v_1+\cdots+\alpha_nv_n&
+                    v &= \beta_1v_1+\cdots+\beta_nv_n
+                \end{align*}
+                for some $\alpha_1,\dots,\alpha_n,\beta_1,\dots,\beta_n\in\R$. It follows that
+                \begin{align*}
+                    u+iv &= \alpha_1v_1+\cdots+\alpha_nv_n+i(\beta_1v_1+\cdots+\beta_nv_n)\\
+                    &= (\alpha_1+i\beta_1)v_1+\cdots+(\alpha_n+i\beta_n)v_n
+                \end{align*}
+                so $u+iv\in\spn(v_1,\dots,v_n)$, as desired.\par
+                To prove that $v_1,\dots,v_n$ is linearly independent, suppose $\lambda_1,\dots,\lambda_n\in C$ make
+                \begin{equation*}
+                    \lambda_1v_1+\cdots+\lambda_nv_n = 0
+                \end{equation*}
+                Then naturally
+                \begin{align*}
+                    (\Re\lambda_1)v_1+\cdots+(\Re\lambda_n)v_n &= 0&
+                    (\Im\lambda_1)v_1+\cdots+(\Im\lambda_n)v_n &= 0
+                \end{align*}
+                so we must have that $\Re\lambda_j=\Im\lambda_j=\lambda_j=0$ for each $j=1,\dots,n$ since $v_1,\dots,v_n$ is linearly independent in $V$.
+            \end{proof}
+            \item The dimension of $V_\C$ equals the dimension of $V$.
+            \begin{proof}
+                This follows from part (a) by the definition of dimension.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item \textbf{Complexification} (of $T\in\ope{V}$): The operator $T_\C\in\ope{V_\C}$ defined by
+    \begin{equation*}
+        T_\C(u+iv) = Tu+iTv
+    \end{equation*}
+    for all $u,v\in V$ a real vector space.
+    \begin{itemize}
+        \item Note that technically, we must prove that $T_\C$ is \emph{actually} in $\ope{V_\C}$ as defined.
+    \end{itemize}
+    \item If $V$ is a real vector space with basis $v_1,\dots,v_n$ and $T\in\ope{V}$, then $\mat{T,(v_1,\dots,v_n)}=\mat{T_\C,(v_1,\dots,v_n)}$.
+    \begin{itemize}
+        \item The proof of this claim follows immediately from the definitions.
+    \end{itemize}
+    \item We now apply complexification to answer a question about invariant subspaces.
+    \begin{theorem}
+        Every operator on a nonzero finite-dimensional vector space has an invariant subspace of dimension 1 or 2.
+        \begin{proof}
+            Let $V$ be a nonzero finite-dimensional vector space, and let $T\in\ope{V}$. We divide into two cases ($V$ is complex and $V$ is real).\par
+            If $V$ is complex, then by Theorem \ref{trm:eigenExists}, $T$ has an eigenvalue and hence a corresponding eigenvector $v$. Thus, $T$ has a 1-dimensional invariant subspace (namely, $\spn(v)$).\par
+            If $V$ is real, then by Theorem \ref{trm:eigenExists}, $T_\C$ has an eigenvalue $a+bi$ and a corresponding eigenvector $u+iv$. It follows that
+            \begin{equation*}
+                Tu+iTv = T_\C(u+iv) = (a+ib)(u+iv) = (au-bv)+(av+bu)i
+            \end{equation*}
+            i.e., that
+            \begin{align*}
+                Tu &= au-bv&
+                Tv &= av+bu
+            \end{align*}
+            The above two equations prove that $\spn(u,v)$ is an invariant subspace of $V$ under $T$ of dimension $\leq 2$.
+        \end{proof}
+    \end{theorem}
+    \item Relating the minimal polynomials of $T_\C$ and $T$.
+    \begin{theorem}\label{trm:minPolyTcT}
+        Suppose $V$ is a real vector space and $T\in\ope{V}$. Then the minimal polynomial of $T_\C$ equals the minimal polynomial of $T$.
+        \begin{proof}
+            Let $p\in\pol{\R}$ be the minimal polynomial of $T$. To prove that $p$ is the minimal polynomial of $T_\C$, it will suffice to show that $p(T_\C)=0$ and that if $q\in\pol{\C}$ is a monic polynomial such that $q(T_\C)=0$, then $\deg q\geq \deg p$ (see Theorem \ref{trm:minPolynomial} for the second claim). Let's begin.\par
+            For the first part, since $(T_\C)^n(u+iv)=T^nu+iT^nv$ by the definition of $T_\C$, we have that $p(T_\C)=(p(T))_\C=0_\C=0$, as desired.\par
+            For the second part, suppose $q\in\pol{\C}$ is a monic polynomial such that $q(T_\C)=0$. Then $(q(T_\C))u=0$ for all $u=u+0i\in V$. It follows that if $r\in\pol{\R}$ is the polynomial with $j^\text{th}$ coefficient equal to the real part of the $j^\text{th}$ coefficient of $q$, then $r(T)=0$. Therefore, $\deg q=\deg r\geq\deg p$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item An interesting corollary to the previous result is that the coefficients of the minimal polynomial of $T_\C$ are real.
+    \item We now show that the \emph{real} eigenvalues of the complexification of $T$ are exactly the eigenvalues of $T$.
+    \begin{theorem}\label{trm:realEigenvalueComplexification}
+        Suppose $V$ is a real vector space, $T\in\ope{V}$, and $\lambda\in\R$. Then $\lambda$ is an eigenvalue of $T_\C$ if and only if $\lambda$ is an eigenvalue of $T$.
+        \begin{proof}[Proof\footnote{\textcite{bib:Axler} also offers a more straightforward proof using the typical definition of eigenvalues and eigenvectors.}]
+            Let $p\in\pol{\C}$ be the minimal polynomial of $T_\C$.
+            Then we have that
+            \begin{align*}
+                \lambda\text{ is a real eigenvalue of }T_\C &\Longleftrightarrow \lambda\text{ is a real zero of }p(T_\C)\tag*{Theorem \ref{trm:minPolyZeroes}}\\
+                &\Longleftrightarrow \lambda\text{ is a zero of }p(T)\tag*{Theorem \ref{trm:minPolyTcT}}\\
+                &\Longleftrightarrow \lambda\text{ is an eigenvalue of }T\tag*{Theorem \ref{trm:minPolyZeroes}}
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now show that $T_\C$ treats $\lambda,\bar{\lambda}$ the same way.
+    \begin{theorem}\label{trm:genEigenvalueConjugate}
+        Suppose $V$ is a real vector space, $T\in\ope{V}$, $\lambda\in\C$, $j$ is a nonnegative integer, and $u,v\in V$. Then $(T_\C-\lambda I)^j(u+iv)=0$ if and only if $(T_\C-\bar{\lambda}I)^j(u-iv)=0$.
+        \begin{proof}
+            We induct on $j$.\par
+            For the base case $j=0$, suppose first that $(T_\C-\lambda I)^0(u+iv)=u+iv=0$. Then $u,v=0$. It follows that $T_\C-\bar{\lambda}I)^0(u-iv)=u-iv=0$, as desired. The proof is symmetric in the reverse direction.\par
+            Now suppose inductively that we have proven the claim for $j-1$; we now seek to prove it for $j$. Suppose first that $(T_\C-\lambda I)^j(u+iv)=0$. Then
+            \begin{align*}
+                0 &= (T_\C-\lambda I)^{j-1}((T_\C-\lambda I)(u+iv))\\
+                &= (T_\C-\lambda I)^{j-1}((Tu-au+bv)+i(Tv-av-bu))
+            \end{align*}
+            It follows by the inductive hypothesis that
+            \begin{align*}
+                0 &= (T_\C-\lambda I)^{j-1}((Tu-au+bv)-i(Tv-av-bu))\\
+                &= (T_\C-\lambda I)^{j-1}((T_\C-\lambda I)(u-iv))\\
+                &= (T_\C-\bar{\lambda}I)^j(u-iv)
+            \end{align*}
+            as desired. The proof is symmetric in the other direction.
+        \end{proof}
+    \end{theorem}
+    \item We can now prove that having one complex number be an eigenvalue of $T_\C$ necessitates that its complex conjugate is an eigenvalue of $T_\C$.
+    \begin{theorem}\label{trm:eigenConjugate}
+        Suppose $V$ is a real vector space, $T\in\ope{V}$, and $\lambda\in\C$. Then $\lambda$ is an eigenvalue of $T_\C$ if and only if $\bar{\lambda}$ is an eigenvalue of $T_\C$.
+        \begin{proof}
+            Take $j=1$ in Theorem \ref{trm:genEigenvalueConjugate}.
+        \end{proof}
+    \end{theorem}
+    \item Since a real operator can naturally only have real eigenvalues, \dq{when mathematicians sometimes informally mention the complex eigenvalues of an operator on a real vector space, what they have in mind is the eigenvalues of the complexification of the operator}{281}.
+    \item We now prove that the multiplicities of complex conjugate eigenvalues coincide.
+    \begin{theorem}\label{trm:conjEigenMultiplicity}
+        Suppose $V$ is a real vector space, $T\in\ope{V}$, and $\lambda\in\C$ is an eigenvalue of $T_\C$. Then the multiplicity of $\lambda$ as an eigenvalue of $T_\C$ equals the multiplicity of $\bar{\lambda}$ as an eigenvalue of $T_\C$.
+        \begin{proof}
+            Suppose $u_1+iv_1,\dots,u_m+iv_m$ is a basis of the generalized eigenspace $G(\lambda,T_\C)$. Then with the help of Theorem \ref{trm:genEigenvalueConjugate}, we can easily show that $u_1-iv_1,\dots,u_m-iv_m$ is a basis of the generalized eigenspace $G(\bar{\lambda},T_\C)$. Therefore, the multiplicities coincide at $m$.
+        \end{proof}
+    \end{theorem}
+    \item Although there exist operators on $\R^2$ (for example) with no eigenvalues, this is not true for every real vector space.
+    \begin{theorem}
+        Every operator on an odd-dimensional real vector space has an eigenvalue.
+        \begin{proof}
+            Suppose $V$ is a real vector space with odd dimension, and let $T\in\ope{V}$. Since every complex eigenvalue of $T_\C$ comes paired with its conjugate (see Theorem \ref{trm:eigenConjugate}) and the members of each conjugate pair have the same multiplicity (see Theorem \ref{trm:conjEigenMultiplicity}), the sum of multiplicities of the complex eigenvalues will be an even number. However, by Theorem \ref{trm:dimGenEigenDecomp}, the sum of all of the multiplicities (counting the complex \emph{and} real) of the eigenvalues of $T_\C$ will equal $\dim V_\C$, an odd number. Thus, there must be at least one additional eigenvalue $\lambda$ of $T_\C$ that is not complex, i.e., is real. It follows by Theorem \ref{trm:realEigenvalueComplexification} that $\lambda$ is an eigenvalue of $T$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now build up to defining the characteristic polynomial for real operators.
+    \begin{theorem}\label{trm:charPolyReal}
+        Suppose $V$ is a real vector space and $T\in\ope{V}$. Then the coefficients of the characteristic polynomial of $T_\C$ are all real.
+        \begin{proof}
+            Suppose $\lambda$ is a nonreal eigenvalue of $T_\C$ with multiplicity $m$. Then by Theorems \ref{trm:eigenConjugate} and \ref{trm:conjEigenMultiplicity}, $\bar{\lambda}$ is also an eigenvalue of $T_\C$ with multiplicity $m$. Thus, the characteristic polynomial of $T_\C$ includes the term
+            \begin{equation*}
+                (z-\lambda)^m(z-\bar{\lambda})^m = (z^2-2(\Re\lambda)z+|\lambda|^2)^m
+            \end{equation*}
+            which has only real coefficients.\par
+            Since the characteristic polynomial of $T_\C$ is the product of terms with the above form and terms of the form $(z-t)^d$, where $t$ is a real eigenvalue of $T_\C$ with multiplicity $d$, the coefficients of the characteristic polynomial of $T_\C$ are all real.
+        \end{proof}
+    \end{theorem}
+    \item The above result allows for the following definition.
+    \item \textbf{Characteristic polynomial} (of $T\in\ope{V}$, $V$ real): The characteristic polynomial of $T_\C$.
+    \item Properties of the characteristic polynomial.
+    \begin{theorem}\label{trm:charPolRealProperties}
+        Suppose $V$ is a real vector space and $T\in\ope{V}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:charPolRealPropertiesa}The coefficients of the characteristic polynomial of $T$ are all real.
+            \begin{proof}
+                See Theorem \ref{trm:charPolyReal}.
+            \end{proof}
+            \item \label{trm:charPolRealPropertiesb}The characteristic polynomial of $T$ has degree $\dim V$.
+            \begin{proof}
+                See Theorem \ref{trm:charPolPropertiesa}.
+            \end{proof}
+            \item \label{trm:charPolRealPropertiesc}The eigenvalues of $T$ are precisely the real zeroes of the characteristic polynomial of $T$.
+            \begin{proof}
+                By Theorem \ref{trm:minPolyTcT}, the real zeroes of the characteristic polynomial of $T$ are the real zeroes of the characteristic polynomial of $T_\C$. These are, in turn, the real eigenvalues of $T_\C$ (by Theorem \ref{trm:charPolPropertiesb}). These, lastly, are in turn the eigenvalues of $T$ (by Theorem \ref{trm:realEigenvalueComplexification}).
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item We can now prove the complete \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}.
+    \begin{theorem}[Cayley-Hamilton Theorem]\label{trm:CayleyHamilton}
+        Suppose $T\in\ope{V}$. Let $q$ denote the characteristic polynomial of $T$. Then $q(T)=0$.
+        \begin{proof}
+            We divide into two cases ($V$ is complex and $V$ is real).\par
+            If $V$ is complex, then apply the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem.\par
+            If $V$ is real, then by the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem, $q(T_\C)=0$. It follows by the definition of the characteristic polynomial of $T$ that $q(T)=q(T_\C)=0$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now extend one last result from the complex to the real case.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item The degree of the minimal polynomial of $T$ is at most $\dim V$.
+            \begin{proof}
+                Let $p\in\pol{\R}$ be the minimal polynomial of $T$, and let $q\in\pol{\R}$ be the characteristic polynomial of $T$. By Theorem \ref{trm:charPolRealPropertiesb}, $\deg q=\dim V$. By the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}, $q(T)=0$. Thus, by the definition of the minimal polynomial
+                \begin{equation*}
+                    \dim p \leq \dim q = \dim V
+                \end{equation*}
+                as desired.
+            \end{proof}
+            \item The characteristic polynomial of $T$ is a polynomial multiple of the minimal polynomial of $T$.
+            \begin{proof}
+                Let $p\in\pol{\R}$ be the minimal polynomial of $T$, and let $q\in\pol{\R}$ be the characteristic polynomial of $T$. By the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem, $q(T_\C)=0$. Thus, by Theorem \ref{trm:minPolyMultiple} $q(T)=q(T_\C)$ is a polynomial multiple of $p(T_\C)=p(T)$ (where the last equality follows from Theorem \ref{trm:minPolyTcT}).
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+\end{itemize}
+
+
+
+
+\end{document}

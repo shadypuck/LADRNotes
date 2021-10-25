@@ -368,27 +368,27 @@
 
 \section{Characteristic and Minimal Polynomials}
 \begin{itemize}
-    \item \textbf{Characteristic polynomial} (of $T$): The polynomial
+    \item \textbf{Characteristic polynomial} (of $T\in\ope{V}$, $V$ complex): The polynomial
     \begin{equation*}
         (z-\lambda_1)^{d_1}\cdots(z-\lambda_m)^{d_m}
     \end{equation*}
     where $\lambda_1,\dots,\lambda_m$ are the distinct eigenvalues of $T$ with corresponding multiplicities $d_1,\dots,d_m$.
     \item We first show some elementary properties of the characteristic polynomial.
-    \begin{theorem}
+    \begin{theorem}\label{trm:charPolProperties}
         Suppose $V$ is a complex vector space and $T\in\ope{V}$. Then
-        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
-            \item The characteristic polynomial of $T$ has degree $\dim V$.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}},ref={\thetheorem\alph*}]
+            \item \label{trm:charPolPropertiesa}The characteristic polynomial of $T$ has degree $\dim V$.
             \begin{proof}
                 This follows from the definition of the characteristic polynomial and Theorem \ref{trm:dimGenEigenDecomp}.
             \end{proof}
-            \item The zeroes of the characteristic polynomial of $T$ are the eigenvalues of $T$.
+            \item \label{trm:charPolPropertiesb}The zeroes of the characteristic polynomial of $T$ are the eigenvalues of $T$.
             \begin{proof}
                 This follows from the definition of the characteristic polynomial.
             \end{proof}
         \end{enumerate}
     \end{theorem}
-    \item The simple definition (as opposed to the determinant-based definition) of the characteristic polynomial given here affords a simple proof of the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}.
-    \begin{theorem}[Cayley-Hamilton Theorem\footnote{This result is named for English mathematician Arthur Cayley and Irish mathematician William Rowan Hamilton, both of whom found great success even before the completion of their undergraduate degrees.}]\label{trm:CayleyHamilton}
+    \item The simple definition (as opposed to the determinant-based definition) of the characteristic polynomial given here affords a simple proof of the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem.
+    \begin{theorem}[Complex Cayley-Hamilton Theorem\footnote{This result is named for English mathematician Arthur Cayley and Irish mathematician William Rowan Hamilton, both of whom found great success even before the completion of their undergraduate degrees.}]\label{trm:ComplexCayleyHamilton}
         Suppose $V$ is a complex vector space and $T\in\ope{V}$. Let $q$ denote the characteristic polynomial of $T$. Then $q(T)=0$.
         \begin{proof}
             Let $\lambda_1,\dots,\lambda_m$ be the distinct eigenvalues of $T$. To prove that $q(T)=0$, it will suffice to show that $q(T)v=0$ for all $v\in V$. Let $v\in V$ be arbitrary. Then by Theorem \ref{trm:genEigenDecompa}, $v=u_1+\cdots+u_m$ where each $u_j\in G(\lambda_j,T)$. Additionally, Theorems \ref{trm:genEigenDecompc} and \ref{trm:NtothedimV} assert that each $(T-\lambda_jI)^{d_j}|_{G(\lambda_j,T)}=0$. Therefore, we have that
@@ -424,7 +424,7 @@
     \item \textbf{Minimal polynomial} (of $T$): The unique monic polynomial $p$ of smallest degree such that $p(T)=0$.
     \begin{itemize}
         \item By the proof of Theorem \ref{trm:minPolynomial}, the degree of the minimal polynomial of each operator on $V$ is at most $(\dim V)^2$.
-        \item By the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}, the degree of the minimal polynomial of each operator on $V$ \emph{complex} is at most $\dim V$.
+        \item By the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem, the degree of the minimal polynomial of each operator on $V$ \emph{complex} is at most $\dim V$.
         \item The minimal polynomial can be computed by considering a homogeneous system of equations
         \begin{equation*}
             a_0\mat{I}+a_1\mat{T}+\cdots+a_m\mat{T}^m = 0
@@ -452,11 +452,11 @@
     \begin{theorem}
         Suppose $\F=\C$ and $T\in\ope{V}$. Then the characteristic polynomial of $T$ is a polynomial multiple of the minimal polynomial of $T$.
         \begin{proof}
-            Let $q$ denote the characteristic polynomial of $T$. By the \hyperref[trm:CayleyHamilton]{Cayley-Hamilton Theorem}, $q(T)=0$. Therefore, by Theorem \ref{trm:minPolyMultiple}, $q(T)$ is a multiple of the minimal polynomial of $T$, as desired.
+            Let $q$ denote the characteristic polynomial of $T$. By the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem, $q(T)=0$. Therefore, by Theorem \ref{trm:minPolyMultiple}, $q(T)$ is a multiple of the minimal polynomial of $T$, as desired.
         \end{proof}
     \end{theorem}
     \item We now show that like the eigenvalues of $T$ are the zeroes of the characteristic polynomial, they are the zeroes of the minimal polynomial\footnote{It would appear then that the minimal polynomial can be written in the form $(z-\lambda_1)\cdots(z-\lambda_m)$.}.
-    \begin{theorem}
+    \begin{theorem}\label{trm:minPolyZeroes}
         Let $T\in\ope{V}$. Then the zeroes of the minimal polynomial of $T$ are precisely the eigenvalues of $T$.
         \begin{proof}
             Let
