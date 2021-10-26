@@ -484,7 +484,7 @@
         \end{proof}
     \end{theorem}
     \item Extending an orthonormal list to an orthonormal basis.
-    \begin{theorem}
+    \begin{theorem}\label{trm:orthonormalExtendBasis}
         Suppose $V$ is finite-dimensional. Then every orthonormal list of vectors in $V$ can be extended to an orthonormal basis of $V$.
         \begin{proof}
             Suppose $e_1,\dots,e_m$ is an orthonormal list of vectors in $V$. Then by Theorem \ref{trm:orthonormalLnlIndep}, $e_1,\dots,e_m$ is linearly independent. Hence this list can be extended to a basis $e_1,\dots,e_m,v_1,\dots,v_n$ of $V$ by Theorem \ref{trm:lnlIndependentExtendBasis}. Applying the \hyperref[trm:GramSchmidt]{Gram-Schmidt Procedure} to this basis yields an orthonormal list $e_1,\dots,e_m,f_1,\dots,f_n$ of vectors in $V$. Note that the \hyperref[trm:GramSchmidt]{Gram-Schmidt Procedure} doesn't change the first $m$ vectors of the list: If $1\leq j\leq m$, then

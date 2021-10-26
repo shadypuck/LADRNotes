@@ -365,10 +365,50 @@
 \end{itemize}
 
 
+\subsection*{Exercises}
+\begin{enumerate}[label={\textbf{\arabic*}},labelsep=1em,ref={\thesection.\arabic*}]
+    \setcounter{enumi}{8}
+    \item \marginnote{10/25:}\label{exr:8.B.9}Suppose $A$ and $B$ are block diagonal matrices of the form
+    \begin{align*}
+        A &=
+        \begin{pmatrix}
+            A_1 &  & 0\\
+             & \ddots & \\
+            0 &  & A_m\\
+        \end{pmatrix}&
+        B &=
+        \begin{pmatrix}
+            B_1 &  & 0\\
+             & \ddots & \\
+            0 &  & B_m\\
+        \end{pmatrix}
+    \end{align*}
+    where $A_j$ has the same size as $B_j$ for $j=1,\dots,m$. Show that $AB$ is a block diagonal matrix of the form
+    \begin{equation*}
+        AB =
+        \begin{pmatrix}
+            A_1B_1 &  & 0\\
+             & \ddots & \\
+            0 &  & A_mB_m\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{proof}
+        Suppose that $A,B$ are $n\times n$ matrices. By the definition of matrix multiplication, if $1\leq i,k\leq\dim A_1=\dim B_1$ we have that
+        \begin{align*}
+            (AB)_{i,k} &= \sum_{r=1}^nA_{i,r}B_{r,k}\\
+            &= \sum_{r=1}^{\dim A_1}A_{i,r}B_{r,k}+\sum_{\dim A_1+1}^n0\cdot 0\\
+            &= \sum_{r=1}^{\dim A_1}A_{1_{i,r}}B_{2_{r,k}}\\
+            &= (A_1B_1)_{i,k}
+        \end{align*}
+        We can do something similar for every other submatrix along the diagonal.
+    \end{proof}
+\end{enumerate}
+
+
 
 \section{Characteristic and Minimal Polynomials}
 \begin{itemize}
-    \item \textbf{Characteristic polynomial} (of $T\in\ope{V}$, $V$ complex): The polynomial
+    \item \marginnote{10/23:}\textbf{Characteristic polynomial} (of $T\in\ope{V}$, $V$ complex): The polynomial
     \begin{equation*}
         (z-\lambda_1)^{d_1}\cdots(z-\lambda_m)^{d_m}
     \end{equation*}

@@ -80,7 +80,7 @@
         \item The proof of this claim follows immediately from the definitions.
     \end{itemize}
     \item We now apply complexification to answer a question about invariant subspaces.
-    \begin{theorem}
+    \begin{theorem}\label{trm:inv12}
         Every operator on a nonzero finite-dimensional vector space has an invariant subspace of dimension 1 or 2.
         \begin{proof}
             Let $V$ be a nonzero finite-dimensional vector space, and let $T\in\ope{V}$. We divide into two cases ($V$ is complex and $V$ is real).\par
@@ -221,6 +221,196 @@
                 Let $p\in\pol{\R}$ be the minimal polynomial of $T$, and let $q\in\pol{\R}$ be the characteristic polynomial of $T$. By the \hyperref[trm:ComplexCayleyHamilton]{Complex} Cayley-Hamilton Theorem, $q(T_\C)=0$. Thus, by Theorem \ref{trm:minPolyMultiple} $q(T)=q(T_\C)$ is a polynomial multiple of $p(T_\C)=p(T)$ (where the last equality follows from Theorem \ref{trm:minPolyTcT}).
             \end{proof}
         \end{enumerate}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Operators on Real Inner Product Spaces}
+\begin{itemize}
+    \item \marginnote{10/25:}In this section, we characterize normal operators and isometries on real inner product spaces.
+    \item First off, we describe normal but not self-adjoint operators on 2-dimensional real inner product spaces.
+    \begin{theorem}\label{trm:normalNotSelfAdjoint}
+        Suppose $V$ is a 2-dimensional real inner product space and $T\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is normal but not self-adjoint.
+            \item The matrix of $T$ with respect to every orthonormal basis of $V$ has the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    a & -b\\
+                    b & a\\
+                \end{pmatrix}
+            \end{equation*}
+            with $b\neq 0$.
+            \item The matrix of $T$ with respect to some orthonormal basis of $V$ has the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    a & -b\\
+                    b & a\\
+                \end{pmatrix}
+            \end{equation*}
+            with $b>0$.
+        \end{enumerate}
+        \begin{proof}
+            We will show that $\text{(a)}\Rightarrow\text{(b)}\Rightarrow\text{(c)}\Rightarrow\text{(a)}$. Let's begin.\par
+            First, suppose that $T$ is normal but not self-adjoint, and let $e_1,e_2$ be an arbitrary orthonormal basis of $V$. We have from the definitions that
+            \begin{equation*}
+                \mat{T,(e_1,e_2)} =
+                \begin{pmatrix}
+                    a & c\\
+                    b & d\\
+                \end{pmatrix}
+            \end{equation*}
+            for some $a,b,c,d\in\R$. We now look to express some of these variable in terms of others using known constraints on normal but not self-adjoint matrices. Since $T$ is normal, Theorem \ref{trm:normalNorm} implies that $\norm{Te_1}^2=\norm{T^*e_1}^2$. Thus, we have that
+            \begin{align*}
+                a^2+b^2 &= \norm{Te_1}^2 = \norm{T^*e_1}^2 = a^2+c^2\\
+                b^2 &= c^2\\
+                c &= \pm b
+            \end{align*}
+            Since $T$ is not self-adjoint, we must choose $c=-b$ instead of $c=b$. Thus, we have that
+            \begin{equation*}
+                \mat{T,(e_1,e_2)} =
+                \begin{pmatrix}
+                    a & -b\\
+                    b & d\\
+                \end{pmatrix}
+            \end{equation*}
+            Additionally, since $T$ is normal, we have by definition that
+            \begin{align*}
+                TT^* &= T^*T\\
+                \begin{pmatrix}
+                    a & -b\\
+                    b & d\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    a & b\\
+                    -b & d\\
+                \end{pmatrix}
+                &=
+                \begin{pmatrix}
+                    a & b\\
+                    -b & d\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    a & -b\\
+                    b & d\\
+                \end{pmatrix}\\
+                \begin{pmatrix}
+                    a^2+b^2 & ab-bd\\
+                    ab-bd & b^2+d^2\\
+                \end{pmatrix}
+                &=
+                \begin{pmatrix}
+                    a^2+b^2 & -ab+bd\\
+                    -ab+bd & b^2+d^2\\
+                \end{pmatrix}
+            \end{align*}
+            Thus, we have that $ab=bd$. But since $b\neq 0$ (otherwise, $T$ would be self-adjoint), we must have $d=a$, as desired.\par
+            Second, suppose that (b) holds. Since $b\neq 0$, either $b>0$ or $b<0$ in $\mat{T}$ with respect to any orthonormal basis of $V$. We now divide into two cases. If $b>0$, then we are done. On the other hand, if $b<0$ in $\mat{T,(e_1,e_2)}$, we will have $b>0$ in $\mat{T,(e_1,-e_2)}$, as desired.\par
+            Third, suppose that (c) holds. Since $b>0$ in $\mat{T}$ with respect to some orthonormal basis, the upper right and lower left entries in $\mat{T}$ are distinct. Thus, $T$ is not self-adjoint. However, we can use matrix multiplication to verify that the matrices of $TT^*$ and $T^*T$ are equal with respect to this basis, proving that $T$ is normal, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now prove a lemma to our main description of normal operators.
+    \begin{theorem}\label{trm:normalInvariantDescriptors}
+        Suppose $V$ is an inner product space, $T\in\ope{V}$ is normal, and $U$ is a subspace of $V$that is invariant under $T$. Then
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $U^\perp$ is invariant under $T$.
+            \begin{proof}
+                Let $e_1,\dots,e_m$ be an orthonormal basis of $U$. Extend it to an orthonormal basis $e_1,\dots,e_m,f_1,\dots,f_m$ of $V$ (see Theorem \ref{trm:orthonormalExtendBasis}). Since $U$ is invariant under $T$ each $Te_j$ is a linear combination of $e_1,\dots,e_m$. Thus, $\mat{T}$ is of the following form.
+                \begin{equation*}
+                    \mat{T} =
+                    \begin{pNiceMatrix}[first-row,first-col]
+                         & e_1 & \cdots & e_m & f_1 & \cdots & f_m & \\
+                        e_1    &  &   &  &  &   &  & \\
+                        \vdots &  & A &  &  & B &  & \\
+                        e_m    &  &   &  &  &   &  & \\
+                        f_1    &  &   &  &  &   &  & \\
+                        \vdots &  & 0 &  &  & C &  & \\
+                        f_m    &  &   &  &  &   &  & \\
+                    \end{pNiceMatrix}
+                \end{equation*}
+                For each $j=1,\dots,m$, Theorem \ref{trm:normOrthoLnlComb} asserts that $\norm{Te_j}^2$ is the sum of the squares of the absolute values of the entries in the $j^\text{th}$ column of $A$. Similarly, for each $j=1,\dots,m$, Theorem \ref{trm:normOrthoLnlComb} asserts that $\norm{T^*e_j}^2$ is the sum of the squares of the absolute values of the entries in the $j^\text{th}$ columns of $A$ and $B$. But since these two values are equal by Theorem \ref{trm:normalNorm}, we must have that all of the values in the $j^\text{th}$ column of $B$ are 0 for each $j=1,\dots,n$, i.e., that $B=0$. Thus, $Tf_k\in\spn(f_1,\dots,f_n)$ for each $k=1,\dots,n$. It follows since $f_1,\dots,f_n$ is a basis of $U^\perp$ that $Tv\in U^\perp$ for any $v\in U^\perp$, implying that $U^\perp$ is invariant under $T$, as desired.
+            \end{proof}
+            \item $U$ is invariant under $T^*$.
+            \begin{proof}
+                By part (a), $\mat{T^*}$ is of the same form as $\mat{T}$. Thus, by a similar argument, $T^*$ is invariant under $U$.
+            \end{proof}
+            \item $(T|_U)^*=(T^*)|_U$.
+            \begin{proof}
+                For every $u,v\in U$, we have that
+                \begin{equation*}
+                    \inp{u}{(T|_U)^*v} = \inp{(T|_U)u}{v} = \inp{Tu}{v} = \inp{u}{T^*v} = \inp{u}{((T^*)|_U)v}
+                \end{equation*}
+                Therefore, $(T|_U)^*=(T^*)|_U$, as desired.
+            \end{proof}
+            \item $T|_U\in\ope{U}$ and $T|_{U^\perp}\in\ope{U^\perp}$ are normal operators.
+            \begin{proof}
+                We have from the above results that
+                \begin{equation*}
+                    (T|_U)(T|_U)^* = T|_U(T^*)|_U
+                    = (TT^*)|_U
+                    = (T^*T)|_U
+                    = (T^*)|_UT|_U
+                    = (T|_U)^*(T|_U)
+                \end{equation*}
+                and similarly for $U^\perp$.
+            \end{proof}
+        \end{enumerate}
+    \end{theorem}
+    \item Note that if an operator has a block diagonal matrix with respect to some basis, then the entry in any $1\times 1$ block on the diagonal of this matrix is an eigenvalue of $T$.
+    \item We now prove that all normal operators on real inner product spaces have block-diagonal matrices with blocks of size at most $2\times 2$.
+    \begin{theorem}
+        Suppose $V$ is a real inner product space and $T\in\ope{V}$. Then the following are equivalent:
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $T$ is normal.
+            \item There is an orthonormal basis of $V$ with respect to which $T$ has a block diagonal matrix such that each block is a $1\times 1$ matrix or a $2\times 2$ matrix of the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    a & -b\\
+                    b & a\\
+                \end{pmatrix}
+            \end{equation*}
+            with $b>0$.
+        \end{enumerate}
+        \begin{proof}
+            Suppose first that $T$ is normal. We induct on $n=\dim V$. For the base case $n=1$, $T$ will trivially have a block diagonal matrix with a single $1\times 1$ block for any basis of $V$, in particular any orthonormal one we can pick by Theorem \ref{trm:orthonormalExists}. For the base case $n=2$, we divide into two cases ($T$ is self-adjoint and $T$ is not self-adjoint). If $T$ is self-adjoint, then by the \hyperref[trm:RealSpectral]{Real} Spectral Theorem, there is an orthonormal basis of $V$ with respect to which $T$ has a diagonal matrix (equivalently, a block diagonal matrix where each [the one] block is a $1\times 1$ matrix), as desired. If $T$ is not self-adjoint, then since $T$ is also normal by hypothesis, Theorem \ref{trm:normalNotSelfAdjoint} asserts that there exists an orthonormal basis of $V$ with respect to which $T$ has a matrix of the form $
+                \left( 
+                    \begin{smallmatrix}
+                        a & -b\\
+                        b & a\\
+                    \end{smallmatrix}
+                \right)
+            $ with $b>0$ (equivalently, a block-diagonal matrix where each [the one] block is a $2\times 2$ matrix of the desired form), as desired.\par
+            Now suppose using strong induction that we have proven the claim for $n-1$; we now seek to prove it for $n$. By Theorem \ref{trm:inv12}, $T$ has an invariant subspace $U$ of dimension 1 or 2. We now divide into two cases. If $\dim U=1$, choose $u\in U$ such that $\norm{u}=1$; this vector forms an orthonormal basis of $U$. If $\dim U=2$, then by Theorem \ref{trm:normalInvariantDescriptors}, $T|_U\in\ope{U}$ is normal. Additionally, $T|_U$ is not self-adjoint (otherwise, Theorem \ref{trm:eigenSelfAdjoint} would imply that $T$ has an eigenvalue and hence a corresponding eigenvector, making $\dim U=1$). Thus, by Theorem \ref{trm:normalNotSelfAdjoint}, we can choose an orthonormal basis of $U$ with respect to which $\mat{T|_U}$ has the required form. Either way, we now have $\dim U^\perp<\dim V$. This combined with the facts that $U^\perp$ is invariant under $T$ and $T|_{U^\perp}$ is normal (see Theorem \ref{trm:normalInvariantDescriptors}) allows us to apply our induction hypothesis. Doing so reveals that there is an orthonormal basis of $U^\perp$ with respect to which $\mat{T|_{U^\perp}}$ has the desired form. Concatenating this basis to the previously found basis of $U$ gives an orthonormal basis of $V$ with respect to which the matrix of $T$ has the desired form overall.\par\smallskip
+            Now suppose that (b) holds. Then using Exercise \ref{exr:8.B.9}, to show that $TT^*=T^*T$, it will suffice to show that all submatrices along the diagonal commute, too. The $1\times 1$ submatrices obviously commute, and the $2\times 2$ ones commute since
+            \begin{align*}
+                T_jT_j^* &=
+                \begin{pmatrix}
+                    a & -b\\
+                    b & a\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    a & b\\
+                    -b & a\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    a^2+b^2 & 0\\
+                    0 & a^2+b^2\\
+                \end{pmatrix}\\
+                &=
+                \begin{pmatrix}
+                    a & b\\
+                    -b & a\\
+                \end{pmatrix}
+                \begin{pmatrix}
+                    a & -b\\
+                    b & a\\
+                \end{pmatrix}\\
+                &= T_j^*T_j
+            \end{align*}
+            as desired.
+        \end{proof}
     \end{theorem}
 \end{itemize}
 
