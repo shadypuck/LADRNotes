@@ -1,0 +1,369 @@
+\documentclass[../main.tex]{subfiles}
+
+\pagestyle{main}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter: #1}{}}
+\setcounter{chapter}{9}
+
+\begin{document}
+
+
+
+
+\chapter{Trace and Determinant}
+\section{Trace}
+\begin{itemize}
+    \item \marginnote{10/27:}To study the trace and determinant, we'll need to know how $\mat{T,(v_1,\dots,v_n)}$ (for $T\in\ope{V}$) changes as $v_1,\dots,v_n$ changes.
+    \item \textbf{$\bm{n}$-by-$\bm{n}$ identity matrix}: The matrix of the identity operator $I\in\ope{V}$. \emph{Denoted by} $\bm{I}$. \emph{Given by}
+    \begin{equation*}
+        \begin{pmatrix}
+            1 &  & 0\\
+             & \ddots & \\
+            0 &  & 1\\
+        \end{pmatrix}
+    \end{equation*}
+    \begin{itemize}
+        \item $\mat{I}$ is the same with respect to every basis of $V$.
+    \end{itemize}
+    \item \textbf{Invertible} (matrix $A$): A square matrix $A$ for which there exists a square matrix $B$ of identical size such that $AB=BA=I$. \emph{Also known as} \textbf{nonsingular}.
+    \item \textbf{Inverse} (of an invertible matrix $A$): The unique matrix $B$ in the above definition. \emph{Denoted by} $\bm{A^{-1}}$.
+    \begin{itemize}
+        \item The "unique" part of this definition follows from a proof symmetric to that of Theorem \ref{trm:uniqueInverse}.
+    \end{itemize}
+    \item \textbf{Singular} (matrix $A$): A matrix $A$ that is not invertible. \emph{Also known as} \textbf{noninvertible}.
+    \item The following result is connected to Theorem \ref{trm:matSTmatSmatT}.
+    \begin{theorem}\label{trm:matST}
+        Suppose $u_1,\dots,u_n$, $v_1,\dots,v_n$, and $w_1,\dots,w_n$ are all bases of $V$. Suppose $S,T\in\ope{V}$. Then
+        \begin{equation*}
+            \mat{ST,(u_1,\dots,u_n),(w_1,\dots,w_n)} = \mat{S,(v_1,\dots,v_n),(w_1,\dots,w_n)}\mat{T,(u_1,\dots,u_n),(v_1,\dots,v_n)}
+        \end{equation*}
+    \end{theorem}
+    \item We now discuss the matrix of the identity operator with respect to two bases.
+    \begin{theorem}\label{trm:changeBasisIdentity}
+        Suppose $u_1,\dots,u_n$ and $v_1,\dots,v_n$ are bases of $V$. Then the matrices
+        \begin{align*}
+            \mat{I,(u_1,\dots,u_n),(v_1,\dots,v_n)}&&
+            \mat{I,(v_1,\dots,v_n),(u_1,\dots,u_n)}
+        \end{align*}
+        are invertible, and each is the inverse of the other.
+        \begin{proof}
+            It follows from Theorem \ref{trm:matST} that
+            \begin{equation*}
+                I = \mat{I,(u_1,\dots,u_n),(v_1,\dots,v_n)}\mat{I,(v_1,\dots,v_n),(u_1,\dots,u_n)}
+            \end{equation*}
+            and 
+            \begin{equation*}
+                I = \mat{I,(v_1,\dots,v_n),(u_1,\dots,u_n)}\mat{I,(u_1,\dots,u_n),(v_1,\dots,v_n)}
+            \end{equation*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item It follows that the above matrices change the coordinates of a vector in $V$ from one basis to another.
+    \item We now discuss change of basis for an operator.
+    \begin{theorem}\label{trm:similarity}
+        Suppose $T\in\ope{V}$. Let $u_1,\dots,u_n$ and $v_1,\dots,v_n$ be bases of $V$. Let
+        \begin{equation*}
+            A = \mat{I,(u_1,\dots,u_n),(v_1,\dots,v_n)}
+        \end{equation*}
+        Then
+        \begin{equation*}
+            \mat{T,(u_1,\dots,u_n)} = A^{-1}\mat{T,(v_1,\dots,v_n)}A
+        \end{equation*}
+        \begin{proof}
+            We have that
+            \begin{align*}
+                \mat{T,(u_1,\dots,u_n)} &= \mat{IT,(u_1,\dots,u_n),(u_1,\dots,u_n)}\\
+                &= \mat{I,(v_1,\dots,v_n),(u_1,\dots,u_n)}\mat{T,(u_1,\dots,u_n),(v_1,\dots,v_n)}\tag*{Theorem \ref{trm:matST}}\\
+                &= A^{-1}\mat{T,(u_1,\dots,u_n),(v_1,\dots,v_n)}\tag*{Theorem \ref{trm:changeBasisIdentity}}
+            \end{align*}
+            We also have that
+            \begin{align*}
+                \mat{T,(u_1,\dots,u_n),(v_1,\dots,v_n)} &= \mat{TI,(u_1,\dots,u_n),(v_1,\dots,u_n)}\\
+                &= \mat{T,(v_1,\dots,v_n),(v_1,\dots,v_n)}\mat{I,(u_1,\dots,u_n),(v_1,\dots,v_n)}\tag*{Theorem \ref{trm:matST}}\\
+                &= \mat{T,(v_1,\dots,v_n)}A
+            \end{align*}
+            Substituting the second equation into the first gives the desired results.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Trace} (of $T\in\ope{V}$, $V$ complex): The sum of the eigenvalues of $T$ with each eigenvalue repeated according to its multiplicity. \emph{Denoted by} $\bm{\tra T}$.
+    \item \textbf{Trace} (of $T\in\ope{V}$, $V$ real): The sum of the eigenvalues of $T_\C$ with each eigenvalue repeated according to its multiplicity. \emph{Denoted by} $\bm{\tra T}$.
+    \item Suppose $T\in\ope{V}$. Let $n=\dim V$. Then $\tra T$ equals the negative of the coefficient of $z^{n-1}$ in the characteristic polynomial of $T$.
+    \item \textbf{Trace} (of $A$): The sum of the diagonal entries of a square matrix $A$. \emph{Denoted by} $\bm{\tra A}$.
+    \item We now build up to proving that $\tra T=\tra\mat{T,(v_1,\dots,v_n)}$ where $v_1,\dots,v_n$ is an arbitrary basis of $V$.
+    \begin{theorem}\label{trm:traABtraBA}
+        If $A$ and $B$ are square matrices of the same size, then
+        \begin{equation*}
+            \tra(AB) = \tra(BA)
+        \end{equation*}
+        \begin{proof}
+            Let
+            \begin{align*}
+                A &=
+                \begin{pmatrix}
+                    A_{1,1} & \cdots & A_{1,n}\\
+                    \vdots &  & \vdots\\
+                    A_{n,1} & \cdots & A_{n,n}\\
+                \end{pmatrix}&
+                B &=
+                \begin{pmatrix}
+                    B_{1,1} & \cdots & B_{1,n}\\
+                    \vdots &  & \vdots\\
+                    B_{n,1} & \cdots & B_{n,n}\\
+                \end{pmatrix}
+            \end{align*}
+            The $j^\text{th}$ diagonal entry of $AB$ is by the definition of matrix multiplication $\sum_{k=1}^nA_{j,k}B_{k,j}$. Thus,
+            \begin{align*}
+                \tra(AB) &= \sum_{j=1}^n\sum_{k=1}^nA_{j,k}B_{k,j}\\
+                &= \sum_{k=1}^n\sum_{j=1}^nB_{k,j}A_{j,k}\\
+                &= \tra(BA)
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now prove that the trace of a matrix is unique up to change of basis.
+    \begin{theorem}\label{trm:traTutraTv}
+        Let $T\in\ope{V}$. Suppose $u_1,\dots,u_n$ and $v_1,\dots,v_n$ are bases of $V$. Then
+        \begin{equation*}
+            \tra\mat{T,(u_1,\dots,u_n)} = \tra\mat{T,(v_1,\dots,v_n)}
+        \end{equation*}
+        \begin{proof}
+            Let $A=\mat{I,(u_1,\dots,u_n),(v_1,\dots,v_n)}$. Then
+            \begin{align*}
+                \mat{T,(u_1,\dots,u_n)} &= \tra(A^{-1}(\mat{T,(v_1,\dots,v_n)})A)\tag*{Theorem \ref{trm:similarity}}\\
+                &= \tra((\mat{T,(v_1,\dots,v_n)})A^{-1}A)\tag*{Theorem \ref{trm:traABtraBA}}\\
+                &= \tra\mat{T,(v_1,\dots,v_n)}
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We can now prove the main result.
+    \begin{theorem}\label{trm:traTtraA}
+        Suppose $T\in\ope{V}$. Then $\tra T=\tra\mat{T}$.
+        \begin{proof}
+            By Theorem \ref{trm:traTutraTv}, $\tra\mat{T}$ is independent of which basis of $V$ we choose. Thus, to prove that $\tra T=\tra\mat{T}$, it will suffice to prove the equality for any basis of $V$.\par
+            Let $v_1,\dots,v_n$ be the basis of $V$ specified by Theorem \ref{trm:blockDiagonalUpperTriangular}. It follows that $\tra\mat{T}=d_1\lambda_1+\cdots+d_m\lambda_m$ where $\lambda_1,\dots,\lambda_m$ are the eigenvalues of $T$ and $d_1,\dots,d_m$ are there respective multiplicities. But this is just $\tra T$ if $V$ is complex and $\tra T_\C$ if $V$ is real, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Note that the statement of Theorem \ref{trm:traTtraA} does not specify a basis because trace is invariant under change of basis, as proven in Theorem \ref{trm:traTutraTv}.
+    \item The trace is additive.
+    \begin{theorem}\label{trm:traAdditive}
+        Suppose $S,T\in\ope{V}$. Then $\tra(S+T)=\tra S+\tra T$.
+        \begin{proof}
+            We have that
+            \begin{align*}
+                \tra(S+T) &= \tra\mat{S+T}\tag*{Theorem \ref{trm:traTtraA}}\\
+                &= \tra(\mat{S}+\mat{T})\\
+                &= \tra\mat{S}+\tra\mat{T}\\
+                &= \tra S+\tra T\tag*{Theorem \ref{trm:traTtraA}}
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now state a curious consequence of the previous theorems that has important applications to quantum theory.
+    \begin{theorem}
+        There do not exist operators $S,T\in\ope{V}$ such that $ST-TS=I$.
+        \begin{proof}
+            Suppose $S,T\in\ope{V}$. Then
+            \begin{align*}
+                \tra(ST-TS) &= \tra(ST)-\tra(TS)\tag*{Theorem \ref{trm:traAdditive}}\\
+                &= \tra\mat{ST}-\tra\mat{TS}\tag*{Theorem \ref{trm:traTtraA}}\\
+                &= \tra\mat{S}\mat{T}-\tra\mat{T}\mat{S}\tag*{Theorem \ref{trm:matSTmatSmatT}}\\
+                &= \tra\mat{S}\mat{T}-\tra\mat{S}\mat{T}\tag*{Theorem \ref{trm:traABtraBA}}\\
+                &= 0
+            \end{align*}
+            Since $\tra I>0$ necessarily, $\tra(ST-TS)\neq\tra I$. It follows that $ST-TS\neq I$, as desired.
+        \end{proof}
+    \end{theorem}
+\end{itemize}
+
+
+
+\section{Determinant}
+\begin{itemize}
+    \item \textbf{Determinant} (of $T\in\ope{V}$, $V$ complex): The product of the eigenvalues of $T$ with each eigenvalue repeated according to its multiplicity. \emph{Denoted by} $\mathbf{det}\,\bm{T}$.
+    \item \textbf{Determinant} (of $T\in\ope{V}$, $V$ real): The product of the eigenvalues of $T_\C$ with each eigenvalue repeated according to its multiplicity. \emph{Denoted by} $\mathbf{det}\,\bm{T}$.
+    \item If $\lambda_1,\dots,\lambda_m$ are the distinct eigenvalues of $T$ (or $T_\C$ if $V$ is real) with corresponding multiplicities $d_1,\dots,d_m$, then
+    \begin{equation*}
+        \det T = \lambda_1^{d_1}\cdots\lambda_m^{d_m}
+    \end{equation*}
+    \item Suppose $T\in\ope{V}$. Let $n=\dim V$. Then $\det T$ is $(-1)^n$ times the constant term of the characteristic polynomial of $T$.
+    \item Invertibility and determinant.
+    \begin{theorem}
+        An operator on $V$ is invertible if and only if its determinant is nonzero.
+        \begin{proof}
+            Let $T\in\ope{V}$. We divide into two cases ($V$ is complex and $V$ is real). Let's begin.\par
+            Suppose first that $V$ is complex. By Theorem \ref{trm:upperTriangularExists}, there is a basis of $V$ with respect to which $\mat{T}$ is upper triangular. By Theorem \ref{trm:upperTriangularInvertible}, $T$ is invertible iff all diagonal entries of $\mat{T}$ are nonzero. By Theorem \ref{trm:upperTriangularEigenvalues}, all diagonal entries of $\mat{T}$ are nonzero iff all eigenvalues of $T$ are nonzero. But this is true iff the product of the eigenvalues of $T$, i.e., $\det T$ is nonzero, as desired.\par
+            Now suppose that $V$ is real. As before, $T$ is invertible iff 0 is not an eigenvalue of $T_\C$. But by Theorem \ref{trm:realEigenvalueComplexification}, it follows in both directions that 0 is not an eigenvalue of $T$, so $\det T\neq 0$ in this case too, as desired.
+        \end{proof}
+    \end{theorem}
+    \item Characteristic polynomial and determinant.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$. Then the characteristic polynomial of $T$ equals $\det(zI-T)$.
+        \begin{proof}
+            Suppose first that $V$ is complex. We know that $\lambda$ is an eigenvalue of $T$ iff $z-\lambda$ is an eigenvalue of $zI-T$:
+            \begin{equation*}
+                -(T-\lambda I) = 0 = (zI-T)-(z-\lambda)I
+            \end{equation*}
+            Raising both sides to the $\dim V$ power and taking null spaces proves that the multiplicity of $\lambda$ wrt. $T$ equals the multiplicity of $z-\lambda$ wrt. $zI-T$. It follows that
+            \begin{equation*}
+                \det(zI-T) = (z-\lambda_1)^{d_1}\cdots(z-\lambda_n)^{d_n}
+            \end{equation*}
+            which is the characteristic polynomial, as desired.\par
+            The real case follows from applying the complex case to $T_\C$.
+        \end{proof}
+    \end{theorem}
+    \item \textbf{Permutation} (of $(1,\dots,n)$): A list $(m_1,\dots,m_n)$ that contains each of the numbers $1,\dots,n$ exactly once.
+    \item $\bm{\perm n}$: The set of all permutations of $(1,\dots,n)$.
+    \item \textbf{Sign} (of a permutation $(m_1,\dots,m_n)$): The number 1 if the number of pairs of integers $(j,k)$ with $1\leq j<k\leq n$ such that $j$ appears after $k$ in the permutation is even, and the number $-1$ otherwise (e.g., if the number of such pairs is odd). \emph{Denoted by} $\bm{\sign n}$. \emph{Also known as} \textbf{signum}.
+    \begin{itemize}
+        \item \dq{In other words, the sign of a permutaton equals 1 if the natural order has been changed an even number of times and equals $-1$ if the natural order has been changed an odd number of times}{313}
+    \end{itemize}
+    \item We now prove a connection between the sign and transpositions.
+    \begin{theorem}\label{trm:signTransposition}
+        Interchanging two entries in a permutation multiplies the sign of the permutation by $-1$.
+    \end{theorem}
+    \item \textbf{Determinant} (of $A$): The following quantity. \emph{Denoted by} $\mathbf{det}\,\bm{A}$. \emph{Given by}
+    \begin{equation*}
+        \det A = \sum_{(m_1,\dots,m_n)\in\perm n}(\sign(m_1,\dots,m_n))A_{m_1,1}\cdots A_{m_n,n}
+    \end{equation*}
+    \item We now build up to proving that the determinant of $A$ is invariant with respect to basis.
+    \item Interchanging two columns.
+    \begin{theorem}\label{trm:detChangeColumns}
+        Suppose $A$ is a square matrix and $B$ is the matrix obtained from $A$ by interchanging two columns. Then
+        \begin{equation*}
+            \det A = -\det B
+        \end{equation*}
+        \begin{proof}
+            Notice that the same products appear in the sum defining the determinants of both matrices. However, the terms appear in different orders; in fact, each term has a unique transposition. Thus, every term of $\det B$ is $-1$ times the corresponding term in $\det A$ by Theorem \ref{trm:signTransposition}. It follows by factoring out the $-1$'s that $\det A=-\det B$.
+        \end{proof}
+    \end{theorem}
+    \item If $\mat{T}$ has two equal columns, then $T$ is not injective hence not invertible, so $\det=0$. Similarly\dots
+    \begin{theorem}
+        If $A$ is a square matrix that has two equal columns, then $\det A=0$.
+        \begin{proof}
+            By the definition of $A$, interchanging the two equal columns of $A$ gives $A$. But by Theorem \ref{trm:detChangeColumns}, this implies that
+            \begin{align*}
+                \det A &= -\det A\\
+                2\det A &= 0\\
+                \det A &= 0
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item We now generalize Theorem \ref{trm:detChangeColumns}.
+    \begin{theorem}
+        Suppose $
+            A =
+            \begin{pmatrix}
+                A_{\cdot,1} & \cdots & A_{\cdot,n}
+            \end{pmatrix}
+        $ is an $n\times n$ matrix and $(m_1,\dots,m_n)$ is a permutation. Then
+        \begin{equation*}
+            \det
+            \begin{pmatrix}
+                A_{\cdot,m_1} & \cdots & A_{\cdot,m_n}
+            \end{pmatrix}
+            = (\sign(m_1,\dots,m_n))\det A
+        \end{equation*}
+        \begin{proof}
+            Change $A$ into $
+                \begin{pmatrix}
+                    A_{\cdot,m_1} & \cdots & A_{\cdot,m_n}
+                \end{pmatrix}
+            $ iteratively, one column switch at a time, and apply Theorems \ref{trm:detChangeColumns} and \ref{trm:signTransposition}.
+        \end{proof}
+    \end{theorem}
+    \item The determinant is linear.
+    \begin{theorem}
+        Suppose $k,n$ are positive integers with $1\leq k\leq n$. Fix $n\times 1$ matrices $A_{\cdot,1},\dots,A_{\cdot,n}$ except $A_{\cdot,k}$. Then the function that takes an $n\times 1$ column vector $A_{\cdot,k}$ to
+        \begin{equation*}
+            \det
+            \begin{pmatrix}
+                A_{\cdot,1} & \cdots & A_{\cdot,k} & \cdots & A_{\cdot,n}
+            \end{pmatrix}
+        \end{equation*}
+        is a linear map from the vector space of $n\times 1$ matrices with entries in $\F$ to $\F$.
+        \begin{proof}
+            The linearity follows from the definition, where each term in the sum contains precisely one entry from the $k^\text{th}$ column of $A$.
+        \end{proof}
+    \end{theorem}
+    \item The determinant of the product of two matrices is equal to the product of the determinants\footnote{The first proof of this theorem was given in 1812 by French mathematicians Jacques Binet and Augustin-Louis Cauchy.}.
+    \begin{theorem}\label{trm:detProduct}
+        Suppose $A,B$ are square matrices of the same size. Then
+        \begin{equation*}
+            \det(AB) = \det(BA) = (\det A)(\det B)
+        \end{equation*}
+        \begin{proof}
+            Given, but complicated. See LinAlgGIEPNotes on Browne.
+        \end{proof}
+    \end{theorem}
+    \item We can now prove that the determinant is independent of basis.
+    \begin{theorem}
+        Suppose $T\in\ope{V}$. Suppose $u_1,\dots,u_n$ and $v_1,\dots,v_n$ are bases of $V$. Then
+        \begin{equation*}
+            \det\mat{T,(u_1,\dots,u_n)} = \det\mat{T,(v_1,\dots,v_n)}
+        \end{equation*}
+        \begin{proof}
+            Invoke Theorem \ref{trm:detProduct} in a paradigm symmetric to that used in the proof of Theorem \ref{trm:traTutraTv}.
+        \end{proof}
+    \end{theorem}
+    \item We can now prove that the determinant of an operator is equal to the determinant of any of its matrices.
+    \begin{theorem}\label{trm:detTdetA}
+        Suppose $T\in\ope{V}$. Then $\det T=\det\mat{T}$.
+        \begin{proof}
+            Invoke Theorem \ref{trm:detProduct} in a paradigm symmetric to that used in the proof of Theorem \ref{trm:traTtraA}.
+        \end{proof}
+    \end{theorem}
+    \item Like the trace is additive, the determinant is multiplicative.
+    \begin{theorem}
+        Suppose $S,T\in\ope{V}$. Then
+        \begin{equation*}
+            \det(ST) = \det(TS) = (\det S)(\det T)
+        \end{equation*}
+        \begin{proof}
+            Invoke Theorems \ref{trm:detTdetA} and \ref{trm:detProduct} in a paradigm symmetric to that used in the proof of Theorem \ref{trm:traAdditive}.
+        \end{proof}
+    \end{theorem}
+    \item We now transition from discussing properties of the determinant to applications.
+    \item Determinant of an isometry.
+    \begin{theorem}\label{trm:detIsom}
+        Suppose $V$ is an inner product space and $S\in\ope{V}$ is an isometry. Then
+        \begin{equation*}
+            |\det S| = 1
+        \end{equation*}
+        \begin{proof}
+            Suppose first that $V$ is complex. Then by Theorem \ref{trm:isomEigenvalues}, every eigenvalue of $S$ has absolute value 1. Therefore, by the definition of the determinant as the product of the eigenvalues, we have that
+            \begin{equation*}
+                |\det S| = |\lambda_1|\cdots|\lambda_m| = 1
+            \end{equation*}
+            as desired.\par
+            Now suppose that $V$ is real. Applying the complexification, we have that $|\det S_\C|=1$ and $\det S=\det S_\C$, as desired.
+        \end{proof}
+    \end{theorem}
+    \item We have that $\det\sqrt{T^*T}\geq 0$ as a positive operator with all positive eigenvalues.
+    \item We now further investigate the relation between $T$ and $\sqrt{T^*T}$ with respect to the determinant.
+    \begin{theorem}
+        Suppose $V$ is an inner product space and $T\in\ope{V}$. Then
+        \begin{equation*}
+            |\det T| = \det\sqrt{T^*T}
+        \end{equation*}
+        \begin{proof}
+            We have by the \hyperref[trm:polarDecomp]{Polar Decomposition} that there exists an isometry $S\in\ope{V}$ such that $T=S\sqrt{T^*T}$. Thus
+            \begin{align*}
+                |\det T| &= |\det S|\cdot\det\sqrt{T^*T}\tag*{Theorem \ref{trm:detProduct}}\\
+                &= \det\sqrt{T^*T}\tag*{Theorem \ref{trm:detIsom}}
+            \end{align*}
+            as desired.
+        \end{proof}
+    \end{theorem}
+    \item \textcite{bib:Axler} now discusses applications of the determinant to volume in $\R^n$.
+    \item If $\Omega\subset\R^n$, then the volume of $T(\Omega)$ (where $T$ is a positive operator) equals $\det T$ times the volume of $\Omega$.
+    \item Isometries don't change volume.
+    \item If $T$ is an \emph{arbitrary} operator, then the volume of $T(\Omega)$ equals $|\det T|$ times the volume of $\Omega$.
+    \item Integrals and derivatives are discussed.
+    \item Talks about the Jacobian and change of coordinates.
+\end{itemize}
+
+
+
+
+\end{document}

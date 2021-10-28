@@ -359,7 +359,7 @@
     \end{theorem}
     \item Note that if an operator has a block diagonal matrix with respect to some basis, then the entry in any $1\times 1$ block on the diagonal of this matrix is an eigenvalue of $T$.
     \item We now prove that all normal operators on real inner product spaces have block-diagonal matrices with blocks of size at most $2\times 2$.
-    \begin{theorem}
+    \begin{theorem}\label{trm:normalReal}
         Suppose $V$ is a real inner product space and $T\in\ope{V}$. Then the following are equivalent:
         \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
             \item $T$ is normal.
@@ -410,6 +410,57 @@
                 &= T_j^*T_j
             \end{align*}
             as desired.
+        \end{proof}
+    \end{theorem}
+    \item \marginnote{10/27:}We now characterize isometries on real inner product spaces.
+    \begin{theorem}
+        Suppose $V$ is a real inner product space and $S\in\ope{V}$. Then the following are equivalent.
+        \begin{enumerate}[label={\textup{(}\alph*\textup{)}}]
+            \item $S$ is an isometry.
+            \item There is an orthonormal basis of $V$ with respect to which $S$ has a block diagonal matrix such that each block on the diagonal is a $1\times 1$ matrix containing 1 or $-1$ or is a $2\times 2$ matrix of the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    \cos\theta & -\sin\theta\\
+                    \sin\theta & \cos\theta\\
+                \end{pmatrix}
+            \end{equation*}
+            with $\theta\in(0,\pi)$.
+        \end{enumerate}
+        \begin{proof}
+            Suppose first that $S$ is an isometry. Then by Theorem \ref{trm:isomConditions}, $S^*S=I=SS^*$, so $S$ is normal. Thus, by Theorem \ref{trm:normalReal}, there is an orthonormal basis of $V$ with respect to which $S$ has a block diagonal matrix such that each block is a $1\times 1$ matrix or a $2\times 2$ matrix of the form
+            \begin{equation*}
+                \begin{pmatrix}
+                    a & -b\\
+                    b & a\\
+                \end{pmatrix}
+            \end{equation*}
+            with $b>0$.\par
+            Suppose $\lambda$ is the sole entry in a $1\times 1$ block of such a matrix. Then there is a basis vector $e_j$ such that $Se_j=\lambda e_j$. But since $S$ is an isometry,
+            \begin{equation*}
+                1 = \norm{e_j} = \norm{Se_j} = \norm{\lambda e_j} = |\lambda|
+            \end{equation*}
+            Since $1,-1$ are the only real numbers with absolute value equal to 1, we have $\lambda=1$ or $\lambda=-1$, as desired.\par
+            Consider a $2\times 2$ matrix of the above form along the diagonal of $S$. It follows that there are basis vectors $e_j,e_{j+1}$ such that
+            \begin{equation*}
+                Se_j = ae_j+be_{j+1}
+            \end{equation*}
+            Thus since $S$ is an isometry and by Theorem \ref{trm:normOrthoLnlComb}, we have that
+            \begin{equation*}
+                1 = \norm{e_j}^2 = \norm{Se_j}^2 = a^2+b^2
+            \end{equation*}
+            This combined with the condition that $b>0$ implies that there exists a number $\theta\in(0,\pi)$ such that $a=\cos\theta$ and $b=\sin\theta$. Thus, the $2\times 2$ diagonal entry has the desired form.\par\smallskip
+            Now suppose that (b) holds. Then there is a direct sum decomposition
+            \begin{equation*}
+                V = U_1\oplus\cdots\oplus U_m
+            \end{equation*}
+            where each $U_j$ is a subspace of $V$ of dimension 1 or 2 such that any two vectors belonging to distinct $U$'s are orthogonal and each $S|_{U_j}$ is an isometry under which $U_j$ is invariant. Now let $v\in V$ be arbitrary. It follows that
+            \begin{align*}
+                \norm{Sv}^2 &= \norm{Su_1+\cdots+Su_m}^2\\
+                &= \norm{Su_1}^2+\cdots+\norm{Su_m}^2\tag*{Theorem \ref{trm:normOrthoLnlComb}}\\
+                &= \norm{u_1}^2+\cdots+\norm{u_m}^2\\
+                &= \norm{v}^2
+            \end{align*}
+            so $S$ is an isometry, as desired.
         \end{proof}
     \end{theorem}
 \end{itemize}
